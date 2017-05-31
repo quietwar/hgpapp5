@@ -1,0 +1,90 @@
+
+<!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">Hidden Genius Project</h1>
+                        <p class="intro-text">View our Geniuses final projects loaded by Cohorts
+                            <br>Doc.</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="Cohort 3" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Who are the Geniuses?</h2>
+                <p>The Genuises come from all over the Bay form as far away as Brentwood to the other side of the Bay in SF <a href="https://www.youtube.com/channel/UCOhVvEbwfi3jnW9YDUuHiBQ/">Our youtube channel</a>. We have been featured in a variety of news, social medaia magazines.</p>
+                <p>Each Cohort is responsible for producing individal mobile applications for their final project. <a href="http://hiddengeniusproject.org/">The Hidden Genius Project</a> Thier projects will be judged by their mentors and awarded nominal payments based on a set of criteria <a href="http://www.meetgeorge.info/">Meet George from cohort 3!</a>.</p>
+                <p>Thier past aps have been featured in a variety of shows, events and media</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="Cohort 4" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Apply to Be the next featured Genius</h2>
+                    <p>What you will learn</p>
+                    <a href="http://www.hiddengeniusproject.org/apply/" class="btn btn-default btn-lg">Apply here</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="Cohort 5" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Visit the Hidden Genius Project</h2>
+                <p>"The Hidden Genius Project trains and mentors Black male youth in technology creation, entrepreneurship, and leadership skills to transform their lives and communities."
+                </p>
+                <p><a href="mailto:info@hiddengeniusproject.org"</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/HiddenGeniusPro" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/quietwar" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/hiddengeniuspro/" class="btn btn-default btn-lg"><i class=""></i> <span class="network-name">Instagram</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+      <%= render 'shared/footer' %>
+      <%= render 'shared/header' %>
+
+
+  <div class="col-md-10">
+    <h2>List of Members</h2>
+    <%= will_paginate @athletes, renderer: BootstrapPagination::Rails, class: "pull-left paginate" %>
+  </div>
+</div>
+
+<div class="row">
+  <% @athletes.each do |athlete| %>
+    <div class="col-md-10 well member">
+      <%= athlete.full_name %>
+      <% if current_user %>
+        <%= link_to "Follow", friendships_path(friend_id: athlete.id),
+            method: :post, class: "btn btn-success pull-right" unless current_user.follows_or_same?(athlete) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
