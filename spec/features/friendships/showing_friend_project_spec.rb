@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Showing Friend Workout" do
+RSpec.feature "Showing Friend Project" do
   before do
     @john = User.create(first_name: "John",
                         last_name: "Doe",
@@ -12,24 +12,24 @@ RSpec.feature "Showing Friend Workout" do
                         email: "sarah@example.com",
                         password: "password")
 
-    @e1 = @john.exercises.create(duration_in_min: 74,
-                                workout: "My body building activity",
-                                workout_date: Date.today)
-    @e2 = @sarah.exercises.create(duration_in_min: 55,
-                                workout: "Weight lifting",
-                                workout_date: Date.today)
+    @e1 = @john.projects.create(app_name: "My App",
+                                coding: "language",
+                                start_date: Date.today)
+    @e2 = @sarah.projects.create(app_name: "My App",
+                                coding: "language",
+                                start_date: Date.today)
     login_as(@john)
 
     @following = Friendship.create(user: @john, friend: @sarah)
   end
 
-  scenario "shows friend's workout for last 7 days" do
+  scenario "shows friend's projects" do
     visit "/"
 
-    click_link "My Lounge"
+    click_link "My lab"
     click_link @sarah.full_name
 
-    expect(page).to have_content(@sarah.full_name + "'s Exercises")
+    expect(page).to have_content(@sarah.full_name + "'s projects")
     expect(page).to have_content(@e2.workout)
     expect(page).to have_css("div#chart")
   end

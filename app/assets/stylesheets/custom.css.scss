@@ -13,7 +13,7 @@ body {
 }
 
 .navbar-header a.navbar-brand {
-  color: blue;
+  color: #4040a1;
   padding-top: 25px;
   padding-bottom: 10px;
   font-size: 150%;
@@ -21,7 +21,7 @@ body {
 }
 
 .navbar-header a.navbar-brand:hover {
-  color: #ffffff;
+  color: #1900ff;
 }
 
 .nav > li > a {
@@ -30,22 +30,35 @@ body {
 }
 
 .navbar-default .navbar-nav > .active > a {
-  background: blue;
+  background: #4040a1;
   color: #ffffff;
 }
 
 .navbar-default .navbar-nav > .active > a:hover {
-  background: blue;
+  background: #4040a1;
   color: #ff0000;
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #blue;
+  color: #4040a1;
   font-size: 130%;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
   color: #ff0000;
+}
+
+.form-group {
+color: green;
+}
+
+.table table-striped{
+  color: red;
+}
+
+
+.col-md-10 {
+color: purple;
 }
 
 // Devise Error Messages
@@ -126,6 +139,10 @@ path {
   margin-bottom: 2px;
 }
 
+#show-header {
+  color: blue;
+}
+
 hr.msg {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -141,6 +158,7 @@ hr.msg {
 
 #form-box {
   margin-left: -15px;
+  color: blue;
 }
 
 #post-btn {

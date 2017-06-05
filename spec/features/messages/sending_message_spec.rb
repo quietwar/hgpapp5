@@ -18,7 +18,7 @@ RSpec.feature "Sending a message" do
   scenario "to followers shows in chatroom window" do
     visit '/'
     
-    click_link "My Lounge"
+    click_link "My lab"
     expect(page).to have_content(@room_name)
     
     fill_in "message-field", with: "Hello"

@@ -1,9 +1,9 @@
 class DashboardsController < ApplicationController
   def index
-    @athletes = User.paginate(:page => params[:page])
+    @features = User.paginate(:page => params[:per_page => 1])
   end
-  
+
   def search
-    @athletes = User.search_by_name(params[:search_name]).paginate(page: params[:page])
+    @features = User.search_by_name(params[:search_name]).paginate(page: params[:page])
   end
 end

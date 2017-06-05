@@ -1,7 +1,7 @@
 <% content_for(:whole_page) do %>
   <div class="col-md-7 col-xs-12">
-  <% unless @exercises.empty? %>
-    <h1>Projects List</h1>
+  <% unless @projects.empty? %>
+    <h1>My Projects</h1>
 
     <table class="table table-striped">
       <thead>
@@ -13,21 +13,39 @@
         </tr>
       </thead>
       <tbody>
-        <% @exercises.each do |exercise| %>
+        <% @projects.each do |project| %>
           <tr>
-            <td><%= project.project_details %></td>
-            <td><%= truncate(project.app, length: 100) %></td>
+            <td><%= project.app_name %></td>
+            <td><%= truncate(project.project_details, length: 240) %></td>
             <td><%= project.start_date %></td>
-            <td><%= link_to 'Show', [current_user, exercise] %></td>
-            <td><%= link_to 'Edit', [:edit, current_user, exercise]
+            <td><%= link_to 'Show', [current_user, project] %></td>
+            <td><%= link_to 'Edit', [:edit, current_user, project]
              %></td>
-            <td><%= link_to 'Destroy', [current_user, exercise],
+            <td><%= link_to 'Destroy', [current_user, project],
             method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <br>
+    <div class="row">
+      <div class="col-md-10">
+        <h2>List of Geniuses</h2>
+        <%= will_paginate @features, renderer: BootstrapPagination::Rails, class: "pull-left paginate" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <% @features.each do |feature| %>
+        <div class="col-md-10 well member">
+          <%= feature.full_name %>
+          <% if current_user %>
+            <%= link_to "Follow", friendships_path(friend_id: feature.id),
+                method: :post, class: "btn btn-success pull-right" unless current_user.follows_or_same?(feature) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
 
     <br>
   <% else %>
@@ -37,10 +55,9 @@
     </div>
     <br>
   <% end %>
-  <%= link_to 'New Projects', new_user_exercise_path(current_user),
+  <%= link_to 'New Project', new_user_project_path(current_user),
       class: "btn btn-success link" %>
 
-  <%= content_tag :div, "", id: "chart", data: { workouts: @exercises } %>
 </div>
 
 <div class="col-md-5 col-xs-12">
@@ -49,7 +66,7 @@
 
     <div class="col-md-2" id="followers">
       <% @followers.each do |follower| %>
-        <%= link_to follower.user.full_name, user_exercises_path(current_user, roomId: follower.user.room.id), class: 'followers' %>
+        <%= link_to follower.user.full_name, user_projects_path(current_user, roomId: follower.user.room.id), class: 'followers' %>
         <br />
       <% end %>
     </div>

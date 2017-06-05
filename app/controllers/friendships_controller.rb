@@ -3,7 +3,7 @@ class FriendshipsController < ApplicationController
   
   def show
     @friend = Friendship.find(params[:id]).friend
-    @exercises = @friend.exercises
+    @projects = @friend.projects
   end
   
   def create
@@ -23,7 +23,7 @@ class FriendshipsController < ApplicationController
     else
       flash.now[:alert] = "#{friendname} could not be unfollowed."
     end
-    redirect_to user_exercises_path(current_user)
+    redirect_to user_projects_path(current_user)
   end
   
   private

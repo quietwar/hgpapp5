@@ -18,7 +18,7 @@ RSpec.feature "Unfollowing Friend" do
   scenario do
     visit "/"
 
-    click_link "My Lounge"
+    click_link "My lab"
     link = "a[href='/friendships/#{@following.id}'][data-method='delete']"
     find(link).click
 
