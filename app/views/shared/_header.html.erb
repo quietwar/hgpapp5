@@ -30,10 +30,10 @@
             <ul class="nav navbar-nav navbar-right">
               <% unless user_signed_in? %>
                 <li><%= link_to "Sign up", new_user_registration_path %></li>
-                <li><%= link_to "Sign in", new_user_session_path %></li>
+                <li><%= link_to "Tap in", new_user_session_path %></li>
               <% else %>
                 <li><%= link_to "My Lab", user_projects_path(current_user) %></li>
-                <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+                <li><%= link_to "Tap out", destroy_user_session_path, method: :delete %></li>
                 <div class="navbar-right signed-in-user">
                   <p class="navbar-text">
                     Signed in as <%= "#{current_user.email}" %>
