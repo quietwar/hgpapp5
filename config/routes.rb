@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show] do
     resources :projects
-    resources :features
+
   end
 
   resources :dashboards, only: [:index] do
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       post :search, to: 'dashboards#search'
     end
   end
-
+  resources :features, only: [:index, :show, :create, :destroy]
   resources :friendships, only: [:show, :create, :destroy]
   resources :messages, only: [:create]
 

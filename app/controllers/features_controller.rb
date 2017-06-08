@@ -1,14 +1,20 @@
 class FeaturesController < ApplicationController
+
+  def index
+    @features = Feature.all
+  end
+
   def show
-    @feature = feature.find(params[:id])
+    @feature = feature.find(params[:feature])
 
   end
 
-  def create
-    feature = User.find(params[:feature_id])
-    params[:user_id] = current_user.id
+  def new
+    @feature = Feature.new
+  end
 
-    Feature.create(feature_params)
+  def create
+    @feature = Feature.new(feature_params)
   end
 
   def destroy
@@ -18,6 +24,6 @@ class FeaturesController < ApplicationController
   private
 
   def feature_params
-    params.require(:feature).permit(:feature_id, :user_id)
+    params.require(:feature).permit(:feature_id)
   end
 end
