@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-    namespace :admin do
+    namespace :admins do
       resources :cohorts
 
       root to: "cohorts#index"

@@ -5,7 +5,7 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
          validates :first_name, presence: true
          validates :last_name, presence: true
-         validates :email, format: { with: /\hiddengeniusproject.org\z/, message: "only allows HGP addresses" }
+         validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
 
          has_many :projects
          has_many :friendships
