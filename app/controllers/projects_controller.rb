@@ -1,14 +1,14 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project
 
   def index
     @projects = current_user.projects
     @friends = current_user.friends
-    set_current_room
+    set_current_chatroom
     @features = User.paginate(:page => params[:per_page => 1])
     @message = Message.new
-    @messages = current_room.messages if current_room
+    @messages = current_chatroom.messages if current_chatroom
     @followers = Friendship.where(friend_id: current_user.id)
   end
 
@@ -16,11 +16,11 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = current_user.projects.new
+    @project = Projects.new
   end
 
   def create
-    @project = current_user.projects.new(project_params)
+    @project = projects.new(project_params)
 
     if @project.save
       flash[:notice] = "project has been created"
@@ -57,16 +57,16 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:app_name, :language, :project_details, :start_date, :user_id)
+    params.permit(:app_name, :language, :project_details, :start_date, :user_id, :avatar, :username)
   end
 
-  def set_current_room
-    if params[:roomId]
-      @room = Room.find_by(id: params[:roomId])
+  def set_current_chatroom
+    if params[:chatroomId]
+      @chatroom = Chatroom.find_by(id: params[:chatroomId])
     else
-      @room = current_user.room
+      @chatroom = current_user.chatroom
     end
-    session[:current_room] = @room.id if @room
+    session[:current_chatroom] = @chatroom.id if @chatroom
   end
 
 end

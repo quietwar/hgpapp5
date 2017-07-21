@@ -1,10 +1,10 @@
 class Admin::CohortsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_admin!
   before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
 
     def index
       @cohort = Cohort.all
-      @cohorts = current_user.cohorts
+      @cohorts = current_admin.cohorts
     end
 
     def show
@@ -26,18 +26,18 @@ class Admin::CohortsController < ApplicationController
     private
 
     def set_cohort
-      @cohort = current_user.cohorts.find params[:id]
+      @cohort = current_admin.cohorts.find params[:id]
     end
 
     def cohort_params
       params.require(:cohort).permit(:cohort_id)
     end
 
-    def set_current_room
+    def set_current_chatroom
       if params[:roomId]
         @class = Class.find_by(id: params[:classId])
       else
-        @class = current_user.room
+        @class = current_admin.room
       end
       session[:current_class] = @class.id if @class
     end
