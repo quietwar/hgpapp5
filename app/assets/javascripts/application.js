@@ -11,8 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui/datepicker
-//= require jquery_ujs
+//= require jquery-ui
+//= require jquery-tablesorter
 //= require bootstrap-sprockets
 //= require d3
 // require turbolinks

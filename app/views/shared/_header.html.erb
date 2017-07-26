@@ -14,10 +14,12 @@
 
           <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><%= link_to "Home", root_path %></li>
-              <li class="active"><li><%= link_to "My Lab", user_projects_path %></li>
+              <% unless user_signed_in? %>
+                <li class="active"><%= link_to "Home", root_path %></li>
+              <% else %>
+                <li class="active"><li><%= link_to "My Lab", user_projects_path %></li>
             </ul>
-
+            <% end %>
             <%= form_tag(search_dashboards_path,
                             class: "navbar-form navbar-left",
         	                  role: "search") do %>

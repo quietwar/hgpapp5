@@ -11,6 +11,9 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require jquery-ui
+ *= require jquery-ui/sortable
+ *= require jquery-tablesorter/theme.black-ice
  *= require jquery-ui/datepicker
  *= require_self
  */

@@ -1,0 +1,56 @@
+<h1>Genius Cohorts </h1>
+
+
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <li class="active"><%= link_to "Currently signed up Geniuses", users_path %></li>
+                </div>
+            </div>
+        </div>
+      </div>
+  </header>
+<div class="container-fluid">
+  <table>
+     <thead>
+       <tr>
+          <th data-input='true' data-type='int'>number (int)</th>
+          <th data-input='true' data-type='float'>number (float)</th>
+          <th data-input='true'>string</th>
+          <th data-input='true'>date</th>
+          <th data-sort='false'>do not sort</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+        <td><input type='text' value='2'></td>
+        <td><input type='text' value='-.18'></td>
+        <td><input type='text' value='apple'></td>
+        <td><input type='text' value='Mar 15, 1986'></td>
+       </tr>
+       <tr>
+        <td><input type='text' value='15'></td>
+        <td><input type='text' value='88.5'></td>
+        <td><input type='text' value='banana'></td>
+        <td><input type='text' value='Aug 07, 2004'></td>
+       </tr>
+       <tr>
+        <td><input type='text' value='-53'></td>
+        <td><input type='text' value='-858'></td>
+        <td><input type='text' value='orange'></td>
+        <td><input type='text' value='Feb 27, 2086'></td>
+       </tr>
+     </tbody>
+    <tfoot>
+      <tr>
+          <td><input type='text'></td>
+          <td><input type='text'></td>
+          <td><input type='text'></td>
+          <td><input type='text'></td>
+      </tr>
+    </tfoot>
+  </tbody>
+</table>
+</div>

@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-   get 'users/index'
-   get 'projects/index'
-   get 'classrooms/index'
+  get 'users/index'
 
-  devise_for :admins, :controllers => { registrations: "staffs/registrations" }
+  devise_for :admins, :controllers => { registrations: 'registrations' }
   devise_for :users, :controllers => { registrations: 'registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -28,7 +26,7 @@ Rails.application.routes.draw do
 
   resources :admin
 
-  resources :features, only: [:index, :show, :create, :destroy]
+  resources :features
   resources :friendships, only: [:show, :create, :destroy]
   resources :messages, only: [:create]
 
