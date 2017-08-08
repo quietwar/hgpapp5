@@ -1,7 +1,7 @@
 class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
          validates :first_name, presence: true
          validates :last_name, presence: true
@@ -11,7 +11,7 @@ class Admin < ApplicationRecord
          has_many :projects
          has_many :friendships
          has_many :friends, through: :friendships, class_name: "User"
-         has_one :chatroom
+         has_one :room
          has_many :cohorts
          has_many :classrooms
          has_many :features

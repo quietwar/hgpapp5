@@ -15,7 +15,7 @@ RSpec.feature "Sending a message" do
     Friendship.create(user: @henry, friend: @john)
   end
   
-  scenario "to followers shows in chatroom window" do
+  scenario "to followers shows in room window" do
     visit '/'
     
     click_link "My lab"

@@ -1,0 +1,29 @@
+<h1>Geniuses</h1>
+<div class="col-md-8">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <% @users = User.all %>
+        <% @users.each do |user| %>
+        <th> Genuius </th><br/>
+        <th> user.email </th><br/>
+      <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+
+  <%= link_to 'Back to the lab', user_projects_path(:current_user),
+      class: "btn btn-success btn-lg link" %>
+
+</div>

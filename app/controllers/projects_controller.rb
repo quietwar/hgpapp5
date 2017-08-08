@@ -1,15 +1,15 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index
-    @projects = current_user.projects
-    @friends = current_user.friends
-    set_current_chatroom
-    @features = User.paginate(:page => params[:per_page => 1])
+    @projects = Project.all
+    #@friends = Friend.new
+    set_current_room
+    @features = User.paginates_per(:page => params[:per_page => 1])
     @message = Message.new
-    @messages = current_chatroom.messages if current_chatroom
-    @followers = Friendship.where(friend_id: current_user.id)
+    @messages = current_room.messages if current_room
+    @followers = Friendship.where(friend_id:, current_user.id)
   end
 
   def show
@@ -60,13 +60,13 @@ class ProjectsController < ApplicationController
     params.permit(:app_name, :language, :project_details, :start_date, :user_id, :avatar, :username)
   end
 
-  def set_current_chatroom
-    if params[:chatroomId]
-      @chatroom = Chatroom.find_by(id: params[:chatroomId])
+  def set_current_room
+    if params[:roomId]
+      @room = room.find_by(id: params[:roomId])
     else
-      @chatroom = current_user.chatroom
+      @room = current_user.room
     end
-    session[:current_chatroom] = @chatroom.id if @chatroom
+    session[:current_room] = @room.id if @room
   end
 
 end

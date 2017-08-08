@@ -80,6 +80,11 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  config.assets.precompile +=
+  %w( #{Rails.root}/vendor/assets/stylesheets/active_admin.css.scss)
+  config.assets.precompile +=
+  %w( #{Rails.root}/vendor/assets/javascripts/active_admin.js.coffee)
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter

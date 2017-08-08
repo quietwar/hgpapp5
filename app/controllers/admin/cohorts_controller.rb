@@ -1,10 +1,15 @@
 class Admin::CohortsController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin_user!
   before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
 
     def index
       @cohort = Cohort.all
       @cohorts = current_admin.cohorts
+
+        respond_to do |format|
+      format.html
+      format.json { render json: UsersDatatable.new(view_context) }
+      end
     end
 
     def show
@@ -33,7 +38,7 @@ class Admin::CohortsController < ApplicationController
       params.require(:cohort).permit(:cohort_id)
     end
 
-    def set_current_chatroom
+    def set_current_room
       if params[:roomId]
         @class = Class.find_by(id: params[:classId])
       else

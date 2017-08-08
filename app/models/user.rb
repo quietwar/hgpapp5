@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+
   alias_attribute :student, :genius
 
   has_many :projects
@@ -17,9 +18,9 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-  after_create :create_chatroom
+  after_create :create_room
 
-  self.per_page = 20
+  #self.per_page = 20
 
   def full_name
     [first_name, last_name].join(" ")
@@ -49,8 +50,13 @@ class User < ApplicationRecord
 
   private
 
-  def create_chatroom
-    hyphenated_username = self.full_name.split.join('-')
-    Room.create(name: hyphenated_username, user_id: self.id)
-  end
+  protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
+    end
+    def create_room
+      hyphenated_username = self.full_name.split.join('-')
+      room.create(name: hyphenated_username, user_id: self.id)
+    end
 end
