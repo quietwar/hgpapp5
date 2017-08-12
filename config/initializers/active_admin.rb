@@ -1,7 +1,7 @@
 ActiveAdmin.setup do |config|
 
   # == Site Title
-  require 'activeadmin'
+  require 'active_admin'
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
@@ -56,7 +56,7 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
 
-  config.authentication_method = :authenticate_active_admin_user!
+  #config.authentication_method = :authenticate_admin!
 
   # == User Authorization
   #
@@ -64,7 +64,7 @@ ActiveAdmin.setup do |config|
   # method in a before filter of all controller actions to
   # ensure that there is a user with proper rights. You can use
   # CanCanAdapter or make your own. Please refer to documentation.
-  config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  #config.authorization_adapter = ActiveAdmin::CanCanAdapter
 
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
@@ -72,7 +72,7 @@ ActiveAdmin.setup do |config|
    #config.pundit_default_policy = "MyDefaultPunditPolicy"
 
   # You can customize your CanCan Ability class name here.
-   config.cancan_ability_class = "Ability"
+   #config.cancan_ability_class = "Ability"
 
   # You can specify a method to be called on unauthorized access.
   # This is necessary in order to prevent a redirect loop which happens
@@ -114,7 +114,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-   config.root_to = 'dashboards#index'
+   config.root_to = 'classrooms#index'
 
   # == Admin Comments
   #
@@ -147,8 +147,9 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  config.before_action :authenticate_admin_user!
+  #config.before_action :authenticate_user!
 
+  #config.before_action :current_ability
   # == Localize Date/Time Format
   #
   # Set the localize format to display dates and times.
@@ -186,7 +187,7 @@ ActiveAdmin.setup do |config|
   # Create another checkbox is disabled by default. You can customize it for individual
   # resources or you can enable them globally from here.
   #
-  # config.create_another = true
+  config.create_another = true
 
   # == Register Stylesheets & Javascripts
   #

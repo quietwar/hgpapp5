@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Listing Projects" do
   before do
-    @john =  User.create!(first_name: "John", last_name: "Doe", email: "john@example.com", password: "password")
-    @sarah = User.create!(first_name: "Sarah", last_name: "Anderson", email: "sarah@example.com", password: "password")
+    @john =  User.create(first_name: "John", last_name: "Doe", email: "john@hgs.hiddengeniusproject.org", password: "password")
+    @sarah = User.create(first_name: "Sarah", last_name: "Anderson", email: "sarah@hgs.hiddengeniusproject.org", password: "password")
 
     login_as(@john)
 
@@ -17,9 +17,7 @@ RSpec.feature "Listing Projects" do
 
     @following = Friendship.create(user: @john, friend: @sarah)
 
-     #@p3 = @john.projects.create(project_details: "",
-     #                               project: "",
-     #                               start_date: 2.days.ago)
+     
 
   end
 
@@ -36,9 +34,6 @@ RSpec.feature "Listing Projects" do
     expect(page).to have_content(@p2.coding)
     expect(page).to have_content(@p2.start_date)
 
-    # expect(page).not_to have_content(@e3.duration_in_min)
-    # expect(page).not_to have_content(@e3.workout)
-    # expect(page).not_to have_connt(@e3.workout_date)
 
   end
 

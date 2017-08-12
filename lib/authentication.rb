@@ -23,6 +23,14 @@ module Authentication
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def authenticate_admin!
+
+   unless current_user.admin?
+      flash[:alert] = "Unauthorized Access: Genius, go back!"
+      redirect_to root_path
+    end
+  end
+
   def logged_in?
     current_user
   end

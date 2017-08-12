@@ -1,22 +1,43 @@
 ActiveAdmin.register User do
+  permit_params :first_name, :last_name, :email, :password, :password_confirmation
+
+  index do
+    selectable_column
+    id_column
+    column :first_name
+    column :last_name
+    column :email
+    column :current_sign_in_at
+    column :sign_in_count
+    column :created_at
+    actions
+  end
+
+  filter :first_name
+  filter :last_name
+  filter :email
+  filter :current_sign_in_at
+  filter :sign_in_count
+  filter :created_at
 
   form do |f|
-    f.inputs "User Details" do
+    f.inputs do
       f.input :first_name
       f.input :last_name
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :admin, :label => "Staff"
+      f.input :superadmin, :label => "Super Administrator"
     end
     f.buttons
   end
 
+
   create_or_edit = Proc.new {
     @user            = User.find_or_create_by_id(params[:id])
-    @user.admin = params[:user][:admin]
+    @user.superadmin = params[:user][:superadmin]
     @user.attributes = params[:user].delete_if do |k, v|
-      (k == "Staff") ||
+      (k == "superadmin") ||
       (["password", "password_confirmation"].include?(k) && v.empty? && !@user.new_record?)
     end
     if @user.save

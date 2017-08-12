@@ -159,4 +159,3 @@ module ActiveAdmin
     end
   end
 end
- 

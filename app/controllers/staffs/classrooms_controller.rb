@@ -1,10 +1,10 @@
 class Staffs::ClassroomsController < ApplicationController
-  before_action :authenticate_admin_user!
-  before_action :set_current_classroom#, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!
+  #before_action :set_current_classroom, only: [:show, :edit, :update, :destroy]
 
     #admin home page
     def index
-      @classrooms_grid = ClassroomGrid.new(params[:classrooms_grid]) do |scope|
+      #@classrooms_grid = ClassroomGrid.new(params[:classrooms_grid]) do |scope|
       scope.page(params[:page])
       # @cohorts = Cohort.all
       # @cohort = Cohort.new

@@ -4,19 +4,21 @@ RSpec.feature "Showing Friend Project" do
   before do
     @john = User.create(first_name: "John",
                         last_name: "Doe",
-                        email: "john@example.com",
+                        email: "john@hgs.hiddengeniusproject.org",
                         password: "password")
 
     @sarah = User.create(first_name: "Sarah",
                         last_name: "Anderson",
-                        email: "sarah@example.com",
+                        email: "sarah@hgs.hiddengeniusproject.org",
                         password: "password")
 
     @e1 = @john.projects.create(app_name: "My App",
                                 coding: "language",
+                                app_details: "das shyt",
                                 start_date: Date.today)
     @e2 = @sarah.projects.create(app_name: "My App",
                                 coding: "language",
+                                app_details: "das shyt",
                                 start_date: Date.today)
     login_as(@john)
 

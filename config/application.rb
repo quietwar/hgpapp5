@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module GeniusLounge
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.exceptions_app = self.routes
     config.load_defaults 5.1
     config.middleware.use Rack::MethodOverride
     config.app_generators.scaffold_controller :responders_controller

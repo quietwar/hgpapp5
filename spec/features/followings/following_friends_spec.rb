@@ -4,12 +4,12 @@ RSpec.feature "Following Friends" do
   before do
     @john = User.create(first_name: "John",
                         last_name: "Doe",
-                        email: "john@example.com",
+                        email: "john@hgs.hiddengeniusproject.org",
                         password: "password")
 
     @peter = User.create(first_name: "Peter",
                         last_name: "Corn",
-                        email: "peter@example.com",
+                        email: "peter@hgs.hiddengeniusproject.org",
                         password: "password")
     login_as(@john)
   end

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "Editing project" do
   before do
-    @owner = User.create!(first_name: "John", last_name: "Doe", email: "owner@example.com", password: "password")
+    @owner = User.create(first_name: "John", last_name: "Doe", email: "owner@hgs.hiddengeniusproject.org", password: "password")
 
-    @owner_project = @owner.projects.create!(app_name: "My great app",
+    @owner_project = @owner.projects.create(app_name: "My great app",
                                                 coding: "language",
                                                 start_date: Date.today)
 

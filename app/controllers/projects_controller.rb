@@ -4,12 +4,13 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    #@friends = Friend.new
+    #@project = current_user.projects
+    #@friends = current_user.friend
     set_current_room
     @features = User.paginates_per(:page => params[:per_page => 1])
     @message = Message.new
     @messages = current_room.messages if current_room
-    @followers = Friendship.where(friend_id:, current_user.id)
+    @followers = Friendship.where(friend_id: current_user.id)
   end
 
   def show

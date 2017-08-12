@@ -57,14 +57,14 @@
     </div>
     <br>
   <% end %>
-  <%= link_to 'New Project', new_user_project_path(current_user),
+  <%= link_to 'New Project', new_user_project_path,
       class: "btn btn-success link" %>
 
 </div>
 
 <div class="col-md-5 col-xs-12">
   <div id="chat-window" class="col-md-12">
-    <header class="text-center">Channel: <%= current_room.name %></header>
+    <header class="text-center">Channel: <%= current_room %></header>
 
     <div class="col-md-2" id="followers">
       <% @followers.each do |follower| %>

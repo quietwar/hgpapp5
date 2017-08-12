@@ -1,0 +1,63 @@
+<h3>Our Cohorts </h3>
+<div class="feature-wrapper bg-primary pt-5 pb-5 mt-5 mt-lg-0">
+  <div class="container">
+    <div class="row"
+      <div class="left">
+        <%= will_paginate(@grid.assets) %>
+        <%= datagrid_form_for @grid %>
+        <%= will_paginate(@grid.assets) %>
+      </div>
+    </div>
+    <div class="right">
+      <%= datagrid_form_for @grid, :method => :get, :url => classrooms_path %>
+          <div class='control-label col-md-3'>
+            <%= f.label :cohort, "Cohort" %><br />
+          </div>
+          <div class='col-md-9'>
+            <%= f.text_field :cohort, class: 'filter-control', autocomplete: "off" %>
+          </div>
+        </div>
+        <div class='filter-group'>
+          <div class='control-label col-md-3'>
+            <div><%= f.label :email %><br />
+              <%= f.text_field :email %>
+            </div>
+          </div>
+        </div>
+
+        <div class='filter-group'>
+          <div class='control-label col-md-3'>
+            <%= f.label :cell %><br />
+          </div>
+          <div class='col-md-9'>
+            <%= f.text_field :cell, class: 'filter-control', autocomplete: "on" %>
+          </div>
+        </div>
+
+        <div class='filter-group'>
+          <div class='control-label col-md-3'>
+            <%= f.label :stipend %><br />
+          </div>
+          <div class='col-md-9'>
+            <%= f.number_field :stipend, class: 'filter-control', autocomplete: "off" %>
+          </div>
+        </div>
+        <div class='filter-group'>
+          <div class='col-md-9 col-md-offset-3'>
+            <div class="checkbox">
+              <label>
+                <%= f.checkbox :completed? %><br />
+                Benchmarks completed!
+            </label>
+            </div>
+          </div>
+        </div>
+
+      <div class='form-group'>
+        <div class='col-md-offset-3 col-md-9'>
+          <%= f.submit "Submit", class: 'btn btn-success btn-lg' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

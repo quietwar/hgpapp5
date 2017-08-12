@@ -17,10 +17,11 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'activeadmin', '~> 1.0.0.pre4' # as of now
+gem 'activeadmin', '~> 1.1'
+
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'responders', '~> 2.2'
-gem 'draper'
+
 gem 'pundit'
 
 # Use jquery as the JavaScript library
@@ -29,8 +30,7 @@ gem 'rails-assets-datatables', source: 'https://rails-assets.org'
 gem 'kaminari'
 gem 'jquery-ui-rails', '5.0.5'
 gem 'jquery-rails'
-gem 'jquery-tablesorter'
-gem 'jquery-datatables-rails', '~> 3.4.0'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 #gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -42,7 +42,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'devise', '~>4.2.0'
-gem 'cancancan', '~> 1.10'
+#gem 'cancancan', '~> 1.10'
 
 gem 'd3-rails','4.1.0'
 #gem 'will_paginate-bootstrap', '~> 1.0.1'

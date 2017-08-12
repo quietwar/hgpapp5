@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Creating project" do
   before do
-    @john = User.create(first_name: "John", last_name: "Doe", email: "john@example.com", password: "password")
+    @john = User.create(first_name: "John", last_name: "Doe", email: "john@hgs.hiddengeniusproject.org", password: "password")
     login_as(@john)
 
     visit "/"
@@ -34,7 +34,7 @@ RSpec.feature "Creating project" do
     expect(page).to have_content("Project has not been created")
     expect(page).to have_content("Coding has to have a language")
     expect(page).to have_content("Project details can't be blank")
-    expect(page).to have_content("Start date can't be")
+    expect(page).to have_content("Start date can't be empty")
   end
 
 end

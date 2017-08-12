@@ -1,10 +1,12 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :trackable
+         validates :first_name, presence: true
+         validates :last_name, presence: true
+         validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
+         after_create :create_room
   alias_attribute :student, :genius
 
   has_many :projects
@@ -15,10 +17,7 @@ class User < ApplicationRecord
   has_many :features
   has_many :messages
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-  after_create :create_room
+
 
   #self.per_page = 20
 

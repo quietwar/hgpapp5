@@ -2,11 +2,11 @@ class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
          validates :first_name, presence: true
          validates :last_name, presence: true
          validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-         alias_attribute :staffs, :admins
+         alias_attribute :staff, :admin
 
          has_many :projects
          has_many :friendships

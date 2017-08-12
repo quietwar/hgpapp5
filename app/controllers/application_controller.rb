@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :logged_in?, :current_room
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
+  helper_method :current_user, :logged_in?, :current_room, :authenticate_admin!
+  before_action :authenticate_admin!, :configure_permitted_parameters, if: :devise_controller? 
+  include Pundit
 
 
   def current_user
@@ -13,9 +13,9 @@ class ApplicationController < ActionController::Base
     current_user != nil
   end
 
-  def authenticate_active_admin_user!
-    authenticate_user!
-    unless current_admin_user
+  def authenticate_admin!
+
+   unless current_user.admin?
       flash[:alert] = "Unauthorized Access: Genius, go back!"
       redirect_to root_path
     end
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_room
-    @room ||= Chatoom.find(session[:current_room]) if session[:current_room]
+    @room ||= Room.find(session[:current_room]) if session[:current_room]
   end
 
   def configure_permitted_parameters
