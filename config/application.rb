@@ -1,5 +1,6 @@
 #require 'devise/orm/:active_record'
 require_relative 'boot'
+require 'kaminari'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

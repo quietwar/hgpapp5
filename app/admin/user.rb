@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :password_confirmation
+  permit_params :first_name, :last_name, :email, :title, :password, :password_confirmation
+  menu priority: 3
+  config.batch_actions = true
+  #sortable tree: true
 
   index do
     selectable_column
@@ -7,7 +10,7 @@ ActiveAdmin.register User do
     column :first_name
     column :last_name
     column :email
-    column :current_sign_in_at
+    column :title
     column :sign_in_count
     column :created_at
     actions
@@ -16,7 +19,7 @@ ActiveAdmin.register User do
   filter :first_name
   filter :last_name
   filter :email
-  filter :current_sign_in_at
+  filter :title
   filter :sign_in_count
   filter :created_at
 
@@ -27,19 +30,20 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :superadmin, :label => "Super Administrator"
+      f.input :title
+      f.input :superadmin, :label => "Super Genius"
     end
-    f.buttons
+    f.button
   end
 
 
   create_or_edit = Proc.new {
-    @user            = User.find_or_create_by_id(params[:id])
+    @user            = User.find_or_create_by!(params[:id])
     @user.superadmin = params[:user][:superadmin]
-    @user.attributes = params[:user].delete_if do |k, v|
-      (k == "superadmin") ||
-      (["password", "password_confirmation"].include?(k) && v.empty? && !@user.new_record?)
-    end
+    #@user.attributes = params[:user].delete_if do |k, v|
+      # (k == "superadmin") ||
+      # (["password", "password_confirmation"].include?(k) && v.empty? && !@user.new_record?)
+  
     if @user.save
       redirect_to :action => :show, :id => @user.id
     else

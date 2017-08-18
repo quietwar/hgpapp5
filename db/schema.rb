@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170729233929) do
+ActiveRecord::Schema.define(version: 20170818003453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,17 +46,10 @@ ActiveRecord::Schema.define(version: 20170729233929) do
     t.string "last_name"
     t.string "username"
     t.string "login"
+    t.string "title"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["username"], name: "index_admins_on_username", unique: true
-  end
-
-  create_table "rooms", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
   create_table "classrooms", id: :serial, force: :cascade do |t|
@@ -84,17 +77,6 @@ ActiveRecord::Schema.define(version: 20170729233929) do
   create_table "friendships", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "grids", id: :serial, force: :cascade do |t|
-    t.string "genius"
-    t.integer "cohorts"
-    t.string "email"
-    t.integer "cell"
-    t.integer "stipend"
-    t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -128,15 +110,6 @@ ActiveRecord::Schema.define(version: 20170729233929) do
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
-  create_table "staff_cohort", id: :serial, force: :cascade do |t|
-    t.integer "admin_id"
-    t.integer "cohort_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_staff_cohort_on_admin_id"
-    t.index ["cohort_id"], name: "index_staff_cohort_on_cohort_id"
-  end
-
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -155,6 +128,7 @@ ActiveRecord::Schema.define(version: 20170729233929) do
     t.boolean "admin", default: false
     t.string "username"
     t.boolean "superadmin", default: false, null: false
+    t.string "title"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
@@ -163,6 +137,4 @@ ActiveRecord::Schema.define(version: 20170729233929) do
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
   add_foreign_key "rooms", "users"
-  add_foreign_key "staff_cohort", "admins"
-  add_foreign_key "staff_cohort", "cohorts"
 end

@@ -1,34 +1,16 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @cohort.number %></h1>
 
-<p>
-  <strong>Cohort:</strong>
-  <%= @cohort.cohort %>
-</p>
-
-<p>
-  <strong>Full name:</strong>
-  <%= @cohort.full_name %>
-</p>
-
-<p>
-  <strong>Benchmark acheived:</strong>
-  <%= @cohort.benchmark %>
-</p>
-
-<p>
-  <strong>Stipend:</strong>
-  <%= @cohort.stipend %>
-</p>
-
-<p>
-  <strong>Web site:</strong>
-  <%= @cohort.web_site %>
-</p>
-
-<p>
-  <strong>Final project:</strong>
-  <%= @cohort.final_project %>
-</p>
-
-<%= link_to 'Edit', edit_cohorts_path(@user) %> |
-<%= link_to 'Back', cohorts_path %>
+<table>
+  <thead>
+  <tr>
+    <th> Name </th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @cohort.students.each do |student| %>
+      <tr>
+        <td><%= student.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
