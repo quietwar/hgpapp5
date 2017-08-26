@@ -1,8 +1,8 @@
 class Project < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, required: false
 
   alias_attribute :app_details, :app
-  
+
 
   validates :app_name, presence: true
   validates :project_details, presence: true

@@ -15,7 +15,7 @@ body {
 .navbar-header a.navbar-brand {
   color: #4040a1;
   padding-top: 25px;
-  padding-bottom: 10px;
+  padding-bottom: 350px;
   font-size: 150%;
   font-weight: bold;
 }
@@ -47,6 +47,49 @@ body {
 .navbar-default .navbar-nav > li > a:hover {
   color: #ff0000;
 }
+
+.navbar-header {
+   text-align: center;
+
+}
+.container {
+     padding: 80px 120px;
+ }
+ .person {
+     border: 10px solid transparent;
+     margin-bottom: 25px;
+     width: 80%;
+     height: 80%;
+     opacity: 0.7;
+ }
+ .person:hover {
+     border-color: #f1f1f1;
+ }
+ .carousel-inner img {
+     -webkit-filter: grayscale(90%);
+     filter: grayscale(90%); /* make all photos black and white */
+     width: 100%; /* Set width to 100% */
+     margin: auto;
+ }
+ .carousel-caption h3 {
+     color: #fff !important;
+ }
+ @media (max-width: 600px) {
+   .carousel-caption {
+     display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+   }
+ }
+
+ .open .dropdown-toggle {
+      color: #fff;
+      background-color: #555 !important;
+  }
+  .dropdown-menu li a {
+      color: #000 !important;
+  }
+  .dropdown-menu li a:hover {
+      background-color: red !important;
+  }
 
 .form-group {
 color: green;

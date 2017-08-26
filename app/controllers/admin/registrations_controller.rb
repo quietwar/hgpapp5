@@ -1,4 +1,5 @@
 class Admin::RegistrationsController < Devise::RegistrationsController
+  #include Accessible
 
 # def sign_up_params
 #   params.require(:admin).permit(:first_name, :last_name, :email, :password, :password_confirmation)

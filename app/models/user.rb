@@ -1,21 +1,28 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
+  devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable
          validates :first_name, presence: true
          validates :last_name, presence: true
          validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-         after_create :create_room
+         validates :cohort, presence: true
+         validates :city, presence: true
+         after_create :create_chatroom
   alias_attribute :student, :genius
+
 
   has_many :projects
   has_many :friendships
   has_many :friends, through: :friendships, class_name: "User"
   has_one :room
   has_one :cohort
+  belongs_to :cohort, required: false
+  
   has_many :features
   has_many :messages
+  has_many :active_admin_comments, as: :resource, class_name: 'ActiveAdmin::Comment'
+  alias_method :comments, :active_admin_comments
 
 
 
@@ -23,6 +30,7 @@ class User < ApplicationRecord
 
   def full_name
     [first_name, last_name].join(" ")
+    @full_name = :genius
   end
 
   def self.search_by_name(name)
@@ -54,8 +62,16 @@ class User < ApplicationRecord
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
     end
-    def create_room
-      hyphenated_username = self.full_name.split.join('-')
-      room.create(name: hyphenated_username, user_id: self.id)
-    end
+
+    def create_chatroom
+     hyphenated_username = self.full_name.split.join('-')
+     Room.create(name: hyphenated_username, user_id: self.id)
+   end
+
+    # def create_room
+    #   @user = :current_user
+    #   @room = @user.create_room(params[:room].permit(:genius, :username))
+    #   hyphenated_username = self.full_name.split.join('-')
+    #   room.create(name: hyphenated_username, user_id: self.id)
+    # end
 end

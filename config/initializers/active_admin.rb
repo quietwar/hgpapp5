@@ -34,15 +34,15 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  config.default_namespace = :admin_panel
+  config.default_namespace = :Genius_Staff
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
   # within a namespace:
   #
-    #  config.namespace :admin_panel do |admin_panel|
-    #    admin.site_title = "Genius staff"
-    #  end
+  #  config.namespace :admin_panel do |admin_panel|
+  #    admin.site_title = "Genius staff"
+  #  end
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
@@ -88,7 +88,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
-  config.current_user_method = :current_admin
+  config.current_user_method = :current_user
 
   # == Logging Out
   #
@@ -100,7 +100,7 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_user_session_path
+  config.logout_link_path = :destroy_admin_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
@@ -121,19 +121,19 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  # config.comments = false
-  #
-  # You can change the name under which comments are registered:
-   config.comments_registration_name = 'current_admin'
-  #
-  # You can change the order for the comments and you can change the column
-  # to be used for ordering:
-  # config.comments_order = 'created_at ASC'
-  #
-  # You can disable the menu item for the comments index page:
-  # config.comments_menu = false
-  #
-  # You can customize the comment menu:
+  #  config.comments = true
+  # #
+  # # You can change the name under which comments are registered:
+  #  config.comments_registration_name = 'current_admin'
+  # #
+  # # You can change the order for the comments and you can change the column
+  # # to be used for ordering:
+  #  config.comments_order = 'created_at ASC'
+  # #
+  # # You can disable the menu item for the comments index page:
+  #  config.comments_menu = true
+  # #
+  # # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
 
   # == Batch Actions
@@ -147,7 +147,7 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  #config.before_action :authenticate_user!
+  #config.before_action :authenticate_admin!
 
   #config.before_action :current_ability
   # == Localize Date/Time Format
@@ -218,13 +218,13 @@ ActiveAdmin.setup do |config|
   #
   # To change the default utility navigation to show a link to your website & a logout btn
   #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :utility_navigation do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #       admin.add_logout_button_to_menu menu
-  #     end
-  #   end
-  #
+    config.namespace :admin do |admin|
+      admin.build_menu :utility_navigation do |menu|
+        #menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
+        admin.add_logout_button_to_menu menu
+      end
+    end
+
   # If you wanted to add a static menu item to the default menu provided:
   #
   #   config.namespace :admin do |admin|
@@ -241,12 +241,12 @@ ActiveAdmin.setup do |config|
   # To disable/customize for the :admin namespace:
   #
   #   config.namespace :admin do |admin|
-  #   admin.build_menu do |menu|
-  #     menu.add :label => "Ad", :priority => 1
-  #     menu.add :label => "Second Item", :priority => 2
-  #     menu.add :label => "Third Item", :priority => 3
-  #   end
-  # end
+    # admin_user.build_menu do |menu|
+    #   menu.add :label => "Ad", :priority => 1
+    #   menu.add :label => "Second Item", :priority => 2
+    #   menu.add :label => "Third Item", :priority => 3
+    # end
+  #end
   #     # Disable the links entirely
   #     admin.download_links = false
   #
@@ -276,28 +276,28 @@ ActiveAdmin.setup do |config|
   # hand side with a filter for each attribute of the registered model.
   # You can enable or disable them for all resources here.
   #
-  # config.filters = true
+   config.filters = true
   #
   # By default the filters include associations in a select, which means
   # that every record will be loaded for each association.
   # You can enabled or disable the inclusion
   # of those filters by default here.
   #
-  # config.include_default_association_filters = true
+   config.include_default_association_filters = true
 
   # == Footer
   #
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
-  config.footer = ' &copyright;   Hodari A. Touré PhD'
+  config.footer = ' copyright;   Hodari A. Touré PhD'
 
   # == Sorting
   #
   # By default ActiveAdmin::OrderClause is used for sorting logic
   # You can inherit it with own class and inject it for all resources
   #
-  # config.order_clause = MyOrderClause
+  #config.order_clause = MyOrderClause
+    #end
   #end
-#end
 end

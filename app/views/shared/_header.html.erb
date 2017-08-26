@@ -1,22 +1,11 @@
 <header>
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button"
-              class="navbar-toggle"
-              data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
 
           <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
            <ul class="nav navbar-nav">
              <li class="active"><%= link_to "Home", root_path %></li>
-             <li class="active"><%= link_to "Genius Lounge - Staff only", admin_panel_dashboard_path %></li>
-
+             <li class="active"><%= link_to "Genius Lounge - Staff only", genius_staff_dashboard_path %></li>
            </ul>
            <%= form_tag(search_users_path,
                            class: "navbar-form navbar-left",
@@ -30,22 +19,32 @@
 
            <ul class="nav navbar-nav navbar-right">
 
-          <% unless current_user %>
-               <li><%= link_to "Genius sign up", signup_path %></li>
-               <li><%= link_to "Tap in", new_user_session_path %></li>
-               <li><%= link_to "Staff sign up", new_admins_user_registration_path %></li>
-               <li><%= link_to "Staff Tap in",  admin_panel_current_admins_path %></li>
-             <% else %>
-               <li><%= link_to "My Lab", projects_path(current_user) %></li>
-               <li><%= link_to "Tap out", destroy_user_session_path, method: :delete %></li>
-               <li><%= link_to "Staff Tap out",  destroy_admin_session_path, method: :delete %></li>
-               <div class="navbar-right signed-in-user">
-                 <p class="navbar-text">
-                   Signed in as <%= "#{current_user.email}" %>
-                 </p>
-               </div>
-
-             <% end %>
+             <% unless current_user %>
+                   <li><%= link_to "My Lab", projects_path(current_user) %></li>
+                   <li><%= link_to "Tap out", destroy_user_session_path, method: :delete %></li>
+                <% else %>
+                  <li><%= link_to "Genius sign up", staff_sign_up_path  %></li>
+                  <li><%= link_to "Tap2 in", new_admin_user_session_path %></li>
+                  <li><%= link_to "Tap in", new_genius_staff_cohort_path %></li>
+                   <div class="navbar-right signed-in-user">
+                     <p class="navbar-text">
+                       Signed in as <%= "#{current_user.email}" %>
+                     </p>
+                   </div>
+              <% end %>
+              <li class="dropdown">
+                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Featured-Geniuses
+                 <span class="caret"></span></a>
+                 <ul class="dropdown-menu">
+                   <li><a href="#">Isaiah</a></li>
+                   <li><a href="#">George</a></li>
+                   <li><a href="#">Malik</a></li>
+                 </ul>
+               </li>
+             <br>
+             <div class="navbar-header">
+                 <h1 class="brand-heading">The Hidden Genius Project</h1>
+             </div>
            </ul>
          </div>
        </div>

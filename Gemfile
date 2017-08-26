@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'activeadmin', '~> 1.1'
 #gem 'arctic_admin'
 #gem "active_admin-sortable_tree"
-
+gem 'active_admin_importable'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'responders', '~> 2.2'
 
@@ -41,11 +41,11 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+gem 'font-awesome-sass'
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'devise', '~>4.2.0'
 #gem 'cancancan', '~> 1.10'
-
+gem 'activerecord-import', '~> 0.19.1'
 gem 'd3-rails','4.1.0'
 #gem 'will_paginate-bootstrap', '~> 1.0.1'
 
@@ -60,6 +60,8 @@ end
 
 group :development do
   #gem 'sqlite3'
+  gem "better_errors"
+  gem "binding_of_caller"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'

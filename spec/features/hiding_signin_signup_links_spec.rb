@@ -16,6 +16,6 @@ RSpec.feature "Hiding signin link" do
 
     expect(page).to have_link("Tap out")
     expect(page).not_to have_link("Tap in")
-    expect(page).not_to have_link("Tap up")
+    expect(page).not_to have_link("Sign up")
   end
 end

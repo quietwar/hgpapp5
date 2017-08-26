@@ -1,50 +1,42 @@
-ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :username, :email, :password, :password_confirmation
-  menu priority: 4
+ActiveAdmin.register AdminUser do
+  permit_params :first_name, :last_name, :email, :title, :password, :password_confirmation#, :superadmin
+  menu priority: 2
   config.batch_actions = true
   #sortable tree: true
 
   index do
     selectable_column
     id_column
-    column :cohort
     column :first_name
     column :last_name
     column :email
-    column :username
-    column :city
-    column :email
-    column :email2
-    column :cell
-    column :projects
+    column :title
+    #column :superadmin
     column :sign_in_count
     column :created_at
+    column :current_user_email do
+    current_user.try(:email)
+  end
     actions
   end
 
-  filter :genius
-  filter :cohort
-  filter :city
+  filter :first_name
+  filter :last_name
   filter :email
-  filter :username
+  filter :title
+  #filter :superadmin
   filter :sign_in_count
   filter :created_at
-  filter :projects
 
   form do |f|
     f.inputs do
       f.input :first_name
       f.input :last_name
-      f.input :cohort
-      f.input :city
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :username
-      f.input :projects
-
-
-
+      f.input :title
+      #f.input :superadmin, :label => "Super Genius"
     end
     f.actions
   end

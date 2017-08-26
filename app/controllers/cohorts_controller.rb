@@ -1,5 +1,5 @@
-class Staffs::CohortsController < ApplicationController
-  before_action :authenticate_admin!
+class CohortsController < ApplicationController
+  #before_action :authenticate_admin!
   before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
 
     def index
