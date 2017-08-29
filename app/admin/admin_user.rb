@@ -22,7 +22,6 @@ ActiveAdmin.register AdminUser do
 
   filter :first_name
   filter :last_name
-  filter :email
   filter :title
   #filter :superadmin
   filter :sign_in_count

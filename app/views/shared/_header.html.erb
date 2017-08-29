@@ -19,16 +19,16 @@
 
            <ul class="nav navbar-nav navbar-right">
 
-             <% unless current_user %>
-                   <li><%= link_to "My Lab", projects_path(current_user) %></li>
+             <% if current_user %>
+                   <li><%= link_to "My Lab", user_projects_path(current_user) %></li>
                    <li><%= link_to "Tap out", destroy_user_session_path, method: :delete %></li>
                 <% else %>
-                  <li><%= link_to "Genius sign up", staff_sign_up_path  %></li>
-                  <li><%= link_to "Tap2 in", new_admin_user_session_path %></li>
-                  <li><%= link_to "Tap in", new_genius_staff_cohort_path %></li>
+                  <li><%= link_to "Genius sign up", genius_staff_root_path  %></li>
+                  <li><%= link_to "Tap2 in", new_user_session_path %></li>
+                  <li><%= link_to "Tap in", admin_root_path %></li>
                    <div class="navbar-right signed-in-user">
                      <p class="navbar-text">
-                       Signed in as <%= "#{current_user.email}" %>
+                       Signed in as <%= "#{current_user}" %>
                      </p>
                    </div>
               <% end %>
@@ -38,7 +38,7 @@
                  <ul class="dropdown-menu">
                    <li><a href="#">Isaiah</a></li>
                    <li><a href="#">George</a></li>
-                   <li><a href="#">Malik</a></li>
+                   <li><a href="features_path">Malik</a></li>
                  </ul>
                </li>
              <br>

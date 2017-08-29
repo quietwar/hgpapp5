@@ -1,4 +1,4 @@
 class Room < ApplicationRecord
-  belongs_to :user, required: false
+  belongs_to :user, required: true
   has_many :messages
 end

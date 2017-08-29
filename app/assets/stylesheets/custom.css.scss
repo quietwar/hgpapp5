@@ -2,7 +2,7 @@
 @import "bootstrap";
 
 body {
-  margin-top: 150px;
+  margin-top: 250px;
 }
 
 // navbar styling
@@ -149,15 +149,15 @@ color: purple;
 }
 
 // Chart Styling
-path {
-  stroke: steelblue; stroke-width: 2; fill: none;
-}
-.axis path, .axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}
+// path {
+//   stroke: steelblue; stroke-width: 2; fill: none;
+// }
+// .axis path, .axis line {
+//     fill: none;
+//     stroke: grey;
+//     stroke-width: 1;
+//     shape-rendering: crispEdges;
+// }
 
 #chat-window {
   border: 1px solid #76C95B;
@@ -190,6 +190,8 @@ path {
 
 #show-header {
   color: blue;
+  padding-top: 350px;
+  padding-bottom: 350px;
 }
 
 hr.msg {

@@ -9,17 +9,18 @@ class User < ApplicationRecord
          validates :cohort, presence: true
          validates :city, presence: true
          after_create :create_chatroom
-  alias_attribute :student, :genius
 
 
-  has_many :projects
+
+   #has_one :cohort
+  belongs_to :cohort, required: true
+  has_many :projects, inverse_of: :user
+  accepts_nested_attributes_for :projects, :allow_destroy => true
   has_many :friendships
   has_many :friends, through: :friendships, class_name: "User"
   has_one :room
-  has_one :cohort
-  belongs_to :cohort, required: false
-  
-  has_many :features
+
+  has_one :feature
   has_many :messages
   has_many :active_admin_comments, as: :resource, class_name: 'ActiveAdmin::Comment'
   alias_method :comments, :active_admin_comments
@@ -29,8 +30,7 @@ class User < ApplicationRecord
   #self.per_page = 20
 
   def full_name
-    [first_name, last_name].join(" ")
-    @full_name = :genius
+    "#{first_name} #{last_name}"
   end
 
   def self.search_by_name(name)

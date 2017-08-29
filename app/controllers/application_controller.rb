@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
    helper_method :current_user, :logged_in?, :current_room, :authenticate_admin!, :authenticate_user!
    before_action :set_current_user
    before_action if: :devise_controller?
-  # before_action :configure_permitted_parameters
+   before_action :configure_permitted_parameters
   #require Pundit
 
 private

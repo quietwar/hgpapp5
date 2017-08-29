@@ -1,5 +1,12 @@
 class Cohort < ApplicationRecord
 
+  has_many :user
+  accepts_nested_attributes_for :user, :allow_destroy => true
+  alias_attribute :genius, :user
+  has_many :projects, through: :user
+  validates :user, presence: true
+  validates :project, presence: true
+
   validates :genius, presence: true
   validates :cohort, presence: true
   validates :city, presence: true
@@ -10,8 +17,6 @@ class Cohort < ApplicationRecord
   # validates :benchmark, presence: true
   # validates :projects, presence: true
 
-  has_many :user
-  accepts_nested_attributes_for :user, :allow_destroy => true
-  belongs_to :admin_user, required: false
+
   #alias_attribute :cohort, :classroom
 end

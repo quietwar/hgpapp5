@@ -19,20 +19,35 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Cohorts" do
           table_for Cohort.order("id desc").limit(10) do
-            ul do
+            ul "HGP Cohorts" do
 
-              #li link_to(post.title, admin_post_path(post))
+              li link_to "Rich 1"
+              li link_to "Oak 1"
+              li link_to "Oak 2"
+              li link_to "Oak 3"
+              li link_to "Oak 4"
+              li link_to "Oak 5"
+              li link_to "Create a new HGP Cohort", new_genius_staff_cohort_path
             end
-          end
+           end
         end
       end
 
       column do
         panel "Geniuses" do
           para "Welcome to the Hidden Genius Project!"
+          table_for Cohort.order("id desc").limit(10) do
+            ul "Feature Geniuses" do
+
+              li link_to "Isaiah"
+              li link_to "George"
+              li link_to "Malik", features_path
+              li link_to "Create a new HGP featured Genius", new_feature_path
+            end
+          end
         end
        end
      end
     end
-  end # content
+  end
 #end

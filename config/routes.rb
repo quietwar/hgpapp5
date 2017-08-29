@@ -13,9 +13,9 @@ Rails.application.routes.draw do
 #   #   get "staff/sign_out" => " admins/sessions#destroy" # "destroy_admin_user_session"
 #    end
 # # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-        resources :projects
+
         resources :users, only: [:index, :show] do
-          #namespace :admin, only: [:index] do
+          resources :projects
         resources :cohorts, only: [:index, :show]
         resources :classrooms, only: [:index, :show]
           collection do

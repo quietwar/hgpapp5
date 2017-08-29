@@ -25,6 +25,7 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'responders', '~> 2.2'
 
 gem 'pundit'
+#gem cancancan
 
 # Use jquery as the JavaScript library
 gem 'rails-assets-jquery', source: 'https://rails-assets.org'

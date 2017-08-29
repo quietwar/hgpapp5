@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :username, :email, :password, :password_confirmation
+  permit_params :first_name, :cohort, :last_name, :username, :email, :password, :password_confirmation
   menu priority: 4
   config.batch_actions = true
   #sortable tree: true

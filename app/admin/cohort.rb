@@ -1,4 +1,5 @@
 ActiveAdmin.register Cohort do
+  
   permit_params :genius, :cohort, :city, :email, :email2, :cell, :stipend, :benchmark, :projects
   menu priority: 3
   config.batch_actions = true
