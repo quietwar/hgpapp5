@@ -1,11 +1,11 @@
 ActiveAdmin.register_page "Dashboard" do
-  #before_action authenticate_admin!
 
   menu priority: 1,
 
-  label: proc{ I18n.t("HGP.dashboard") }
+  label:  "Genius Lounge"
 
-  content title: proc{ I18n.t("active_admin.dashboard") } do
+  content title:  "The Genius Lounge" do
+    link_to "www.hiddengeniusproject.org"
     div class: "blank_slate_container", id: "dashboard_default_message" do
       span class: "blank_slate" do
         span I18n.t("active_admin.dashboard_welcome.welcome")
@@ -27,7 +27,7 @@ ActiveAdmin.register_page "Dashboard" do
               li link_to "Oak 3"
               li link_to "Oak 4"
               li link_to "Oak 5"
-              li link_to "Create a new HGP Cohort", new_genius_staff_cohort_path
+              li link_to "Create a new HGP Cohort", new_admin_cohort_path
             end
            end
         end

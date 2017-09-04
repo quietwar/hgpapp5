@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
 before_action :authenticate_user!
+#permit_params :first_name, :last_name, :city, :cohort_id, :email
 
  def index
    @users = User.all
  end
+
 
  def create
    @user = User.new(set_user_params)
@@ -13,7 +15,7 @@ before_action :authenticate_user!
     #  user_password = params[:session][:password]
     #  user_email = params[:session][:email]
     #  user = user_email.present? && User.find_by(email: :user_email)
-     #
+
     #  if user && valid_password? user_password
     #    sign_in user, store: false
     #    user.generate_authentication_token!
@@ -23,6 +25,7 @@ before_action :authenticate_user!
     #    render json: { errors: "Invalid email or password" }, status: 422
     #  end
    end
+ end
 
  def show
    @users = User.find_by(params[:id])

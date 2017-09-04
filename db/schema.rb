@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828010318) do
+ActiveRecord::Schema.define(version: 20170903175240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170828010318) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email2"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -93,13 +94,16 @@ ActiveRecord::Schema.define(version: 20170828010318) do
     t.datetime "updated_at", null: false
     t.integer "admin_id"
     t.string "city"
-    t.integer "cohort"
+    t.integer "cohort_id"
     t.string "email"
     t.string "email2"
     t.integer "stipend"
     t.string "benchmark"
     t.string "projects"
     t.integer "cell"
+    t.integer "user_id"
+    t.string "first_name"
+    t.string "last_name"
   end
 
   create_table "features", id: :serial, force: :cascade do |t|
@@ -167,7 +171,7 @@ ActiveRecord::Schema.define(version: 20170828010318) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "city"
-    t.integer "cohort"
+    t.integer "cohort_id"
     t.string "email2"
     t.string "projects"
     t.integer "cell"
@@ -176,6 +180,7 @@ ActiveRecord::Schema.define(version: 20170828010318) do
     t.text "project_details"
     t.date "start_date"
     t.integer "user_id"
+    t.string "genius"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

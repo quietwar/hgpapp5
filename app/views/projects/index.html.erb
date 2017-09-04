@@ -57,7 +57,7 @@
     </div>
     <br>
   <% end %>
-  <%= link_to 'New Project', new_project_path,
+  <%= link_to 'New Project', new_user_project_path,
       class: "btn btn-success link" %>
 
 </div>
@@ -68,25 +68,40 @@
 
     <div class="col-md-2" id="followers">
       <% @followers.each do |follower| %>
-        <%= link_to follower.user.full_name, projects_path(current_user, roomId: follower.user.room.id), class: 'followers' %>
+        <%= link_to follower.user.full_name, user_projects_path(current_user, roomId: follower.user.room.id), class: 'followers' %>
         <br />
       <% end %>
     </div>
 
     <div class="col-md-10" id="messages-box">
       <div id="chat-box" data-channel="rooms" data-room-id=<%= current_room %>>
-
-
-
+      <% @message.each do |message| %>
+        <%= render partial: 'shared/message', locals: { message: message } %>
+      <% end %>
     </div>
 
     <div id="form-box">
-      <%= form_for @message, remote: true do |f| %>
-        <%= f.text_field :body, id: 'message-field', class: 'form-control pull-left' %>
-        <%= f.submit 'Post', class: 'btn btn-default', id: 'post-btn' %>
-      <% end %>
+
+        <%= form_with message: Message.new do |form| %>
+          <%= form.text_field :title %>
+        <% end %>
     </div>
     </div>
   </div>
   <h1 class="text-center">My Friends</h1>
+
+  <% @friends.each do |friend| %>
+    <div class="col-md-offset-3 col-md-6 friend_name">
+      <%= link_to friend.full_name, friendship_path(current_user.current_friendship(friend)) %>
+    </div>
+
+    <div class="col-md-3">
+      <div class="btn-unfollow">
+        <%= link_to "Unfollow", friendship_path(current_user.current_friendship(friend)),
+            method: :delete, data: { confirm: "Are you sure?" },
+            class: "btn btn-success link" %>
+      </div>
+    </div>
+  <% end %>
+</div>
 <% end %>

@@ -24,7 +24,7 @@ gem 'active_admin_importable'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'responders', '~> 2.2'
 
-gem 'pundit'
+#gem 'pundit'
 #gem cancancan
 
 # Use jquery as the JavaScript library
@@ -41,14 +41,14 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 gem 'font-awesome-sass'
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'devise', '~>4.2.0'
 #gem 'cancancan', '~> 1.10'
 gem 'activerecord-import', '~> 0.19.1'
 gem 'd3-rails','4.1.0'
-#gem 'will_paginate-bootstrap', '~> 1.0.1'
+gem 'will_paginate-bootstrap', '~> 1.0.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

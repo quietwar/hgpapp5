@@ -10,7 +10,7 @@ ActiveAdmin.setup do |config|
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
-  config.site_title_link = "user_path"
+  config.site_title_link = '/'
 
   # Set an optional image to be displayed for the header
   # instead of a string (overrides :site_title)
@@ -34,8 +34,15 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  config.default_namespace = :Genius_Staff
-  #
+  #config.default_namespace = :Genius_Staff
+  config.namespace :staff do |staff|
+    staff.build_menu :utility_navigation do |menu|
+      menu.add label: "HGP Staff", url: "http://www.activeadmin.info",
+                                          html_options: { target: :blank }
+      staff.add_current_user_to_menu  menu
+      staff.add_logout_button_to_menu menu
+    end
+  end
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
   # within a namespace:
@@ -56,7 +63,7 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
 
-  #config.authentication_method = :authenticate_admin!
+  config.authentication_method = false #:authenticate_admin!
 
   # == User Authorization
   #
@@ -88,7 +95,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
-  config.current_user_method = :current_user
+  config.current_user_method = false #:current_admin
 
   # == Logging Out
   #
@@ -106,7 +113,7 @@ ActiveAdmin.setup do |config|
   # link. For example :get, :delete, :put, etc..
   #
   # Default:
-   config.logout_link_method = :delete
+   config.logout_link_method = :logout
 
   # == Root
   #
@@ -121,15 +128,15 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  #  config.comments = true
+  config.comments = false
   # #
   # # You can change the name under which comments are registered:
   #  config.comments_registration_name = 'current_admin'
   # #
   # # You can change the order for the comments and you can change the column
   # # to be used for ordering:
-  #  config.comments_order = 'created_at ASC'
-  # #
+  #config.comments_order = 'created_at ASC'
+  #
   # # You can disable the menu item for the comments index page:
   #  config.comments_menu = true
   # #
@@ -207,7 +214,7 @@ ActiveAdmin.setup do |config|
   # == CSV options
   #
   # Set the CSV builder separator
-  # config.csv_options = { col_sep: ';' }
+  config.csv_options = { col_sep: ';' }
   #
   # Force the use of quotes
   # config.csv_options = { force_quotes: true }
@@ -264,7 +271,7 @@ ActiveAdmin.setup do |config|
   # Pagination is enabled by default for all resources.
   # You can control the default per page count for all resources here.
   #
-   config.default_per_page = 25
+  #config.default_per_page = 25
   #
   # You can control the max per page count too.
   #

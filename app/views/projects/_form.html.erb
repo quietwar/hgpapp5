@@ -1,60 +1,18 @@
 <div class='row'>
   <div class='col-md-12'>
-    <%= form_for([current_user, @project],
-    :html => {class: "form-horizontal", role: "form"}) do |f| %>
-      <% if @project.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@project.errors.count, "error") %>
-          prohibited this project from being saved:</h2>
-
-          <ul>
-          <% @project.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+      <div class='form-group'>
+        <div class='col-md-10'>
+          <%= form_with model: User.new do |user| %>
+            <%= user.fields model: Project.new do |project| %>
+              <%= project.text_field :app_name, id: :name, class: "name"  %>
+              <%= project.text_field :coding, id: :langauge, class: "langauge" %>
+              <%= project.text_area :project_details, id: :email, class: "app description"  %>
+              <%= project.date_field :start_date, id: :date_started, class: "date started"  %>
+            <%= project.submit class: 'btn btn-success btn-lg' %>
+            <% end %>
           <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <div class='form-group'>
-        <div class='control-label col-md-2'>
-          <%= f.label :app_name, "App Name" %>
-        </div>
-        <div class='col-md-10'>
-          <%= f.text_field :app_name, class: 'form-control' %>
         </div>
       </div>
-      <div class='form-group'>
-        <div class='control-label col-md-2'>
-          <%= f.label :coding, "language?" %>
-        </div>
-        <div class='col-md-10'>
-          <%= f.text_field :coding, class: 'form-control' %>
-        </div>
-      </div>
-
-      <div class='form-group'>
-        <div class='control-label col-md-2'>
-          <%= f.label :project_details, "My App description" %><br>
-        </div>
-        <div class='col-md-10'>
-          <%= f.text_area :project_details, class: 'form-control', rows: "5" %>
-        </div>
-      </div>
-      <div class='form-group'>
-        <div class='control-label col-md-2'>
-          <%= f.label :start_date, "Start date" %>
-        </div>
-        <div class='col-md-10'>
-          <%= f.text_field :start_date, class: 'form-control' %>
-        </div>
-      </div>
-
-      <div class='form-group'>
-        <div class='col-md-offset-2 col-md-10'>
-          <%= f.submit class: 'btn btn-success btn-lg' %>
-        </div>
-      </div>
-    <% end %>
-
   </div>
+
 </div>

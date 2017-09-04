@@ -1,19 +1,22 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :confirmable,
+  devise :registerable,:database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable
          validates :first_name, presence: true
          validates :last_name, presence: true
+         validates :genius, presence: false
          validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-         validates :cohort, presence: true
+         validates :cohort_id, presence: true
          validates :city, presence: true
          after_create :create_chatroom
 
 
 
-   #has_one :cohort
-  belongs_to :cohort, required: true
+
+  has_one :cohort
+  belongs_to :cohort, optional: true
+  accepts_nested_attributes_for :cohort, :allow_destroy => true
   has_many :projects, inverse_of: :user
   accepts_nested_attributes_for :projects, :allow_destroy => true
   has_many :friendships
@@ -25,9 +28,6 @@ class User < ApplicationRecord
   has_many :active_admin_comments, as: :resource, class_name: 'ActiveAdmin::Comment'
   alias_method :comments, :active_admin_comments
 
-
-
-  #self.per_page = 20
 
   def full_name
     "#{first_name} #{last_name}"

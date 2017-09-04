@@ -1,16 +1,5 @@
 <%= form_with(model: genius, local: true) do |form| %>
-  <% if genius.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this Genius from being saved:</h2>
-
-      <ul>
-      <% feature.errors.full_messages.each do |feature| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_for @user, :as => :user, :url => sign_in_path(@user) do |f| %>
   <div class="field">
     <%= form.label :cohort %>
     <%= form.number_field :cohort, id: :cohort %>

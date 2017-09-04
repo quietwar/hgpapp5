@@ -5,12 +5,12 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    #@projects = current_user.projects
-    #@friends = current_user.friends
-    #set_current_room
     :set_current_room
+
+    @friends = Friendship.all
+
     @features = User.paginates_per(:page => params[:per_page => 1])
-    @message = Message.new
+    @message = Message.all
     @message = current_room.message if current_room
     @followers = Friendship.where(friend_id: current_user)
   end
@@ -18,10 +18,13 @@ class ProjectsController < ApplicationController
 
   def show
     @project = User.first
+    @project = Project.find(params[:id])
+    @friends = current_user.friends
   end
 
   def new
     @project = Project.new
+    #@project = current_user.projects
   end
 
   def create
@@ -62,11 +65,11 @@ private
   end
 
   def set_project
-    @project = user_projects_path(current_user)
+    @project = user_projects_path(:current_user)
   end
 
   def project_params
-    params.require(:project).permit(:app_name, :coding, :project_details, :start_date, :user_id, :avatar, :username)
+    params.require(:project).permit(:app_name, :coding, :project_details, :start_date)
   end
 
   def set_current_room
