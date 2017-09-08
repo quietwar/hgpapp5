@@ -39,8 +39,8 @@ ActiveAdmin.register_page "Dashboard" do
           table_for Cohort.order("id desc").limit(10) do
             ul "Feature Geniuses" do
 
-              li link_to "Isaiah"
-              li link_to "George"
+              #li link_to "Isaiah", feature_path
+              #li link_to "George", new_features_path
               li link_to "Malik", features_path
               li link_to "Create a new HGP featured Genius", new_feature_path
             end

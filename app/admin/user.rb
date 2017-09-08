@@ -1,9 +1,13 @@
 ActiveAdmin.register User, :as => 'Genius' do
-  permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend, :benchmark, :projects
+  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend, :benchmark, :projects
   menu priority: 4
   config.batch_actions = true
 
-
+  show do
+  attributes_table do
+    image_row :avatar
+    end
+  end
 
   # sidebar "Genius Details", only: => [:show, :edit] do
   #   ul do
@@ -14,9 +18,11 @@ ActiveAdmin.register User, :as => 'Genius' do
 
   #sortable tree: true
 
+
   index do
     selectable_column
     id_column
+    #image_column :avatar, style: :thumb
     column :cohort_id
     column :genius
     column :email
@@ -40,6 +46,7 @@ ActiveAdmin.register User, :as => 'Genius' do
 
   form do |f|
     f.inputs do
+      f.input :avatar
       f.input :genius
       f.input :cohort_id
       f.input :city

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903175240) do
+ActiveRecord::Schema.define(version: 20170908035703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,10 @@ ActiveRecord::Schema.define(version: 20170903175240) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email2"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -104,6 +108,14 @@ ActiveRecord::Schema.define(version: 20170903175240) do
     t.integer "user_id"
     t.string "first_name"
     t.string "last_name"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "event"
+    t.integer "staff_id"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "features", id: :serial, force: :cascade do |t|
@@ -181,8 +193,16 @@ ActiveRecord::Schema.define(version: 20170903175240) do
     t.date "start_date"
     t.integer "user_id"
     t.string "genius"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string "access_token"
+    t.string "refresh_token"
+    t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["refresh_token"], name: "index_users_on_refresh_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end

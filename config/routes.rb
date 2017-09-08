@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
 
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  resources :events
+  devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "callbacks" }
+
     devise_scope :user do
       get 'tap_in', to: 'devise/sessions#new'
       get 'genius_signup', to: 'devise/registrations#new'
+      get '/redirect', to: 'events#redirect', as: 'redirect'
+      get '/callback', to: 'events#callback', as: 'callback'
+      get '/calendars', to: 'events#calendars', as: 'hgp_calendars'
+      get '/events/:calendar_id', to: 'events#events', as: 'hgp_events', hgp_calendar_id: /[^\/]+/
+      post '/events/:calendar_id', to: 'events#new_event', as: 'new_hgp_event', hgp_calendar_id: /[^\/]+/
     end
 
     devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :admin)
@@ -28,10 +35,14 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :features
       resources :friendships, only: [:show, :create, :destroy]
       resources :messages, only: [:create]
-    root to: "classrooms#index"
+      resources :features do
+        collection do
+          'hgp_features'
+        end
+      end
+      root to: "classrooms#index"
     mount ActionCable.server => '/cable'
 
     #end

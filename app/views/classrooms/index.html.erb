@@ -1,33 +1,32 @@
-<!-- Intro Header -->
-    <header class="intro">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </header>
+<script src="//maps.google.com/maps/api/js?key=[your API key]"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=542001295987&callback=myMap"></script>
 
+<!-- Intro Header -->
+<div class="container">
+  <div class="genius">
+  </div>
     <!-- About Section -->
     <section id="Cohort 3" class="container content-section text-center">
-        <div class="row">
+        <div class="person">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Who are the Geniuses?</h2>
                 <p>The Genuises come from all over the Bay from as far away as Brentwood to the other side of the Bay in SF <a href="https://www.youtube.com/channel/UCOhVvEbwfi3jnW9YDUuHiBQ/">Our youtube channel</a>. We have been featured in a variety of news, social medaia magazines.</p>
-                <p>Each Cohort is responsible for producing individal mobile applications for their final project. <a href="http://hiddengeniusproject.org/">The Hidden Genius Project</a> Their projects will be judged by their mentors and awarded nominal payments based on a set of criteria <a href="http://www.meetgeorge.info/">Meet George from cohort 3!</a>.</p>
+                <p>Each Cohort is responsible for producing individal mobile applications for their final project. <a href="http://hiddengeniusproject.org/">The Hidden Genius Project</a> Their projects will be judged by their mentors and awarded nominal payments based on a set of criteria.</p>
                 <p>Their past aps have been featured in a variety of shows, events and media</p>
             </div>
         </div>
     </section>
 
     <!-- Download Section -->
-    <section id="Cohort 4" class="content-section text-center">
-        <div class="download-section">
-            <div class="container">
+    <section id="Cohort 5" class="content-section text-center">
+        <div class="apply">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Apply to be in the next cohort of Hidden Genius</h2>
                     <p>What you will learn</p>
                     <a href="http://www.hiddengeniusproject.org/apply/" class="btn btn-default btn-lg">Apply here</a>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- Contact Section -->
@@ -50,9 +49,59 @@
                         <a href="https://www.instagram.com/hiddengeniuspro/" class="btn btn-default btn-lg"><i class=""></i> <span class="network-name">Instagram</span></a>
                     </li>
                 </ul>
+              </div>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                  <div class="item active">
+                    <img src="assets/baybrig.jpg" alt="Oakland" width="1200" height="700">
+                    <div class="carousel-caption">
+                      <h3>Oakland</h3>
+                      <p>The founding site!</p>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <img src="assets/cohort4-EA.jpg" alt="Oak4" width="1200" height="700">
+                    <div class="carousel-caption">
+                      <h3>Cohort Oak4</h3>
+                      <p>Oak4 at EA Sports</p>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <img src="assets/b-boyC5jpg.jpg" alt="Oak5" width="1200" height="700">
+                    <div class="carousel-caption">
+                      <h3>Oak5</h3>
+                      <p>B-by stance!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
             </div>
+            <br>
+
+            <br>
+
         </div>
 
       <%= render 'shared/header' %>
       <%= render 'shared/main' %>
     </section>
+</div>

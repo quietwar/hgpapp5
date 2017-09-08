@@ -2,8 +2,24 @@
 @import "bootstrap";
 
 body {
+  background-color: black;
   margin-top: 250px;
 }
+
+// home page styling
+// .col-md-8 {
+//   margin-top: 250px;
+//   text-align: center;
+//   background-color: black;
+//   overflow-x: visible;
+// }
+//
+// .col-md-12 {
+//   //margin-top: 250px;
+//   text-align: center;
+//   background-color: black;
+//
+// }
 
 // navbar styling
 .navbar {
@@ -52,53 +68,50 @@ body {
    text-align: center;
 
 }
-.container {
-     padding: 80px 120px;
- }
- .person {
-     border: 10px solid transparent;
-     margin-bottom: 25px;
-     width: 80%;
-     height: 80%;
-     opacity: 0.7;
- }
- .person:hover {
-     border-color: #f1f1f1;
- }
- .carousel-inner img {
-     -webkit-filter: grayscale(90%);
-     filter: grayscale(90%); /* make all photos black and white */
-     width: 100%; /* Set width to 100% */
-     margin: auto;
- }
- .carousel-caption h3 {
-     color: #fff !important;
- }
- @media (max-width: 600px) {
-   .carousel-caption {
-     display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
-   }
- }
 
- .open .dropdown-toggle {
-      color: #fff;
-      background-color: #555 !important;
-  }
-  .dropdown-menu li a {
-      color: #000 !important;
-  }
-  .dropdown-menu li a:hover {
-      background-color: red !important;
-  }
+.page {
+  background-color: black;
+}
+.container {
+    background-color: black;
+    color: #4040a1 !important;
+    // text-align: center;
+     width: 100%;
+     height: 100%;
+
+   }
+
+.carousel-inner img {
+   -webkit-filter: grayscale(90%);
+   filter: grayscale(90%); /* make all photos black and white */
+   width: 100%; /* Set width to 100% */
+   margin: auto;
+}
+.carousel-caption h3 {
+   color: #4040a1 !important;
+}
+@media (max-width: 600px) {
+ .carousel-caption {
+   display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+ }
+}
+
+.open .dropdown-toggle {
+    color: #fff;
+    background-color: #555 !important;
+}
+
+.dropdown-menu li a {
+    color: #000 !important;
+}
+
+.dropdown-menu li a:hover {
+    background-color: red !important;
+}
 
 .form-group {
 color: green;
 text-align: left;
-}
-
-.col-md-3 {
-  color: green;
-  text-align: left;
 }
 
 .form-control {
@@ -110,9 +123,35 @@ text-align: left;
   color: red;
 }
 
+.col-md-3 {
+  color: green;
+  text-align: left;
+}
 
+.genius {
+  margin: 05cm 0cm;
+  padding: 600px;
+  background-image: url('claremont2.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+//form styling
 .col-md-10 {
 color: purple;
+text-align: left;
+}
+
+//About Section
+.col-lg-8 {
+   background-color: black;
+   //padding: 180px;
+   color: #4040a1 !important;
+   text-align: center;
+   //margin-bottom: 25px;
+   width: 100%;
+   height: 100%;
+   //opacity: 80%;
 }
 
 // Devise Error Messages
@@ -128,6 +167,9 @@ color: purple;
  font-size: 150%;
 }
 
+.col-md-12 {
+  margin-top: 260px;
+}
 .signed-in-user {
   padding-top: 10px;
   padding-right: 20px;
@@ -153,17 +195,7 @@ color: purple;
   font-size: 120%;
 }
 
-// Chart Styling
-// path {
-//   stroke: steelblue; stroke-width: 2; fill: none;
-// }
-// .axis path, .axis line {
-//     fill: none;
-//     stroke: grey;
-//     stroke-width: 1;
-//     shape-rendering: crispEdges;
-// }
-
+//chat-box styling
 #chat-window {
   border: 1px solid #76C95B;
   margin-top: 50px;

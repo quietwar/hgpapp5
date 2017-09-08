@@ -6,7 +6,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '5e5b31d42d473539df50a15bc7b80014bd675d329a61e347b8f8cd1329dd9c5bd238e17ce69e3e8e2117c6c524d698a060b047bbb675c65cbdbf97af6f6cf540'
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'],
+  ENV['GOOGLE_CLIENT_SECRET'],
+  { access_type: "offline",
+    prompt: "consent",
+    select_account: true,
+    scope: 'userinfo.email,calendar' }
+   config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

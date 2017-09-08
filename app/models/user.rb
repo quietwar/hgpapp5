@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :registerable,:database_authenticatable, :confirmable,
+  # :lockable, :timeoutable 
+  devise :registerable,:database_authenticatable, :confirmable,:omniauthable,
          :recoverable, :rememberable, :trackable
          validates :first_name, presence: true
          validates :last_name, presence: true
@@ -55,6 +55,23 @@ class User < ApplicationRecord
     friendships.where(friend: friend).first
   end
 
+  def self.find_for_google_oauth2(auth)
+    data = auth.info
+    if validate_email(auth)
+      user = User.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+      end
+      user.token = auth.credentials.token
+      user.refresh_token = auth.credentials.refresh_token
+      user.save
+      return user
+    else
+      return nil
+    end
+
   private
 
   protected
@@ -73,5 +90,5 @@ class User < ApplicationRecord
     #   @room = @user.create_room(params[:room].permit(:genius, :username))
     #   hyphenated_username = self.full_name.split.join('-')
     #   room.create(name: hyphenated_username, user_id: self.id)
-    # end
+   end
 end

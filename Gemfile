@@ -18,15 +18,21 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'activeadmin', '~> 1.1'
+gem 'active_admin_theme'
 #gem 'arctic_admin'
 #gem "active_admin-sortable_tree"
 gem 'active_admin_importable'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+gem 'activeadmin_addons'
 gem 'responders', '~> 2.2'
-
+gem 'gmaps4rails'
+gem 'underscore-rails'
+gem 'geocoder'
+gem 'google-api-client',  require: 'google/apis/calendar_v3'
+gem 'omniauth-google-oauth2'
 #gem 'pundit'
 #gem cancancan
-
+gem 'figaro'
 # Use jquery as the JavaScript library
 gem 'rails-assets-jquery', source: 'https://rails-assets.org'
 gem 'rails-assets-datatables', source: 'https://rails-assets.org'
@@ -50,8 +56,7 @@ gem 'activerecord-import', '~> 0.19.1'
 gem 'd3-rails','4.1.0'
 gem 'will_paginate-bootstrap', '~> 1.0.1'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -77,6 +82,9 @@ end
 
 group :production do
   gem 'pg'
+  # Use Capistrano for deployment
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', group: :development
 end
 
 group :test do

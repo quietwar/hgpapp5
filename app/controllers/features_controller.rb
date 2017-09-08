@@ -4,8 +4,18 @@ class FeaturesController < ApplicationController
     @features = Feature.all
   end
 
+  def home
+    @features = Feature.home
+  end
+
+  def hgp_features
+    logger.warn "It works!"
+    redirect_to :back
+  end
+
   def show
     @feature = Feature.find(params[:id])
+    render template: "features/#{params[:feature]}"
   end
 
   def new
