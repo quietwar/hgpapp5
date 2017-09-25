@@ -19,11 +19,27 @@
 </head>
 
   <body>
-    <%= render 'shared/header' %>
+    <div class='page'>
+      <!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid"> -->
+          <div class="google">
+            <% if current_user %>
+              Signed in as <strong><%= current_user.name %></strong>!
+              <%= link_to "Sign out", signout_path, id: "sign_out" %>
+            <% else %>
+              <%= link_to "Sign in with Google", google_signin_path(:google_oauth2), id: "sign_in" %>
+            <% end %>
+          </div>
+          <!-- <div>
+          <%= yield %>
+          </div> -->
+      <%= render 'shared/header' %>
 
-    <%= render 'shared/main' %>
+      <%= render 'shared/main' %>
 
-    <%= render 'shared/footer' %>
-
+      <%= render 'shared/footer' %>
+        <!-- </div>
+      </nav> -->
+    </div>
   </body>
 </html>

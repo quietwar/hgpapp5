@@ -1,39 +1,51 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Events</h1>
-  <ul>
-    <% @calendar_list.items.each do |calendar| %>
-      <li><%= calendar.summary %> (<%= calendar.id %>)</li>
-    <% end %>
-  </ul>
-  <ul>
-  <% @event_list.items.each do |event| %>
-    <li><%= event.summary %> (<%= event.id %>)</li>
-  <% end %>
-</ul>
+<div id="calendar"></div>
+<script type=”text/javascript”>
 
-<%= form_tag new_event_url do %>
-  <%= submit_tag 'Add event' %>
-<% end %>
+$(‘#calendar’).fullCalendar({
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+events: function(start, end, timezone, callback) {
 
-  <tbody>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+   $.ajax({
 
-<br>
+        url: ‘myxmlfeed.php’,
 
-<%= link_to 'New Event', new_event_path %>
+        dataType: ‘xml’,
+
+        data: {
+
+                        // our hypothetical feed requires UNIX timestamps
+
+                       start: start.unix(),
+
+                       end: end.unix()
+
+       },
+
+       success: function(doc) {
+
+            var events = [];
+
+                       $(doc).find(‘event’).each(function() {
+
+                            events.push({
+
+                                 title: $(this).attr(‘title’),
+
+                                 start: $(this).attr(‘start’) // will be parsed
+
+                 });
+
+                     });
+
+                    callback(events);
+
+                 }
+
+ });
+
+}
+
+});
+
+</script>

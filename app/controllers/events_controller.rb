@@ -4,17 +4,25 @@ class EventsController < Devise::OmniauthCallbacksController
   respond_to :html
 
   def index
-    @events = Event.all
-    respond_with(@events)
+    @events = Event.where(start: params[:start]..params[:end])
   end
 
+  respond_to :json
+
+    # def get_events
+    #   @task = current_user.tasks
+    #   events = []
+    #   @task.each do |task|
+    #     events << {:id => task.id, :title => "#{task.taskable.try(:name)} : #{task.task}", :start => "#{task.planned_start_date}",:end => "#{task.planned_end_date}" }
+    #   end
+    #   render :text => events.to_json
+    # end
+
   def show
-    respond_with(@event)
   end
 
   def new
     @event = Event.new
-    respond_with(@event)
   end
 
   def edit
@@ -24,6 +32,16 @@ class EventsController < Devise::OmniauthCallbacksController
     @event = Event.new(event_params)
     flash[:notice] = 'Event was successfully created.' if @event.save
     respond_with(@event)
+    @event.save
+
+    user = User.from_omniauth(request.env["omniauth.auth"])
+    session[:user_id] = user.id
+    redirect_to root_path
+  end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_path
   end
 
   def update
@@ -50,17 +68,9 @@ class EventsController < Devise::OmniauthCallbacksController
 
     session[:authorization] = response
 
-    redirect_to hgp_calendars_path
+    redirect_to events_path
   end
 
-  def calendar_id(schedule)
-    response = @client.execute(api_method:
-      @service.calendar_list.list)
-    calendars = JSON.parse(response.body)
-    calendar = calendars["items"].select {|cal|
-      cal["id"].downcase == schedule.calendar_id}
-    calendar["id"]
-  end
 
   def calendars
     client = Signet::OAuth2::Client.new(client_options)
@@ -85,7 +95,7 @@ class EventsController < Devise::OmniauthCallbacksController
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
-    @event_list = service.list_events(params[:calendar_id])
+    @hgp_event_list = service.list_events(params[:calendar_id])
   end
 
   def new_hgp_event
@@ -103,28 +113,11 @@ class EventsController < Devise::OmniauthCallbacksController
        summary: 'New HGP event!'
      })
 
-     service.insert_event(params[:calendar_id], event)
+     service.insert_hgp_event(params[:calendar_id], event)
 
-     redirect_to events_url(calendar_id: params[:calendar_id])
+     redirect_to hpg_event_url(calendar_id: params[:calendar_id])
    end
 
-   def google_oauth2
-       @user = User.find_for_google_oauth2(request.env["omniauth.auth"])
-       if @user
-         sign_in @user
-         redirect_to root_path
-       else
-         redirect_to new_user_session_path, notice: 'Access Denied.'
-       end
-     end
-
-     def make_google_calendar_reservations
-      @schedule = @cohort.schedules.find_by(slug:
-        params[:slug])
-      @calendar = GoogleCalWrapper.new(current_user)
-      @calendar.book_rooms(@schedule)
-      response = @client.execute(api_method: @service.calendar_list.list)
-    end
   private
 
     def client_options

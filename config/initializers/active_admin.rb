@@ -1,4 +1,7 @@
 ActiveAdmin.setup do |config|
+  config.before_action do
+    params.permit!
+  end
 
   # == Site Title
   require 'active_admin'
@@ -17,7 +20,7 @@ ActiveAdmin.setup do |config|
   #
   # Note: Aim for an image that's 21px high so it fits in the header.
   #
-   config.site_title_image = "/assets/newlogo.png"
+   config.site_title_image = "/assets/blue_logo.png"
 
   # == Default Namespace
   #
@@ -34,13 +37,13 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  #config.default_namespace = :Genius_Staff
-  config.namespace :staff do |staff|
-    staff.build_menu :utility_navigation do |menu|
-      menu.add label: "HGP Staff", url: "http://www.activeadmin.info",
+  config.default_namespace = :Hgp_staff
+  config.namespace :Hgp_staff do |hgp_staff|
+    hgp_staff.build_menu :utility_navigation do |menu|
+      menu.add label: "HGP Webpage", url: "http://www.hiddengeniusproject",
                                           html_options: { target: :blank }
-      staff.add_current_user_to_menu  menu
-      staff.add_logout_button_to_menu menu
+      hgp_staff.add_current_user_to_menu :current_admin
+      #hgp_staff.add_logout_button_to_menu, method: :delete
     end
   end
   # You can customize the settings for each namespace by using
@@ -107,13 +110,13 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_admin_session_path
+  config.logout_link_path = :destroy_admin_user_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
   #
   # Default:
-   config.logout_link_method = :logout
+   config.logout_link_method = :delete
 
   # == Root
   #
@@ -142,7 +145,20 @@ ActiveAdmin.setup do |config|
   # #
   # # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
-
+  # module ActiveAdmin
+  #   class ResourceDSL < DSL
+  #     def permit_params(*args, &block)
+  #       resource_sym = config.resource_name.singular.to_sym
+  #       controller do
+  #         define_method :permitted_params do
+  #           params.permit :utf8, :authenticity_token, :commit,
+  #                         resource_sym =>
+  #                         block? instance_exec(&block) : args do
+  #         end
+  #       end
+  #       end
+  #     end
+  #   end
   # == Batch Actions
   #
   # Enable and disable Batch Actions
@@ -225,12 +241,7 @@ ActiveAdmin.setup do |config|
   #
   # To change the default utility navigation to show a link to your website & a logout btn
   #
-    config.namespace :admin do |admin|
-      admin.build_menu :utility_navigation do |menu|
-        #menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-        admin.add_logout_button_to_menu menu
-      end
-    end
+
 
   # If you wanted to add a static menu item to the default menu provided:
   #
@@ -271,7 +282,7 @@ ActiveAdmin.setup do |config|
   # Pagination is enabled by default for all resources.
   # You can control the default per page count for all resources here.
   #
-  #config.default_per_page = 25
+  config.default_per_page = 25
   #
   # You can control the max per page count too.
   #

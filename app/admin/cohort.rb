@@ -1,9 +1,9 @@
 ActiveAdmin.register Cohort do
 
-  permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend, :benchmark, :projects
+  permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend,:project, :benchmark, :projects
   menu priority: 3
   config.batch_actions = true
-  active_admin_importable
+  active_admin_importable  
   #sortable tree: true
 
   index do
@@ -30,8 +30,9 @@ ActiveAdmin.register Cohort do
 
   form do |f|
     f.inputs "Hgp Geniuses" do
-
-      f.input :genius
+      #f.input :genius
+      f.input :first_name
+      f.input :last_name
       f.input :cohort_id
       f.input :city
       f.input :email

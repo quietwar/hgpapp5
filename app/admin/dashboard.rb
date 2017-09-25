@@ -1,4 +1,10 @@
 ActiveAdmin.register_page "Dashboard" do
+  # controller do
+  #   def permitted_params
+  #     params.permit :utf8, :_method, :authenticity_token, :commit, :id,
+  #               project: [:app_name, :coding ]
+  #   end
+  # end
 
   menu priority: 1,
 
@@ -27,7 +33,7 @@ ActiveAdmin.register_page "Dashboard" do
               li link_to "Oak 3"
               li link_to "Oak 4"
               li link_to "Oak 5"
-              li link_to "Create a new HGP Cohort", new_admin_cohort_path
+              li link_to "Create a new HGP Cohort",  new_hgp_staff_cohort_path
             end
            end
         end
@@ -37,16 +43,27 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Geniuses" do
           para "Welcome to the Hidden Genius Project!"
           table_for Cohort.order("id desc").limit(10) do
+
             ul "Feature Geniuses" do
 
-              #li link_to "Isaiah", feature_path
-              #li link_to "George", new_features_path
-              li link_to "Malik", features_path
-              li link_to "Create a new HGP featured Genius", new_feature_path
+               #li link_to "Isaiah", views_pages_isaiah_path
+              # li link_to "George", pages_george_path
+              # li link_to "Malik", pages_malik_path
+               li link_to "Create a new HGP featured Genius", user_features_path(:current_admin)
             end
           end
         end
        end
+
+       column do
+         panel "Events" do
+           table_for Event.order("id desc").limit(10) do
+             ul "Upcoming Events" do
+               li link_to "HGP Events Calendar",  calendar_path
+             end
+            end
+          end
+        end
      end
     end
   end

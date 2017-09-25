@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails' , '>= 5.0.0.rc2', '< 5.1'
+gem 'rails' , '>= 5.0.0.rc2', '< 5.1.4'
 gem 'bundler', '>= 1.8.4'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
@@ -17,9 +17,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+#gem 'kaminari'
 gem 'activeadmin', '~> 1.1'
 gem 'active_admin_theme'
-#gem 'arctic_admin'
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
+gem 'paperclip', '~> 5.0'
+#gem 'rmagick', '~> 2.15'
 #gem "active_admin-sortable_tree"
 gem 'active_admin_importable'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
@@ -33,15 +37,16 @@ gem 'omniauth-google-oauth2'
 #gem 'pundit'
 #gem cancancan
 gem 'figaro'
+gem 'high_voltage', '~> 3.0.0'
 # Use jquery as the JavaScript library
 gem 'rails-assets-jquery', source: 'https://rails-assets.org'
 gem 'rails-assets-datatables', source: 'https://rails-assets.org'
-gem 'kaminari'
+
 gem 'jquery-ui-rails', '5.0.5'
 gem 'jquery-rails'
-
+gem 'bootstrap-datepicker-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-#gem 'turbolinks', '~> 5'
+gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -55,7 +60,7 @@ gem 'devise', '~>4.2.0'
 gem 'activerecord-import', '~> 0.19.1'
 gem 'd3-rails','4.1.0'
 gem 'will_paginate-bootstrap', '~> 1.0.1'
-
+gem 'everett'
 
 
 group :development, :test do

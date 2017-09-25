@@ -1,7 +1,8 @@
 ActiveAdmin.register User, :as => 'Genius' do
-  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend, :benchmark, :projects
+  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects, :project, :project_ids
   menu priority: 4
   config.batch_actions = true
+  active_admin_importable
 
   show do
   attributes_table do
@@ -33,6 +34,7 @@ ActiveAdmin.register User, :as => 'Genius' do
     column :projects
     column :sign_in_count
     column :created_at
+    column :projects
     actions
   end
 
@@ -40,23 +42,25 @@ ActiveAdmin.register User, :as => 'Genius' do
   filter :cohort_id
   filter :city
   filter :username
+  filter :feature
   filter :sign_in_count
   filter :created_at
-  filter :projects
+  #filter :projects
 
   form do |f|
     f.inputs do
-      f.input :avatar
       f.input :genius
       f.input :cohort_id
       f.input :city
       f.input :cell
       f.input :email
       f.input :email2
-      f.input :password
-      f.input :password_confirmation
-      f.input :username
+      #f.input :password
+      #f.input :password_confirmation
       f.input :projects
+      f.input :username
+      f.input :feature
+
 
 
 

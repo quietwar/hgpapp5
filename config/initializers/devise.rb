@@ -6,13 +6,8 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'],
-  ENV['GOOGLE_CLIENT_SECRET'],
-  { access_type: "offline",
-    prompt: "consent",
-    select_account: true,
-    scope: 'userinfo.email,calendar' }
-   config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
+
+  config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -194,7 +189,7 @@ Devise.setup do |config|
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
-
+  config.authentication_keys = [ :login ]
   # Warn on the last attempt before the account is locked.
   # config.last_attempt_warning = true
 
@@ -254,15 +249,15 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
+  #config.provider "KEY", "SECRET"
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-  # end
+  config.warden do |manager|
+    manager.intercept_401 = false
+    manager.default_strategies(scope: :user).unshift :some_external_strategy
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908035703) do
+ActiveRecord::Schema.define(version: 20170923221821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20170908035703) do
   end
 
   create_table "cohorts", id: :serial, force: :cascade do |t|
-    t.text "genius"
+    t.string "genius"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "admin_id"
@@ -121,6 +121,9 @@ ActiveRecord::Schema.define(version: 20170908035703) do
   create_table "features", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "genius"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_features_on_user_id", unique: true
   end
 
   create_table "friendships", id: :serial, force: :cascade do |t|
@@ -199,9 +202,17 @@ ActiveRecord::Schema.define(version: 20170908035703) do
     t.datetime "avatar_updated_at"
     t.string "access_token"
     t.string "refresh_token"
+    t.integer "project_id"
+    t.string "project"
+    t.string "feature"
+    t.string "cohorts"
+    t.string "provider"
+    t.string "uid"
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["genius"], name: "index_users_on_genius", unique: true
+    t.index ["project"], name: "index_users_on_project", unique: true
     t.index ["refresh_token"], name: "index_users_on_refresh_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

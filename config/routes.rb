@@ -1,33 +1,29 @@
 Rails.application.routes.draw do
-
-  resources :events
-  devise_for :users, controllers: { sessions: 'users/sessions', :omniauth_callbacks => "callbacks" }
-
+      devise_for :users,  controllers: { omniauth_callbacks: "omniauth_callbacks" }
     devise_scope :user do
-      get 'tap_in', to: 'devise/sessions#new'
-      get 'genius_signup', to: 'devise/registrations#new'
       get '/redirect', to: 'events#redirect', as: 'redirect'
       get '/callback', to: 'events#callback', as: 'callback'
-      get '/calendars', to: 'events#calendars', as: 'hgp_calendars'
-      get '/events/:calendar_id', to: 'events#events', as: 'hgp_events', hgp_calendar_id: /[^\/]+/
-      post '/events/:calendar_id', to: 'events#new_event', as: 'new_hgp_event', hgp_calendar_id: /[^\/]+/
+      get '/calendars', to: 'events#calendars', as: 'calendar'
+      get '/events/:calendar_id', to: 'events#events', as: 'hgp_event', calendar_id: /[^\/]+/
+      post '/events/:calendar_id', to: 'events#new_event', as: 'new_hgp_event', calendar_id: /[^\/]+/
+      get 'tap_in', to: 'devise/sessions#new'
+      get 'genius_signup', to: 'devise/registrations#new'
+      get 'auth/:google_oauth2/callback', to: 'authentications#create', as: 'google_signin'
+      get 'signout', to: 'sessions#destroy', as: 'signout'
     end
 
-    devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :admin)
-      ActiveAdmin.routes(self)
-        #resources :admin_users, controller: 'admin/registrations'
-  # devise_scope :admin do
-  #      #get "/staff/sign_in", to: " admin/sessions#new" # custom path to login/sign_in
-        get "/staff/sign_up", to: "active_admin/devise/registrations#new"  # custom path to sign_up/registration
-  #   #   get "staff/sign_out" => " admins/sessions#destroy" # "destroy_admin_user_session"
-        match 'admin/classrooms/show', to: 'classrooms#index', :via => :post
+  devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :admin)
+    ActiveAdmin.routes(self) do
+    get "/staff/sign_up", to: "active_admin/devise/registrations#new"
+    match 'admin/classrooms/show', to: 'classrooms#index', :via => :post
+  end
+     resources :events
 
-        #post "admin/classrooms#index" => "classrooms#index"
-#end
 # # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-      resources :users, only: [:index, :show] do
+      resources :users do
         resources :projects
+      resources :features,only: [:create]
       resources :cohorts, only: [:index, :show]
       resources :classrooms, only: [:index, :show]
         collection do
@@ -35,13 +31,10 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :friendships, only: [:show, :create, :destroy]
+      resources :friendships, only: [:show, :create, :destroy] do
       resources :messages, only: [:create]
-      resources :features do
-        collection do
-          'hgp_features'
         end
-      end
+      #get "/auth/:provider/callback" => "authentications#create"
       root to: "classrooms#index"
     mount ActionCable.server => '/cable'
 

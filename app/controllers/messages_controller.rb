@@ -11,8 +11,8 @@ class MessagesController < ApplicationController
         format.js { ActionCable.server.broadcast "messages_room_#{current_room.id}",
           render(partial: 'shared/message', object: @message ) }
       end
-      #flash[:notice] = "Comment has been created"
-      #redirect_to user_exercises_path(current_user, roomId: current_room.id)
+      flash[:notice] = "Comment has been created"
+      redirect_to user_projects_path(current_user, roomId: current_room.id)
     end
   end
 

@@ -1,11 +1,14 @@
 class Cohort < ApplicationRecord
 
-  has_many :users
+  has_many :users# :class_name => 'Cohort::Users'
+    accepts_nested_attributes_for :users, :allow_destroy => true
+    validates_uniqueness :users, attribute_name: 'genius'
+    after_save :genius
   belongs_to :user, optional: true
-  accepts_nested_attributes_for :user, :allow_destroy => true
+  validates :user, presence: true
   alias_attribute :genius, :user
-  has_many :projects
-  #validates :user, presence: true
+  #has_many :projects
+
   #validates :project, presence: true
 
   # validates :genius, presence: true

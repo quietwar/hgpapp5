@@ -15,15 +15,16 @@
       </thead>
       <tbody>
         <% @projects.each do |project| %>
+
           <tr>
             <td><%= project.app_name %></td>
-            <td><%= project.code_name %></td>
+            <td><%= project.coding %></td>
             <td><%= truncate(project.project_details, length: 240) %></td>
             <td><%= project.start_date %></td>
-            <td><%= link_to 'Show', [current_user, project] %></td>
-            <td><%= link_to 'Edit', [:edit, current_user, project]
+            <td><%= link_to 'Show', user_project_path(:user_id, project) %></td>
+            <td><%= link_to 'Edit', edit_user_project_path(:user_id, project)
              %></td>
-            <td><%= link_to 'Destroy', [current_user, project],
+            <td><%= link_to 'Destroy',  user_project_path(:user_id, project),
             method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
@@ -33,17 +34,17 @@
     <div class="row">
       <div class="col-md-10">
         <h2>List of Geniuses</h2>
-        <%= per_page @features, renderer: BootstrapPagination::Rails, class: "pull-left paginate" %>
+
       </div>
     </div>
 
     <div class="row">
-      <% @features.each do |feature| %>
+      <% @followers.each do |follower| %>
         <div class="col-md-10 well member">
-          <%= feature.full_name %>
+          <%= friend.full_name %>
           <% if current_user %>
             <%= link_to "Follow", friendships_path(friend_id: feature.id),
-                method: :post, class: "btn btn-success pull-right" unless current_user.follows_or_same?(feature) %>
+                method: :post, class: "btn btn-success pull-right" unless current_user.follows_or_same?(follow) %>
           <% end %>
         </div>
       <% end %>

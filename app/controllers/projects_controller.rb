@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  wrap_parameters format: [:json, :xml, :url_encoded_form, :multipart_form]
+  before_action :configure_params, only: [:create]
   before_action :authenticate_user!
   before_action :set_project#, except: [:index, :new, :create]
 
@@ -9,7 +11,7 @@ class ProjectsController < ApplicationController
 
     @friends = Friendship.all
 
-    @features = User.paginates_per(:page => params[:per_page => 1])
+    @followers = User.paginates_per(:page => params[:per_page => 1])
     @message = Message.all
     @message = current_room.message if current_room
     @followers = Friendship.where(friend_id: current_user)
@@ -19,7 +21,7 @@ class ProjectsController < ApplicationController
   def show
     @project = User.first
     @project = Project.find(params[:id])
-    @friends = current_user.friends
+    @friends = Friend(:user_id, @friends)
   end
 
   def new
@@ -32,7 +34,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
       flash[:notice] = "project has been created"
-      redirect_to [current_user, @project]
+      redirect_to [:current_user, @project]
     else
       flash.now[:alert] = "project has not been created"
       render :new
@@ -69,7 +71,7 @@ private
   end
 
   def project_params
-    params.require(:project).permit(:app_name, :coding, :project_details, :start_date)
+    params.require(:project).permit(:app_name, :coding, :project_details, :start_date, :user_id)
   end
 
   def set_current_room

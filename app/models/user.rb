@@ -1,32 +1,41 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :lockable, :timeoutable 
-  devise :registerable,:database_authenticatable, :confirmable,:omniauthable,
-         :recoverable, :rememberable, :trackable
+  # :lockable, :timeoutable
+  devise :registerable,:database_authenticatable, :confirmable,
+         :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
+         # Only allow letter, number, underscore and punctuation.
+         validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
          validates :first_name, presence: true
          validates :last_name, presence: true
          validates :genius, presence: false
          validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
          validates :cohort_id, presence: true
+         validates :user_id, presence: false
+         validates :project_id, presence: false
          validates :city, presence: true
+         validates :project, presence: true
          after_create :create_chatroom
+         after_save :create_project
 
 
-
-
-  has_one :cohort
+  has_one :cohort, :class_name => 'User::Cohort'
+    accepts_nested_attributes_for :cohort, :allow_destroy => true
+    validates_uniqueness :cohorts, attribute_name: 'projects'
   belongs_to :cohort, optional: true
-  accepts_nested_attributes_for :cohort, :allow_destroy => true
-  has_many :projects, inverse_of: :user
-  accepts_nested_attributes_for :projects, :allow_destroy => true
+    #validates_presence_of :cohort
+  has_many :projects#, :class_name => 'User::Project' #inverse_of: :user
+    accepts_nested_attributes_for :projects, :allow_destroy => true
+    validates_uniqueness :projects, attribute_name: 'app'
+
   has_many :friendships
-  has_many :friends, through: :friendships, class_name: "User"
+  has_many :friends#, through: :friendships, class_name: "User"
   has_one :room
 
-  has_one :feature
+  has_one :feature#, :class_name => 'User::Feature'
   has_many :messages
   has_many :active_admin_comments, as: :resource, class_name: 'ActiveAdmin::Comment'
   alias_method :comments, :active_admin_comments
+  after_create :create_profile!, :send_welcome_email!
 
 
   def full_name
@@ -55,26 +64,48 @@ class User < ApplicationRecord
     friendships.where(friend: friend).first
   end
 
-  def self.find_for_google_oauth2(auth)
-    data = auth.info
-    if validate_email(auth)
-      user = User.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-        user.provider = auth.provider
-        user.uid = auth.uid
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0,20]
-      end
-      user.token = auth.credentials.token
-      user.refresh_token = auth.credentials.refresh_token
-      user.save
-      return user
-    else
-      return nil
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.first_name = auth.info.first_name
+      user.last_name = auth.info.last_name   # assuming the user model has a name
+      user.image = auth.info.image # assuming the user model has an image
     end
+  end
+
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+
+    unless user
+        user = User.create(name: data["name"],
+             email: data["email"],
+             password: Devise.friendly_token[0,20]
+            )
+    end
+    user
+end
+
+
+
+    def create_profile!
+        profile = profiles.create(
+          name: 'name',
+          kind: 'blog'
+        )
+
+        create_user_main_profile(profile_id: profile.id)
+    end
+
+    def send_welcome_email!
+      UserMailer.delay.welcome(self.id)
+    end
+
 
   private
 
-  protected
+
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
@@ -83,12 +114,12 @@ class User < ApplicationRecord
     def create_chatroom
      hyphenated_username = self.full_name.split.join('-')
      Room.create(name: hyphenated_username, user_id: self.id)
-   end
+    end
 
     # def create_room
     #   @user = :current_user
     #   @room = @user.create_room(params[:room].permit(:genius, :username))
     #   hyphenated_username = self.full_name.split.join('-')
     #   room.create(name: hyphenated_username, user_id: self.id)
-   end
+   #end
 end

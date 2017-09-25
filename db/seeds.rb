@@ -3,25 +3,25 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 require 'csv'
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'cohort.csv'))
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'Cohort.csv'))
 puts csv_text
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 puts csv
 
 csv.each do |row|
-  c = Cohort.new
-  c.cohort = row['cohort']
-  c.genius = row['genius']
-  c.city = row['city']
-  c.email = row['email']
-  c.email2 = row['email2']
-  c.stipend = row['stipend']
-  c.benchmark = row['benchmark']
-  c.projects = row['projects']
-  c.save
-  puts "#{c.cohort}, #{c.genius}, #{c.city}, #{c.email}, #{c.email2} saved"
+  u = User.new
+  u.cohort_id = row['cohort_1d']
+  u.genius = row['genius']
+  u.cell = row['cell']
+  u.email = row['email']
+  u.email2 = row['email2']
+  u.city = row['city']
+  u.password = row['password']
+  u.password confirmation = row['password confirmation']
+  u.save
+  puts "#{u.cohort_id}, #{u.genius}, #{u.cell}, #{u.email}, #{u.email2}, #{u.city} saved"
 end
-puts "There are now #{Cohort.count} rows in the cohorts table"
+puts "There are now #{User.count} rows in the user table"
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])

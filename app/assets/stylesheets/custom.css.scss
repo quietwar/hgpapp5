@@ -6,6 +6,18 @@ body {
   margin-top: 250px;
 }
 
+.page {
+  background-color: black;
+}
+.container {
+    background-color: black;
+    color: #4040a1 !important;
+    // text-align: center;
+     width: 100%;
+     height: 100%;
+
+   }
+
 // home page styling
 // .col-md-8 {
 //   margin-top: 250px;
@@ -14,12 +26,12 @@ body {
 //   overflow-x: visible;
 // }
 //
-// .col-md-12 {
-//   //margin-top: 250px;
-//   text-align: center;
-//   background-color: black;
-//
-// }
+.intro {
+  margin-top: 50px;
+  text-align: center;
+  color: #cccccc;
+
+}
 
 // navbar styling
 .navbar {
@@ -66,20 +78,14 @@ body {
 
 .navbar-header {
    text-align: center;
-
 }
 
-.page {
-  background-color: black;
+.google {
+  text-align: right;
+  margin-top: 350px;
 }
-.container {
-    background-color: black;
-    color: #4040a1 !important;
-    // text-align: center;
-     width: 100%;
-     height: 100%;
 
-   }
+//carosel pics on home page
 
 .carousel-inner img {
    -webkit-filter: grayscale(90%);
@@ -109,6 +115,14 @@ body {
     background-color: red !important;
 }
 
+//project form styling
+.col-md-10 {
+color: purple;
+text-align: left;
+padding: 10px;
+
+}
+
 .form-group {
 color: green;
 text-align: left;
@@ -119,7 +133,7 @@ color: green;
 text-align: left;
 }
 
-.table table-striped{
+.table {
   color: red;
 }
 
@@ -136,15 +150,12 @@ text-align: left;
   background-size: 100%;
 }
 
-//form styling
-.col-md-10 {
-color: purple;
-text-align: left;
-}
+
 
 //About Section
 .col-lg-8 {
    background-color: black;
+   background-size: cover;
    //padding: 180px;
    color: #4040a1 !important;
    text-align: center;

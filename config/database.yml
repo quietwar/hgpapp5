@@ -9,7 +9,7 @@ development:
   encoding: unicode
   database: HgpApp_development
   pool: 5
-  username: hodaritoure
+  username: #hodaritoure
   password:
 
 
@@ -18,7 +18,7 @@ test:
   encoding: unicode
   database: HpgApp_test
   pool: 5
-  username: hodaritoure
+  username: #hodaritoure
   password:
 
 production:

@@ -1,0 +1,35 @@
+<div class='page'>
+  <div class='col-md-12'>
+      <div class='form-group'>
+        <div class='col-md-10'>
+          <%= form_with model: User.new do |user| %>
+          <% if @feature.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@feature.errors.count, "error") %>
+              prohibited this project from being saved:</h2>
+
+              <ul>
+              <% @feature.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+            <%= user.fields model: Feature.new do |feature| %>
+            <div class='form-group'>
+              <div class='control-label col-md-2'>
+                <%= feature.label :genius  %>
+              </div>
+              <div class='col-md-10'>
+                  <%= feature.text_field :genius %>
+              </div>
+
+              <%= feature.submit class: 'btn btn-success btn-lg' %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
