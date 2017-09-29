@@ -10,22 +10,21 @@ class User < ApplicationRecord
          validates :genius, presence: false
          validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
          validates :cohort_id, presence: true
-         validates :user_id, presence: false
-         validates :project_id, presence: false
+        #  validates :user_id, presence: false
+        #  validates :project_id, presence: false
          validates :city, presence: true
-         validates :project, presence: true
+         #validates :project, presence: true
          after_create :create_chatroom
          after_save :create_project
 
 
   has_one :cohort, :class_name => 'User::Cohort'
     accepts_nested_attributes_for :cohort, :allow_destroy => true
-    validates_uniqueness :cohorts, attribute_name: 'projects'
-  belongs_to :cohort, optional: true
+  # belongs_to :cohort, optional: true
     #validates_presence_of :cohort
-  has_many :projects#, :class_name => 'User::Project' #inverse_of: :user
-    accepts_nested_attributes_for :projects, :allow_destroy => true
-    validates_uniqueness :projects, attribute_name: 'app'
+  has_many :projects
+    # accepts_nested_attributes_for :projects, :allow_destroy => true
+    # validates_uniqueness :projects, attribute_name: 'app'
 
   has_many :friendships
   has_many :friends#, through: :friendships, class_name: "User"
@@ -79,14 +78,15 @@ class User < ApplicationRecord
     user = User.where(:email => data["email"]).first
 
     unless user
-        user = User.create(name: data["name"],
-             email: data["email"],
-             password: Devise.friendly_token[0,20]
-            )
+    user = User.create(name: data["name"],
+         email: data["email"],
+         uid: access_token.uid,
+         provider: access_token.provider,
+         password: Devise.friendly_token[0,20]
+        )
+      end
+      user
     end
-    user
-end
-
 
 
     def create_profile!

@@ -23,9 +23,9 @@
 
            <ul class="nav navbar-nav navbar-right">
              <% unless current_user %>
-                <li><%= link_to "Genius staff sign up", new_admin_user_registration_path  %></li>
+                <li><%= link_to "Genius staff sign up", new_user_registration_path  %></li>
                 <li><%= link_to "Genius sign up", genius_signup_path  %></li>
-                 <li><%= link_to "Genius staff sign in", new_admin_user_session_path %></li>
+                 <li><%= link_to "Genius staff sign in", new_user_session_path %></li>
                  <li><%= link_to "Tap in", tap_in_path %></li>
                  <li><%= link_to "Tap In with Google", google_signin_path(:google_oauth2) %></li>
               <% else %>

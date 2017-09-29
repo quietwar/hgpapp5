@@ -9,19 +9,17 @@ csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 puts csv
 
 csv.each do |row|
-  u = User.new
-  u.cohort_id = row['cohort_1d']
-  u.genius = row['genius']
-  u.cell = row['cell']
-  u.email = row['email']
-  u.email2 = row['email2']
-  u.city = row['city']
-  u.password = row['password']
-  u.password confirmation = row['password confirmation']
-  u.save
-  puts "#{u.cohort_id}, #{u.genius}, #{u.cell}, #{u.email}, #{u.email2}, #{u.city} saved"
+  c = Cohorts.new
+  c.cohort = row['cohort']
+  c.genius = row['genius']
+  c.cell = row['cell']
+  c.email = row['email']
+  c.email2 = row['email2']
+  c.city = row['city']
+  c.save
+  puts "#{c.cohort}, #{c.genius}, #{c.cell}, #{c.email}, #{c.email2}, #{c.city} saved"
 end
-puts "There are now #{User.count} rows in the user table"
+puts "There are now #{Cohorts.count} rows in the cohort table"
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])

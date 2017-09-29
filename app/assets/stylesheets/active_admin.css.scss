@@ -22,4 +22,10 @@ $skinBorderWindowColor: #cccccc;
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
+
+   .logo {
+     width: 300px;
+     height: 200px;
+
+   }
    .status_tag { background: #6090DB; }

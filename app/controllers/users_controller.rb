@@ -3,7 +3,7 @@ class UsersController < Devise::RegistrationsController
          :recoverable, :rememberable, :trackable,
          :validatable, :authentication_keys => {email: true, login: false}
 before_action :configure_users_params, only: [:create, :new]
-#permit_params :first_name, :last_name, :city, :cohort_id, :email, :avatar, :project
+permit_params :first_name, :last_name, :city, :cohort_id, :email, :email2, :avatar, :username
 Rails.logger.info(@users.errors.inspect)
  def index
    @users = User.all
@@ -59,7 +59,7 @@ Rails.logger.info(@users.errors.inspect)
  private
 #params[:product][:data].try(:keys))
  def user_params
-   params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :avatar, product: params[:app_name, :coding, :project_details, :start_date
+   params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :avatar, :username, project: params[:app_name, :coding, :project_details, :user_id, :project_ids, :start_date
 ])
  end
 

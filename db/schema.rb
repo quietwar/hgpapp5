@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170923221821) do
+ActiveRecord::Schema.define(version: 20170929210935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20170923221821) do
     t.integer "user_id"
     t.string "first_name"
     t.string "last_name"
+    t.integer "cohort"
   end
 
   create_table "events", force: :cascade do |t|
@@ -208,6 +209,8 @@ ActiveRecord::Schema.define(version: 20170923221821) do
     t.string "cohorts"
     t.string "provider"
     t.string "uid"
+    t.string "benchmarks"
+    t.integer "stipend"
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
