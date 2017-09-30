@@ -2,13 +2,3 @@ LOG:  database system was shut down at 2017-09-21 14:13:08 PDT
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
-FATAL:  role "hodaritoure" does not exist
-FATAL:  role "hodaritoure" does not exist
-FATAL:  role "hodaritoure" does not exist
-FATAL:  role "hodaritoure" does not exist
-FATAL:  role "hodaritoure" does not exist
-FATAL:  role "hodaritoure" does not exist
-LOG:  received smart shutdown request
-LOG:  autovacuum launcher shutting down
-LOG:  shutting down
-LOG:  database system is shut down
