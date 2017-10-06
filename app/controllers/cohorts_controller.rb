@@ -18,7 +18,6 @@ Rails.logger.info(@cohorts.errors.inspect)
     end
 
     def new
-      byebug
       @cohort = Cohort.new
     end
 

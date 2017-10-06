@@ -4,30 +4,25 @@ class User < ApplicationRecord
   devise :registerable,:database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
          # Only allow letter, number, underscore and punctuation.
-         validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
-         validates :first_name, presence: true
-         validates :last_name, presence: true
-         validates :genius, presence: false
-         validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-         validates :cohort_id, presence: true
-        #  validates :user_id, presence: false
-        #  validates :project_id, presence: false
-         validates :city, presence: true
-         #validates :project, presence: true
+          validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+          validates :first_name, :last_name, :cohort, :city, presence: true
+        #  validates :genius, uniqueness: true
+        #  validates :email, format: { with: /\hiddengeniusproject.org\z/, message: "only allows HGP addresses" }
+          validates :password, length: { minimum: 8 }, unless: "password.nil?"
+          validates :password, presence: true, if: "id.nil?"
+          has_attached_file :avatar, styles: { medium: '680x300>', thumb: '170x75>' }, default_url: '/assests/images/missing.png"'
+          validates_attachment_content_type :avatar, content_type: '/\Aimage\/.*\z/'
          after_create :create_chatroom
-         after_save :create_project
 
 
-  has_one :cohort, :class_name => 'User::Cohort'
+
+  has_one :cohort
     accepts_nested_attributes_for :cohort, :allow_destroy => true
   # belongs_to :cohort, optional: true
-    #validates_presence_of :cohort
+    validates_presence_of :cohort
   has_many :projects
-    # accepts_nested_attributes_for :projects, :allow_destroy => true
-    # validates_uniqueness :projects, attribute_name: 'app'
-
   has_many :friendships
-  has_many :friends#, through: :friendships, class_name: "User"
+  has_many :friends, through: :friendships, class_name: "User"
   has_one :room
 
   has_one :feature#, :class_name => 'User::Feature'
@@ -74,6 +69,7 @@ class User < ApplicationRecord
   end
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+   #byebug
     data = access_token.info
     user = User.where(:email => data["email"]).first
 
@@ -102,7 +98,16 @@ class User < ApplicationRecord
       UserMailer.delay.welcome(self.id)
     end
 
+    def after_sign_up_path_for(user)
+      '/root_path/'
+    end
 
+    def avatar_attributes=(attributes)
+       # Marks the attachment for destruction on next save,
+       # if the attributes hash contains a _destroy flag
+       # and a new avatar was not uploaded at the same time:
+       avatar.clear if has_destroy_flag?(attributes) && !avatar.dirty?
+     end
   private
 
 

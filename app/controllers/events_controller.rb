@@ -30,7 +30,7 @@ class EventsController < Devise::OmniauthCallbacksController
 
   def create
     @event = Event.new(event_params)
-    flash[:notice] = 'Event was successfully created.' if @event.save
+    flash[:notice] = 'Event was successfully created' if @event.save
     respond_with(@event)
     @event.save
 
@@ -45,7 +45,7 @@ class EventsController < Devise::OmniauthCallbacksController
   end
 
   def update
-    flash[:notice] = 'Event was successfully updated.' if @event.update(event_params)
+    flash[:notice] = 'Event was successfully updated' if @event.update(event_params)
     respond_with(@event)
   end
 

@@ -1,15 +1,6 @@
   <div class="calendar">
-    <ul>
-      <% @calendar_list.items.each do |calendar| %>
-        <li><%= calendar.summary %> (<%= calendar.id %>)</li>
-      <% end %>
-    </ul>
-    <ul>
-      <% @event_list.items.each do |event| %>
-        <li><%= event.summary %> (<%= event.id %>)</li>
-      <% end %>
-    </ul>
-    <%= form_tag new_event_url do %>
+
+    <%= form_tag new_hgp_event_url do %>
       <%= submit_tag 'Add event' %>
   </div>
 <% end %>

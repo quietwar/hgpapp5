@@ -1,9 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
-  wrap_parameters format: [:json, :xml, :url_encoded_form, :multipart_form]
-  before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
-  #accepts_nested_attributes :project
-  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects, :project, :project_ids
+  # wrap_parameters format: [:json, :xml, :url_encoded_form, :multipart_form]
+  # before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_account_update_params, only: [:update]
+  # #accepts_nested_attributes :project
+  # permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects, :project, :project_ids
 
   POST /resource/sign_in
   # def create
@@ -15,16 +15,17 @@ class RegistrationsController < Devise::RegistrationsController
         resource.save
     end
   end
+
   protected
 
-  def sign_up_params
-    params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :password, :password_confirmation, :project)
-  end
+  # def sign_up_params
+  #   params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :password, :password_confirmation, :project)
+  # end
 
 
-  def project_params
-    params.require(:project).permit(:app_name, :coding, :project_details, :start_date)
-  end
+  # def project_params
+  #   params.require(:project).permit(:app_name, :coding, :project_details, :start_date)
+  # end
   # # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #  devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
@@ -50,8 +51,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    params.require(:user).permit(:cohort[:avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email,:email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects,:project, :project_ids])
-  end
+    params.require(:user).permit(:cohort, :avatar, :first_name, :last_name, :username, :genius, :city, :email, :email2, :cell, :password, :password_confirmation,)
 
   def account_update_params
     params.require(:user).permit(:avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects,:project, :project_ids

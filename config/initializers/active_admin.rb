@@ -38,9 +38,11 @@ ActiveAdmin.setup do |config|
   #
   # Default:
 
+
   config.default_namespace = :Hgp_staff
-  config.namespace :Hgp_staff do |hgp_staff|
+    config.namespace :Hgp_staff do |hgp_staff|
       hgp_staff.build_menu :utility_navigation do |menu|
+        menu.add id: 'current_user', label: -> { display_name current_active_admin_user }, url: -> { user_path(current_active_admin_user) }, if: :current_active_admin_user?
         menu.add label: "HGP Webpage", url: "http://www.hiddengeniusproject",
                                             html_options: { target: :blank }
         hgp_staff.add_current_user_to_menu  menu

@@ -1,26 +1,30 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
    devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
-   namespace :api do
-     namespace :v1 do
-       resources :users
-     end
-   end
 
-   resources :users
+   resources :users do
+     resources :projects
+     end
+
       devise_scope :user do
+        get '/event/:id', to: 'events#new', id: /[A-Z]\d{5}/
+        post '/events/:id', to: 'events#create', id: /[A-Z]\d{5}/
+        get '/events/1/edit/', to: 'events#edit'
+        get '/events/1/:id', to: 'events#show', id: /[A-Z]\d{5}/
+        get '/events', to: 'events#index'
+        get '/calendars', to: 'events#calendars', as: 'calendars'
         get '/redirect', to: 'events#redirect', as: 'redirect'
         get '/callback', to: 'events#callback', as: 'callback'
-        get '/calendars', to: 'events#calendars', as: 'calendar'
         get '/events/:calendar_id', to: 'events#events', as: 'hgp_event', calendar_id: /[^\/]+/
         post '/events/:calendar_id', to: 'events#new_event', as: 'new_hgp_event', calendar_id: /[^\/]+/
         get 'tap_in', to: 'devise/sessions#new'
         get 'genius_signup', to: 'devise/registrations#new'
         get 'auth/:google_oauth2/callback', to: 'authentications#create', as: 'google_signin'
         get 'signout', to: 'sessions#destroy', as: 'signout'
-        #registration seems to much cooler for authenticable and other stuff
-        #match 'api/v1/users' , to: 'registrations#create' , via: :post
       end
+    #registration seems to much cooler for authenticable and other stuff
+    #match 'api/v1/users' , to: 'registrations#create' , via: :post
+
   #    devise_for :users,  controllers: { omniauth_callbacks: "omniauth_callbacks" }
   #   devise_scope :user do
   #     get '/redirect', to: 'events#redirect', as: 'redirect'
@@ -39,15 +43,14 @@ Rails.application.routes.draw do
   #   get "/staff/sign_up", to: "active_admin/devise/registrations#new"
   #   match 'admin/classrooms/show', to: 'classrooms#index', :via => :post
   # end
-     resources :events
+
 
 # # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-      resources :users do
-        resources :projects
+
       resources :features,only: [:create]
       resources :cohorts, only: [:index, :show]
-      resources :classrooms, only: [:index, :show]
+      resources :classrooms, only: [:index, :show, :search] do
         collection do
           post :search, to: 'classrooms#search'
         end

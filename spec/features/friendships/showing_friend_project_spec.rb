@@ -2,27 +2,27 @@ require "rails_helper"
 
 RSpec.feature "Showing Friend Project" do
   before do
-    @john = User.create(first_name: "John",
+    @john = User.create!(first_name: "John",
                         last_name: "Doe",
                         email: "john@hgs.hiddengeniusproject.org",
-                        password: "password")
+                        password: "password", cohort: 5, city: "Oakland", cell: "510 777-9311")
 
-    @sarah = User.create(first_name: "Sarah",
+    @sarah = User.create!(first_name: "Sarah",
                         last_name: "Anderson",
                         email: "sarah@hgs.hiddengeniusproject.org",
-                        password: "password")
+                        password: "password", cohort: 5, city: "Oakland", cell: "510 777-9311")
 
-    @e1 = @john.projects.create(app_name: "My App",
+    @e1 = @john.projects.create!(app_name: "My App",
                                 coding: "language",
                                 app_details: "das shyt",
                                 start_date: Date.today)
-    @e2 = @sarah.projects.create(app_name: "My App",
-                                coding: "language",
-                                app_details: "das shyt",
-                                start_date: Date.today)
+    @e2 = @sarah.projects.create!(app_name: "My App",
+                                 coding: "language",
+                                 app_details: "das shyt",
+                                 start_date: Date.today)
     login_as(@john)
 
-    @following = Friendship.create(user: @john, friend: @sarah)
+    @following = Friendship.create!(user: @john, friend: @sarah)
   end
 
   scenario "shows friend's projects" do
@@ -31,6 +31,8 @@ RSpec.feature "Showing Friend Project" do
     click_link "My lab"
     click_link @sarah.full_name
 
+    expect(cohort.to_i).to eql model.id
+    expect(cell.to_i).to eql model.id
     expect(page).to have_content(@sarah.full_name + "'s projects")
     expect(page).to have_content(@e2.workout)
     expect(page).to have_css("div#chart")

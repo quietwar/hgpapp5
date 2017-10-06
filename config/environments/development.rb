@@ -1,6 +1,6 @@
 Rails.application.configure do
 
-  
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -29,8 +29,8 @@ Rails.application.configure do
   end
 
   config.action_mailer.smtp_settings = {
-      user_name:      Rails.application.secrets.mail_username,
-      password:       Rails.application.secrets.mail_password,
+      user_name: ENV["GMAIL_USERNAME"],
+      password: ENV["GMAIL_PASSWORD"],
       domain:         'gmail.com',
       address:       'smtp.gmail.com',
       port:          '587',
