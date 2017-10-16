@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004210756) do
+ActiveRecord::Schema.define(version: 20171012034832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 20171004210756) do
     t.integer "cohort_id"
     t.string "email2"
     t.string "projects"
-    t.integer "cell"
+    t.bigint "cell"
     t.string "app_name"
     t.string "coding"
     t.text "project_details"
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 20171004210756) do
     t.string "uid"
     t.string "benchmarks"
     t.integer "stipend"
-    t.integer "cohort"
+    t.string "oauth_token"
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

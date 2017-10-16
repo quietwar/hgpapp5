@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Deleting project" do
   before do
-    @owner = User.create!(first_name: "John", last_name: "Doe", email: "owner@hgs.hiddengeniusproject.org", password: "password", cohort: 5, city: "Oakland", cell: "510 777-9311")
+    @owner = User.create!(first_name: "John", last_name: "Doe", email: "owner@hgs.hiddengeniusproject.org", password: "password", cohort_id: (0), cell: (5107779311), city: "Oakland")
 
     @owner_project = @owner.projects.create(app_name: "The greatet ever",
                                                 coding: "language",

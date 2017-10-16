@@ -1,6 +1,6 @@
 ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
 
-  permit_params :first_name, :last_name, :username, :genius, :cohort, :city, :email, :email2, :cell, :stipend,:project, :benchmark, :projects
+  permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend,:project, :benchmark, :projects
   menu priority: 3
   config.batch_actions = true
   active_admin_importable
@@ -17,7 +17,7 @@ ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
   index do
     selectable_column
     id_column
-    column :cohort
+    column :cohort_id
     column :genius
     column :username
     column :city
@@ -31,7 +31,7 @@ ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
   end
 
   filter :genius
-  filter :cohort
+  filter :cohort_id
   filter :city
   filter :username
 
@@ -39,7 +39,7 @@ ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
   form do |f|
     f.inputs "Hgp Geniuses" do
       f.input :genius
-      f.input :cohort
+      f.input :cohort_id
       f.input :city
       f.input :cell
       f.input :email

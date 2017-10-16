@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Hiding signin link" do
   before do
     @john = User.create!(first_name: "John", last_name: "Doe", email: "john@hiddengeniusproject.org",
-                         password: "password", city: "Oakland", cohort: "0", cell: "510 777-9311")
+                         password: "password", cohort_id: (0), cell: (5107779311), city: "Oakland")
   end
 
   scenario "upon successful signin" do
@@ -18,8 +18,6 @@ RSpec.feature "Hiding signin link" do
 
     click_button "Tap in"
 
-    expect(cohort.to_i)
-    expect(cell.to_i)
     expect(page).to have_link("Tap out")
     expect(page).to have_link("My Lab")
     expect(page).not_to have_link("Tap in")

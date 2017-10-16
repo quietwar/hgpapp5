@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.feature "Sending a message" do
   before do
-    @john = User.create(first_name: 'John', last_name: 'Doe', email: 'john@hgs.hiddengeniusproject.org', password: 'password', cohort: 5, city: "Oakland", cell: "510 777-9311")
-    @sarah = User.create(first_name: 'Sarah', last_name: 'Anderson', email: 'sarah@hgs.hiddengeniusproject.org', password: 'password', cohort: 5, city: "Oakland", cell: "510 777-9311")
-    @henry = User.create(first_name: 'Henry', last_name: 'Flynn', email: 'henry@hgs.hiddengeniusproject.org', password: 'password', cohort: 5, city: "Oakland", cell: "510 777-9311")
+    @john = User.create(first_name: 'John', last_name: 'Doe', email: 'john@hgs.hiddengeniusproject.org', password: 'password', cohort_id: 5, city: "Oakland", cell: (5107779311))
+    @sarah = User.create(first_name: 'Sarah', last_name: 'Anderson', email: 'sarah@hgs.hiddengeniusproject.org', password: 'password', cohort_id: 5, city: "Oakland", cell: (5107779311))
+    @henry = User.create(first_name: 'Henry', last_name: 'Flynn', email: 'henry@hgs.hiddengeniusproject.org', password: 'password', cohort_id: 5, city: "Oakland", cell: (5107779311))
 
     @room_name = @john.first_name + '-' + @john.last_name
     @room = Room.create(name: @room_name, user_id: @john.id)

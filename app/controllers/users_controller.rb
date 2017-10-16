@@ -4,6 +4,8 @@ class UsersController < Devise::RegistrationsController
           :authentication_keys => {email: true, login: true}
 #before_action :configure_users_params, only: [:create, :new]
 permit_params :first_name, :last_name, :city, :cohort, :email, :email2, :avatar, :username, :project
+require 'google/api_client'
+require 'google/api_client/client_secrets'
 Rails.logger.info(@users.errors.inspect)
  def index
    @users = User.all
@@ -19,10 +21,13 @@ Rails.logger.info(@users.errors.inspect)
  end
 
  def create
-   @user = User.new(set_user_params)
+   @user = User.from_omniauth(request.env["omniauth.auth"])
+   session[:user_id] = user.id
+   redirect_to root_path
     if @user.save!
       redirect_to root_path
     else
+      @user = User.new(set_user_params)
     #  user_password = params[:session][:password]
     #  user_email = params[:session][:email]
     #  user = user_email.present? && User.find_by(email: :user_email)

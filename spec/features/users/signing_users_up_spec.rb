@@ -7,18 +7,16 @@ RSpec.feature "Users signup" do
     click_link "Genius Sign up"
     fill_in "First name", with: "John"
     fill_in "Last name", with: "Doe"
-    fill_in "Email", with: "john@ehgs.hiddengeniusproject.org"
+    fill_in "Email", with: "john@hgs.hiddengeniusproject.org"
     fill_in "Password",  with: "password"
     fill_in "Password confirmation",  with: "password"
     fill_in "City", with: "Oakland"
     fill_in "Cohort", with: 0
-    fill_in "Cell", with: "510 777-9311"
+    fill_in "Cell", with: (5107779311)
 
     click_button "Sign up"
 
     expect(page).to have_content("Welcome Genius! You're good.")
-    expect(cohort.to_i)
-    expect(cell.to_i)
     user = User.last
     room = Room.last
     expect(room.name).to eq(user.full_name.split.join('-'))

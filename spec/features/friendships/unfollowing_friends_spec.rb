@@ -5,11 +5,11 @@ RSpec.feature "Unfollowing Friend" do
     @john = User.create(first_name: "John",
                         last_name: "Doe",
                         email: "john@hgs.hiddengeniusproject.org",
-                        password: "password", cohort: 5, city: "Oakland", cell: "510 777-9311")
+                        password: "password", cohort_id: (5), city: "Oakland", cell: (5107779311))
     @sarah = User.create(first_name: "Sarah",
                         last_name: "Anderson",
                         email: "sarah@hgs.hiddengeniusproject.org",
-                        password: "password", cohort: 5, city: "Oakland", cell: "510 777-9311")
+                        password: "password", cohort_id: (5), city: "Oakland", cell: (5107779311))
     login_as(@john)
 
     @following = Friendship.create(user: @john, friend: @sarah)
