@@ -1,6 +1,7 @@
 class CohortsController < ApplicationController
   #before_action :authenticate_admin!
-  #before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
+  before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
+  permit_params :genius, :city, :cohort, :cell, :email, :email2
 Rails.logger.info(@cohorts.errors.inspect)
     def index
       @cohort = Cohort.all
@@ -17,7 +18,6 @@ Rails.logger.info(@cohorts.errors.inspect)
     end
 
     def new
-      byebug
       @cohort = Cohort.new
     end
 
@@ -37,7 +37,7 @@ Rails.logger.info(@cohorts.errors.inspect)
     end
 
     def cohort_params
-      params.require(:cohort).permit(:cohort_id, :project)
+      params.require(:cohorts).permit(:cohort, :genius, :city, :cohort )
     end
 
     def set_current_room

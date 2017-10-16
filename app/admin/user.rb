@@ -1,14 +1,12 @@
 ActiveAdmin.register User, :as => 'Genius' do
-  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmark, :projects, :project, :project_ids
+  permit_params :avatar, :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :password, :password_confirmation, :stipend, :benchmarks, avatar_attributes: [:_destroy]
   menu priority: 4
   config.batch_actions = true
   active_admin_importable
 
-  show do
-  attributes_table do
-    image_row :avatar
-    end
-  end
+  # index do
+  #
+  # end
 
   # sidebar "Genius Details", only: => [:show, :edit] do
   #   ul do
@@ -34,18 +32,21 @@ ActiveAdmin.register User, :as => 'Genius' do
     column :projects
     column :sign_in_count
     column :created_at
-    column :projects
+    image_column :avatar, style: :thumb
+
     actions
   end
 
   filter :genius
   filter :cohort_id
   filter :city
+  filter :stipend
+  filter :benchmarks
   filter :username
   filter :feature
   filter :sign_in_count
   filter :created_at
-  #filter :projects
+
 
   form do |f|
     f.inputs do
@@ -55,16 +56,14 @@ ActiveAdmin.register User, :as => 'Genius' do
       f.input :cell
       f.input :email
       f.input :email2
-      #f.input :password
-      #f.input :password_confirmation
-      f.input :projects
       f.input :username
-      f.input :feature
-
-
-
-
-    end
+      f.input :avatar, as: :file
+      if f.object.avatar.present?
+        f.semantic_fields_for :avatar_attributes do |avatar_fields|
+         avatar_fields.input :_destroy, as: :boolean, label: 'Delete?'
+       end
+     end
+   end
     f.actions
 
   end

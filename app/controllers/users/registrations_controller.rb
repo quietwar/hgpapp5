@@ -1,9 +1,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-    before_action :configure_sign_up_params, only: [:create]
-    before_action :configure_account_update_params, only: [:update]
-    # accepts_nested_attributes :project
+    # before_action :configure_sign_up_params, only: [:create]
+    # before_action :configure_account_update_params, only: [:update]
+     #accepts_nested_attributes :project
     # before_action :configure_permitted_parameters, if: :devise_controller?
-    # params.permit(:projects => [ :app_name => [], :coding => [], :project_details => [], :start_date)
+     #params.permit(:projects => [ :app_name => [], :coding => [], :project_details => [], :start_date)
 
     def create
       @project = Project.new(project_params)
@@ -20,22 +20,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
    protected
 
-   def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit({ roles: [] }, :email, :password, :password_confirmation)
-   end
-
-
-
-   def sign_up_params
-     params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :password, :password_confirmation)
-   end
-  # # If you have extra params to permit, append them to the sanitizer.
+  #  def configure_permitted_parameters
+  #     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+  #     user_params.permit({ roles: [] }, :email, :password, :password_confirmation)
+  #  end
+  #
+  #
+  #
+  #  def sign_up_params
+  #    params.require(:user).permit(:first_name, :last_name, :city, :cohort, :email, :password, :password_confirmation)
+  #  end
+  # # # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
   # end
-  #
-  # # If you have extra params to permit, append them to the sanitizer.
+  # #
+  # # # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end

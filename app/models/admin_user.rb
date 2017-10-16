@@ -16,7 +16,7 @@ class AdminUser < ApplicationRecord
 
 
          has_many :cohort, :class_name => 'Admin_user::Cohort'
-         has_many :users, :class_name => 'Admin_user::User' #inverse_of: :user
+         has_many :users, :class_name => 'Admin_user::User'
 
          has_many :friendships
          has_many :friends#, through: :friendships, class_name: "User"

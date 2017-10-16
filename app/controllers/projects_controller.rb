@@ -21,16 +21,17 @@ class ProjectsController < ApplicationController
   def show
     @project = User.first
     @project = Project.find(params[:id])
-    @friends = Friend(:user_id, @friends)
+    #@friends = Friend(:user_id, @friends)
   end
 
   def new
     @project = Project.new
-    #@project = current_user.projects
+    #@project = current_user.project_params[:id])
   end
 
   def create
     @project = Project.new(project_params)
+      
 
     if @project.save
       flash[:notice] = "project has been created"

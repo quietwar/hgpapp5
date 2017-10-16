@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Listing Projects" do
   before do
-    @john =  User.create(first_name: "John", last_name: "Doe", email: "john@hgs.hiddengeniusproject.org", password: "password")
-    @sarah = User.create(first_name: "Sarah", last_name: "Anderson", email: "sarah@hgs.hiddengeniusproject.org", password: "password")
+    @john =  User.create!(first_name: "John", last_name: "Doe", email: "john@hgs.hiddengeniusproject.org", password: "password", cohort_id: (0), cell: (5107779311), city: "Oakland")
+    @sarah = User.create!(first_name: "Sarah", last_name: "Anderson", email: "sarah@hgs.hiddengeniusproject.org", password: "password", cohort_id: (0), cell: (5107779311), city: "Oakland")
 
     login_as(@john)
 
@@ -17,7 +17,7 @@ RSpec.feature "Listing Projects" do
 
     @following = Friendship.create(user: @john, friend: @sarah)
 
-     
+
 
   end
 

@@ -1,10 +1,10 @@
 class EventsController < Devise::OmniauthCallbacksController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  #before_action :set_event #, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
   def index
-    @events = Event.where(start: params[:start]..params[:end])
+    @events = Event.where(start: params[:start] && params[:end])
   end
 
   respond_to :json
@@ -19,6 +19,7 @@ class EventsController < Devise::OmniauthCallbacksController
     # end
 
   def show
+    @events = Event.find_by(params[:id])
   end
 
   def new
@@ -30,13 +31,9 @@ class EventsController < Devise::OmniauthCallbacksController
 
   def create
     @event = Event.new(event_params)
-    flash[:notice] = 'Event was successfully created.' if @event.save
+    flash[:notice] = 'Event was successfully created' if @event.save
     respond_with(@event)
     @event.save
-
-    user = User.from_omniauth(request.env["omniauth.auth"])
-    session[:user_id] = user.id
-    redirect_to root_path
   end
 
   def destroy
@@ -45,7 +42,7 @@ class EventsController < Devise::OmniauthCallbacksController
   end
 
   def update
-    flash[:notice] = 'Event was successfully updated.' if @event.update(event_params)
+    flash[:notice] = 'Event was successfully updated' if @event.update(event_params)
     respond_with(@event)
   end
 
@@ -54,8 +51,20 @@ class EventsController < Devise::OmniauthCallbacksController
     respond_with(@event)
   end
 
+  # def redirect
+  #   client = Signet::OAuth2::Client.new(client_options)
+  #
+  #   redirect_to client.authorization_uri.to_s
+  # end
+
   def redirect
-    client = Signet::OAuth2::Client.new(client_options)
+    client = Signet::OAuth2::Client.new({
+      client_id: '542001295987-1a2tcq6vm4ndsov68svt3e1379lpetnk.apps.googleusercontent.com',
+      client_secret: 'tDdFW_ZGEoSYyn8o5PpqScGJ',
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
+      redirect_uri: url_for(:action => :callback)
+    })
 
     redirect_to client.authorization_uri.to_s
   end
@@ -122,8 +131,8 @@ class EventsController < Devise::OmniauthCallbacksController
 
     def client_options
       {
-        client_id: Rails.application.secrets.google_client_id,
-        client_secret: Rails.application.secrets.google_client_secret,
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
         authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
         token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
         scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
@@ -136,6 +145,6 @@ class EventsController < Devise::OmniauthCallbacksController
     end
 
     def event_params
-      params[:event]
+      params.require[:event].permit(:event, :title, :notes, :dates)
     end
 end

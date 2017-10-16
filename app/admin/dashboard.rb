@@ -33,7 +33,7 @@ ActiveAdmin.register_page "Dashboard" do
               li link_to "Oak 3"
               li link_to "Oak 4"
               li link_to "Oak 5"
-              li link_to "Create a new HGP Cohort",  new_hgp_staff_cohort_path
+              li link_to "Create a new HGP Cohort"
             end
            end
         end
@@ -41,15 +41,15 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel "Geniuses" do
-          para "Welcome to the Hidden Genius Project!"
+          para "Welcome to the Hidden Genius Project! Please click on the logo to go back to the Genius home screen"
           table_for Cohort.order("id desc").limit(10) do
 
             ul "Feature Geniuses" do
 
-               #li link_to "Isaiah", views_pages_isaiah_path
-              # li link_to "George", pages_george_path
-              # li link_to "Malik", pages_malik_path
-               li link_to "Create a new HGP featured Genius", user_features_path(:current_admin)
+               li link_to "Isaiah", page_path('isaiah')
+               li link_to "George", page_path('george')
+               li link_to "Malik",  page_path('malik')
+               li link_to "Create a new HGP featured Genius", features_path(:current_admin)
             end
           end
         end
@@ -59,7 +59,7 @@ ActiveAdmin.register_page "Dashboard" do
          panel "Events" do
            table_for Event.order("id desc").limit(10) do
              ul "Upcoming Events" do
-               li link_to "HGP Events Calendar",  calendar_path
+               li link_to "HGP Events Calendar",  events_path
              end
             end
           end

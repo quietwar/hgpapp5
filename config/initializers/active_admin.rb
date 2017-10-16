@@ -20,7 +20,7 @@ ActiveAdmin.setup do |config|
   #
   # Note: Aim for an image that's 21px high so it fits in the header.
   #
-   config.site_title_image = "/assets/blue_logo.png"
+   config.site_title_image = "/assets/HGPAssets_Emblem_Yellow.png"
 
   # == Default Namespace
   #
@@ -37,15 +37,25 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
+
+
   config.default_namespace = :Hgp_staff
-  config.namespace :Hgp_staff do |hgp_staff|
-    hgp_staff.build_menu :utility_navigation do |menu|
-      menu.add label: "HGP Webpage", url: "http://www.hiddengeniusproject",
-                                          html_options: { target: :blank }
-      hgp_staff.add_current_user_to_menu :current_admin
-      #hgp_staff.add_logout_button_to_menu, method: :delete
+    config.namespace :Hgp_staff do |hgp_staff|
+      hgp_staff.build_menu :utility_navigation do |menu|
+        menu.add id: 'current_user', label: -> { display_name current_active_admin_user }, url: -> { user_path(current_active_admin_user) }, if: :current_active_admin_user?
+        menu.add label: "HGP Webpage", url: "http://www.hiddengeniusproject",
+                                            html_options: { target: :blank }
+        hgp_staff.add_current_user_to_menu  menu
+        hgp_staff.add_logout_button_to_menu menu
+      end
     end
-  end
+
+
+
+  #     hgp_staff.add_current_user_to_menu :current_admin
+  #     hgp_staff.add_logout_button_to_menu method: :delete
+  #   end
+  # end
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
   # within a namespace:
@@ -92,13 +102,13 @@ ActiveAdmin.setup do |config|
    config.on_unauthorized_access = :access_denied
 
   # == Current User
-  #config.authorization_adapter = ActiveAdminAdapter
+  #config.authorization_adapter = :OnlyHgpAuthorization
   # Active Admin will associate actions with the current
   # user performing them.
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
-  config.current_user_method = false #:current_admin
+  config.current_user_method = :current_user
 
   # == Logging Out
   #
@@ -110,7 +120,7 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_admin_user_session_path
+  config.logout_link_path = :destroy_admin_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
