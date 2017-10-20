@@ -1,3 +1,2 @@
-Figaro.require_keys [
-  'secret_key_base'
-]
+Figaro.require_keys
+  '1783c597c0a466191edee0d07839c1d2240de63b1e4d41f2bde67d0771a859e4c9a92db198fe982d7359681ed23d741d5e79c28a5ede7c86f8818b8955810c79'
