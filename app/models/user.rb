@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :registerable,:database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
          # Only allow letter, number, underscore and punctuation.
-          validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+          #validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
           validates :cohort_id, :city, presence: true
         #  validates :first_name, :last_name,:genius, uniqueness: true
           validates :email, presence: false
@@ -57,7 +57,7 @@ class User < ApplicationRecord
   def current_friendship(friend)
     friendships.where(friend: friend).first
   end
-  
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
@@ -70,22 +70,29 @@ class User < ApplicationRecord
     end
   end
 
-  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-   #byebug
-    data = access_token#.info
-    #user = User.where(:email => data["email"]).first
+    def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+        data = access_token.info
+        user = User.where(:provider => access_token.provider, :uid =>     access_token.uid ).first
 
-    #unless user
-    user = User.create(genius: data,#["name"],
-         email: data,#["email"],
-         #uid: access_token.uid,
-         #provider: access_token.provider,
-         password: Devise.friendly_token[0,20]
-        )
-      #end
-      user
+        unless user
+          #registered_user = User.where(:email => access_token.info.email).first
+
+          #if registered_user
+          #  return registered_user
+          #else
+            user = User.create(
+              name: data["genius"],
+              provider:access_token.provider,
+              email: data["email"],
+              uid: access_token.uid ,
+              password: Devise.friendly_token[0,20],
+            )
+          #end
+
+       end
+
+       user
     end
-
 
     # def create_profile!
     #     profile = profiles.create(

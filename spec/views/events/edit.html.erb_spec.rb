@@ -8,7 +8,7 @@ RSpec.describe "events/edit", type: :view do
   it "renders the edit event form" do
     render
 
-    assert_select "form[action=?][method=?]", event_path(@event), "post" do
+    assert_select "form[action=?][method=?]", events_1_path(@events), "post" do
     end
   end
 end

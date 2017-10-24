@@ -1,5 +1,5 @@
 Rails.application.config.middleware.use Warden::Manager do |manager|
-  manager.default_strategies [:httpauth, :params]
+  manager.default_strategies [:omniauth, :params]
 end
 
 Warden::Manager.serialize_into_session do |user|
@@ -9,7 +9,7 @@ end
 Warden::Manager.serialize_from_session do |id|
   User.where(persistence_token: id).first
 end
-
+#
 module UserCredentialAuthentication
   def verify_against_old_credentials( user, password )
     Sha512.matches?( user.sha512_password, password, user.sha512_salt )
@@ -48,15 +48,15 @@ module UserCredentialAuthentication
 end
 
 
-Warden::Strategies.add(:httpauth) do
+Warden::Strategies.add(:omniauth) do
   include UserCredentialAuthentication
 
   def medium
-    'httpAuth'
+    'omniauth'
   end
 
   def valid?
-    Rails.logger.warn("[AUTH] checking httpAuth")
+    Rails.logger.warn("[OMNIAUTH] checking omniauth")
     auth.provided? && auth.basic?
   end
 
@@ -69,7 +69,7 @@ Warden::Strategies.add(:httpauth) do
   end
 
   def auth
-    @auth ||= Rack::Auth::Basic::Request.new(env)
+    @omniauth ||= Rack::Auth::Basic::Request.new(env)
   end
 end
 
@@ -81,7 +81,7 @@ Warden::Strategies.add(:params) do
   end
 
   def valid?
-    Rails.logger.warn("[AUTH] checking params")
+    Rails.logger.warn("[OMNIAUTH] checking params")
     credential_params['username'] && credential_params['password']
   end
 

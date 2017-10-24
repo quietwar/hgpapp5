@@ -1,6 +1,6 @@
-<%= form_with(model: event, local: true) do |form| %>
+<%= form_with(model: @events, local: true) do |form| %>
   <div class="form-inputs">
-    
+
     <%= text_field :notes, id: :notes %>
     <%= date_field :date_range, input_html: { class: "form-control input-sm date-range-picker" } %>
     <%= hidden_field :start, as: :hidden, value: Date.today, class: 'form-control input-sm start_hidden' %>
@@ -21,7 +21,7 @@
   <div class="actions">
     <%= form.submit %>
     <%= link_to 'Delete',
-                event,
+                events_path,
                 method: :delete,
                 class: 'btn btn-danger',
                 data: {confirm: 'Are you sure?'},

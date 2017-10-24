@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
       devise_scope :user do
         get '/events', to: 'events#index'
-        get '/events/new', to: 'events#new'
+        get '/events/new', to: 'events#new', as: 'new_event'
         get '/events/1/', to: 'events#show', :id => "1"
         get '/events/1/edit/', to: 'events#edit', :id => "1"
         post '/events', to: 'events#create'

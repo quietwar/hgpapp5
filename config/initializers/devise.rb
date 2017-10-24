@@ -1,14 +1,8 @@
-# Use this hook to configure devise mailer, warden hooks and so forth.
-# Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # The secret key used by Devise. Devise uses this key to generate
-  # random tokens. Changing this key will render invalid all existing
-  # confirmation, reset password and unlock tokens in the database.
-  # Devise will use the `secret_key_base` as its `secret_key`
-  # by default. You can change it below and use your own secret key.
+  require 'omniauth-google-oauth2'
 
-  config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
-
+  #config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
+  config.secret_key = ENV['config.secret_key'] if Rails.env.production?
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -248,8 +242,20 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+
   #config.provider "KEY", "SECRET"
+      # provider
+      #     google_oauth2: '542001295987-1a2tcq6vm4ndsov68svt3e1379lpetnk.apps.googleusercontent.com',
+      #     google_client_secret: 'tDdFW_ZGEoSYyn8o5PpqScGJ',
+      #     prompt: "consent",
+      #       access_type: "offline",
+      #     select_account: true,
+      #     scope: 'calendars,maps,email',
+      #     image_aspect_ratio: 'square',
+      #     image_size: 50
+      #     on_failure { |env| AuthenticationsController.action(:failure).call(env) }
+      #   end
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
@@ -272,4 +278,10 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+  #config.omniauth :google_oauth2, 'AIzaSyB49uC_ZAuE5ef0ouy5DuVJ1qroP7qN6Ss', 'tDdFW_ZGEoSYyn8o5PpqScGJ', scope: 'user,calendars,email,maps'
+  config.omniauth :google_oauth2,
+    Figaro.env.google_client_id,
+    Figaro.env.google_client_secret, {
+      scope: "email,calendar"
+    }
 end
