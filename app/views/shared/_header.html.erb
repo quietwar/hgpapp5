@@ -22,8 +22,8 @@
              <% end %>
 
            <ul class="nav navbar-nav navbar-right">
-             <% if current_user %>
-             Signed in as <strong><%= current_user.name %></strong>!
+             <% if logged_in? %>
+             Signed in as <strong><%= current_user  %></strong>!
 
                <li><%= link_to "My Lab", user_projects_path(:current_user) %></li>
                <li><%= link_to "Tap out", signout_path, method: :delete %></li>

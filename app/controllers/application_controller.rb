@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
    helper_method :current_user, :logged_in?, :current_room, :authenticate_admin!, :authenticate_user!
    #before_action :set_current_user
    #before_action :configure_permitted_parameters, if: :devise_controller?

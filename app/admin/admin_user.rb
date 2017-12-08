@@ -4,6 +4,7 @@ ActiveAdmin.register AdminUser, :as => 'Staff' do
   menu priority: 2
   config.batch_actions = true
   #sortable tree: true
+  #active_admin_comments
 
   index do
     selectable_column

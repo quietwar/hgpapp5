@@ -1,7 +1,7 @@
 class CohortsController < ApplicationController
   #before_action :authenticate_admin!
   before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
-  permit_params :genius, :city, :cohort, :cell, :email, :email2
+  permit_params :genius, :city, :cohort_id, :cell, :email, :email2
 Rails.logger.info(@cohorts.errors.inspect)
     def index
       @cohort = Cohort.all

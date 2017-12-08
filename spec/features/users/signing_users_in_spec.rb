@@ -12,7 +12,7 @@ RSpec.feature "Users signin" do
     click_link "Tap in"
     fill_in "Email", with: @john.email
     fill_in "Password",  with: @john.password
-    fill_in "cohort", with: 0
+    fill_in "cohort_id", with: 0
     fill_in "city", with: "Oakland"
     fill_in "cell", with: (5107779311)
     click_button "Log in"

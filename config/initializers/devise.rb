@@ -1,5 +1,4 @@
 Devise.setup do |config|
-  require 'omniauth-google-oauth2'
 
   #config.secret_key = 'cba52b9879adc14a361f8b26e1985ff3e909bd33c273a67ffd4f8d041f98d043f448f9d60952ca5280a539a655203e874f174fcfbd39df83b6050d6b8f'
   config.secret_key = ENV['config.secret_key'] if Rails.env.production?
@@ -83,7 +82,7 @@ Devise.setup do |config|
   # avoid CSRF token fixation attacks. This means that, when using AJAX
   # requests for sign in and sign up, you need to get a new CSRF token
   # from the server. You can disable this option at your own risk.
-  config.clean_up_csrf_token_on_authentication = true
+  #config.clean_up_csrf_token_on_authentication = true
 
   # When false, Devise will not attempt to reload routes on eager load.
   # This can reduce the time taken to boot the app but if your application
@@ -260,10 +259,10 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  config.warden do |manager|
-    manager.intercept_401 = false
-    manager.default_strategies(scope: :user).unshift :some_external_strategy
-  end
+  # config.warden do |manager|
+  #   manager.intercept_401 = false
+  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+  # end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -279,9 +278,32 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   #config.omniauth :google_oauth2, 'AIzaSyB49uC_ZAuE5ef0ouy5DuVJ1qroP7qN6Ss', 'tDdFW_ZGEoSYyn8o5PpqScGJ', scope: 'user,calendars,email,maps'
-  config.omniauth :google_oauth2,
-    Figaro.env.google_client_id,
-    Figaro.env.google_client_secret, {
-      scope: "email,calendar"
-    }
-end
+  module OmniAuth
+    module Strategies
+      class GoogleAuth < OmniAuth::Strategies::GoogleOauth2
+        option :name, 'google_auth'
+        option :callback_path, '/callbacks/google'
+      end
+    end
+  end
+
+  require 'omniauth-google-oauth2'
+
+  Rails.application.config.middleware.use OmniAuth::Builder do
+    #def google_oauth2_options
+   #config.omniauth 
+    provider :google_oauth2,
+     Figaro.env.google_client_id,
+     Figaro.env.google_client_secret
+     #google_oauth2_options
+      {
+        scope: 'email, calendar',
+        prompt: 'select_account',
+        image_aspect_ratio: 'original',
+        name: 'google',
+        access_type: 'offline',
+        provider_ignores_state: true
+      }
+    end
+
+  end

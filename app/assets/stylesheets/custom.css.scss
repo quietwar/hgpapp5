@@ -6,9 +6,7 @@ body {
   margin-top: 250px;
 }
 
-.page {
-  background-color: black;
-}
+
 .container {
     background-color: black;
     color: #4040a1 !important;
@@ -116,12 +114,24 @@ body {
 }
 
 //project form styling
+.page {
+  background-color: black;
+}
+
 .col-md-10 {
-color: purple;
-text-align: left;
-padding: 10px;
+  color: purple;
+  text-align: left;
+  padding: 10px;
 
 }
+
+// .col-md-2 {
+//   box-sizing: content-box;
+//   width: 250px;
+//   height: 50px;
+//   padding-bottom: 10px;
+//
+// }
 
 .form-group {
 color: green;
@@ -197,6 +207,11 @@ text-align: left;
 
 #back-btn {
   margin-left: -10px;
+  margin-top: 30px;
+}
+
+#submit-btn {
+  margin-left: 10px;
   margin-top: 30px;
 }
 

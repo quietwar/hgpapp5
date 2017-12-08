@@ -42,13 +42,13 @@ ActiveAdmin.setup do |config|
   config.default_namespace = :Hgp_staff
     config.namespace :Hgp_staff do |hgp_staff|
       hgp_staff.build_menu :utility_navigation do |menu|
-        menu.add id: 'current_user', label: -> { display_name current_active_admin_user }, url: -> { user_path(current_active_admin_user) }, if: :current_active_admin_user?
-        menu.add label: "HGP Webpage", url: "http://www.hiddengeniusproject",
-                                            html_options: { target: :blank }
-        hgp_staff.add_current_user_to_menu  menu
-        hgp_staff.add_logout_button_to_menu menu
+        menu.add id: 'current_user', label: -> { display_name current_user } #url: -> { hgp_staff_dashboard(current_user) }, if: :current_user
+        #menu.add label: "HGP Webpage", url: -> "http://www.hiddengeniusproject"
+                                            #html_options: { target: :blank }
+        #  add_current_user menu  menu
+        #  add_logout_button menu menu
       end
-    end
+    #end
 
 
 
@@ -141,39 +141,40 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  config.comments = false
+  config.comments = true
   # #
   # # You can change the name under which comments are registered:
-  #  config.comments_registration_name = 'current_admin'
+  config.comments_registration_name = 'staff-comments'
   # #
   # # You can change the order for the comments and you can change the column
   # # to be used for ordering:
   #config.comments_order = 'created_at ASC'
-  #
+
   # # You can disable the menu item for the comments index page:
-  #  config.comments_menu = true
+   config.comments_menu = true
   # #
   # # You can customize the comment menu:
-  # config.comments_menu = { parent: 'Admin', priority: 1 }
-  # module ActiveAdmin
-  #   class ResourceDSL < DSL
-  #     def permit_params(*args, &block)
-  #       resource_sym = config.resource_name.singular.to_sym
-  #       controller do
-  #         define_method :permitted_params do
-  #           params.permit :utf8, :authenticity_token, :commit,
-  #                         resource_sym =>
-  #                         block? instance_exec(&block) : args do
-  #         end
-  #       end
-  #       end
-  #     end
-  #   end
+   config.comments_menu = { parent: 'Staff', priority: 5 }
+  #module ActiveAdmin
+    #class ResourceDSL < DSL
+      def permit_params#(*args, &block)
+        resource_sym = config.resource_name.singular.to_sym
+        controller do
+          define_method :permitted_params do
+            params.permit :utf8, :authenticity_token, :commit
+          #                 resource_sym =>
+          #                 block? instance_exec(&block) : args do
+          #
+          # end
+         #end
+        end
+      end
+    end
   # == Batch Actions
   #
   # Enable and disable Batch Actions
   #
-  config.batch_actions = true
+   config.batch_actions = true
 
   # == Controller Filters
   #
@@ -189,11 +190,11 @@ ActiveAdmin.setup do |config|
   # To understand how to localize your app with I18n, read more at
   # https://github.com/svenfuchs/i18n/blob/master/lib%2Fi18n%2Fbackend%2Fbase.rb#L52
   #
-  config.localize_format = :long
+   config.localize_format = :long
 
   # == Setting a Favicon
   #
-  # config.favicon = 'favicon.ico'
+   #config.favicon = 'favicon.ico'
 
   # == Meta Tags
   #
@@ -213,7 +214,7 @@ ActiveAdmin.setup do |config|
   # Breadcrumbs are enabled by default. You can customize them for individual
   # resources or you can disable them globally from here.
   #
-  # config.breadcrumb = false
+   config.breadcrumb = true
 
   # == Create Another Checkbox
   #
@@ -311,14 +312,14 @@ ActiveAdmin.setup do |config|
   # You can enabled or disable the inclusion
   # of those filters by default here.
   #
-   config.include_default_association_filters = true
+  #config.include_default_association_filters = true
 
   # == Footer
   #
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
-  config.footer = ' copyright;   Hodari A. Touré PhD'
+  config.footer = 'Copyright © Hodari A. Touré PhD'
 
   # == Sorting
   #
@@ -326,6 +327,7 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   #config.order_clause = MyOrderClause
-    #end
-  #end
+# end
+   #end
+ end
 end

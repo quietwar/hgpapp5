@@ -1,22 +1,22 @@
 class UsersController < Devise::RegistrationsController
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :confirmations,
-          :authentication_keys => {email: true, login: true}
-#before_action :configure_users_params, only: [:create, :new]
-permit_params :first_name, :last_name, :city, :cohort, :email, :email2, :avatar, :username, :project
-require 'google/api_client'
-require 'google/api_client/client_secrets'
-Rails.logger.info(@users.errors.inspect)
+  # devise :database_authenticatable, :registerable,
+  #        :recoverable, :rememberable, :trackable, :confirmations,
+  #         :authentication_keys => {email: true, login: true}
+
+before_action user_params: #only: => {create:, new:}
+#permit_params :first_name, :last_name, :city, :cohort, :email, :email2, :avatar, :username, :project
+# require 'google/api_client'
+# require 'google/api_client/client_secrets'
  def index
    @users = User.all
    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
       marker.lat user.latitude
       marker.lng user.longitude
       marker.title user.title
- end
+   end
+  end
 
  def new
-   byebug
    @user = User.new
  end
 
@@ -28,6 +28,11 @@ Rails.logger.info(@users.errors.inspect)
       redirect_to root_path
     else
       @user = User.new(set_user_params)
+      respond_to do |format|
+      format.html { redirect_to @user }
+      format.js
+      # create.js.erb
+      # destroy.js.erb
     #  user_password = params[:session][:password]
     #  user_email = params[:session][:email]
     #  user = user_email.present? && User.find_by(email: :user_email)
@@ -47,14 +52,19 @@ Rails.logger.info(@users.errors.inspect)
    @users = User.find_by(params[:id])
  end
 
-
+ def destroy
+   session[:user_id] = nil
+   redirect_to root_path
  end
+
+
 
  private
 #params[:product][:data].try(:keys))
+
  def user_params
-   params.require(:user).permit(:first_name, :last_name, :city, :cohort, :email, :avatar, :username #project: params[:app_name, :coding, :project_details, :user_id, :project_ids, :start_date
-])
+   params.require(:user).permit(:first_name, :last_name, :city, :cohort, :email, :avatar, :username, project: [ :app_name, :coding, :project_details, :start_date])
+   #params.permit(user: [ :first_name, :last_name, :city, :cohort, :email, :avatar, :username { projects: :app_name, :coding, :project_details, :start_date } ])
  end
 
  def authenticate_user!
@@ -63,4 +73,5 @@ Rails.logger.info(@users.errors.inspect)
        redirect_to root_path
      end
   end
+end
 end

@@ -3,7 +3,7 @@ ActiveAdmin.register User, :as => 'Genius' do
   menu priority: 4
   config.batch_actions = true
   active_admin_importable
-
+  
   # index do
   #
   # end
@@ -65,6 +65,5 @@ ActiveAdmin.register User, :as => 'Genius' do
      end
    end
     f.actions
-
   end
 end

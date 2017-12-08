@@ -1,14 +1,16 @@
 ActiveAdmin.register_page "Dashboard" do
-  # controller do
-  #   def permitted_params
-  #     params.permit :utf8, :_method, :authenticity_token, :commit, :id,
+  menu priority: 1, label:  "Genius Lounge"
+  #active_admin_comments
+  # params.permit :utf8, :_method, :authenticity_token, :commit, :id,
   #               project: [:app_name, :coding ]
-  #   end
-  # end
+  controller do
+    def permitted_params
+      params.permit :utf8, :_method, :authenticity_token, :commit, :id
 
-  menu priority: 1,
+    end
+   end
 
-  label:  "Genius Lounge"
+
 
   content title:  "The Genius Lounge" do
     link_to "www.hiddengeniusproject.org"
@@ -64,7 +66,7 @@ ActiveAdmin.register_page "Dashboard" do
             end
           end
         end
-     end
+     #end
     end
   end
-#end
+end

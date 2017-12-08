@@ -27,7 +27,7 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
-
+Rails.application.routes.default_url_options[:host] = 'domain.com'
   config.action_mailer.smtp_settings = {
       user_name: ENV["GMAIL_USERNAME"],
       password: ENV["GMAIL_PASSWORD"],

@@ -23,13 +23,14 @@ class EventsController < Devise::OmniauthCallbacksController
   end
 
   def new
-    @events = Event.new
+    @event = Event.new
   end
 
   def edit
   end
 
   def create
+    byebug
     @event = Event.new(event_params)
     flash[:notice] = 'Event was successfully created' if @event.save
     respond_with(@event)
@@ -82,6 +83,7 @@ class EventsController < Devise::OmniauthCallbacksController
 
 
   def calendars
+    byebug
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(session[:authorization])
 
