@@ -6,7 +6,7 @@ gem 'rails' , '>= 5.0.0.rc2', '< 5.1.4'
 gem 'bundler', '>= 1.8.4'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
-#gem 'taps'
+gem 'pg', '0.21.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -62,6 +62,7 @@ gem 'd3-rails','4.1.0'
 gem 'will_paginate-bootstrap', '~> 1.0.1'
 gem 'everett'
 gem 'cocoon'
+gem 'rails_layout'
 
 
 group :development, :test do
@@ -87,7 +88,7 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '0.21.0'
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', group: :development

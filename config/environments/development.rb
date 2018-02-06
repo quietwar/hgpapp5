@@ -58,6 +58,12 @@ Rails.application.routes.default_url_options[:host] = 'domain.com'
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  if defined? BetterErrors && ENV['EDITOR'].include?('atom')
+  BetterErrors.editor = proc { |file, line|
+    "atom://core/open/file?filename=#{CGI.escape(file)}&line=#{line}"
+  }
+end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

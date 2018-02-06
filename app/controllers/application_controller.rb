@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
+
   protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
    helper_method :current_user, :logged_in?, :current_room, :authenticate_admin!, :authenticate_user!
    #before_action :set_current_user
-   #before_action :configure_permitted_parameters, if: :devise_controller?
+   before_action :configure_permitted_parameters, if: :devise_controller?
    #require Pundit
+
+
 
   def after_sign_out_path_for(user)
       root_path
@@ -15,10 +19,13 @@ class ApplicationController < ActionController::Base
 
 protected
 
-    def configure_permitted_parameters
-        devise_parameter_sanitizer(:sign_up) { |u| u.permit( :email, :password, :avatar) }
-        devise_parameter_sanitizer(:account_update) { |u| u.permit( :email, :password, :current_password, :avatar) }
-    end
+def configure_permitted_parameters
+ devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :password, :password_confirmation])
+ devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :password, :password_confirmation])
+ devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :password, :password_confirmation, :current_password])
+end
+
+
 
 private
 
@@ -50,16 +57,6 @@ helper_method :current_user
   def access_denied(exception)
       redirect_to root_path, alert: exception.message
   end
-
-
-#   def sign_up_params
-#     params.require(:user).permit(:first_name, :last_name, :city, :cohort_id, :email, :avatar, :project
-# )
-#   end
-#
-#   def account_update_params
-#     params.require(:user).permit(:avatar, :first_name, :last_name, :email, :password, :password_confirmation)
-#   end
 
   def current_room
     @room ||= Room.find(session[:current_room]) if session[:current_room]

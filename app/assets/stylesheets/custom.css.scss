@@ -6,15 +6,31 @@ body {
   margin-top: 250px;
 }
 
+.page {
+  background-color: black;
+}
 
 .container {
     background-color: black;
     color: #4040a1 !important;
-    // text-align: center;
-     width: 100%;
-     height: 100%;
+    position:absolute;
+    left:0;
+    right:0;
 
    }
+
+   .g-signin2 {
+     margin-top: 250px;
+   }
+
+   .genius {
+     margin-top: 250px;
+     padding: 500px;
+     background-image: url('claremont2.jpg');
+     background-repeat: no-repeat;
+     background-size: 100%;
+   }
+
 
 // home page styling
 // .col-md-8 {
@@ -24,10 +40,21 @@ body {
 //   overflow-x: visible;
 // }
 //
+// .col-md-2 {
+//   box-sizing: content-box;
+//   width: 250px;
+//   height: 50px;
+//   padding-bottom: 10px;
+//
+// }
+// .col-md-12 {
+//   margin-top: 260px;
+// }
 .intro {
-  margin-top: 50px;
+  margin-top: 500px;
   text-align: center;
   color: #cccccc;
+  z-index: 1;
 
 }
 
@@ -78,6 +105,15 @@ body {
    text-align: center;
 }
 
+.navbar-brand-heading {
+   text-align: center;
+}
+
+.apply {
+  padding: 25px;
+  ///margin-top: 350px;
+}
+
 .google {
   text-align: right;
   margin-top: 350px;
@@ -100,6 +136,10 @@ body {
  }
 }
 
+.item {
+  width: 1200px;
+  height: 700px;
+}
 .open .dropdown-toggle {
     color: #fff;
     background-color: #555 !important;
@@ -113,10 +153,24 @@ body {
     background-color: red !important;
 }
 
-//project form styling
-.page {
-  background-color: black;
+.logo {
+  position: absolute;
+    right: 0px;
+    top: 0px;
 }
+
+.footer {
+  position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   //background-color: purple;
+   color: purple;
+   text-align: center;
+}
+
+//project form styling
+
 
 .col-md-10 {
   color: purple;
@@ -124,14 +178,6 @@ body {
   padding: 10px;
 
 }
-
-// .col-md-2 {
-//   box-sizing: content-box;
-//   width: 250px;
-//   height: 50px;
-//   padding-bottom: 10px;
-//
-// }
 
 .form-group {
 color: green;
@@ -152,24 +198,15 @@ text-align: left;
   text-align: left;
 }
 
-.genius {
-  margin: 05cm 0cm;
-  padding: 600px;
-  background-image: url('claremont2.jpg');
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-
 
 //About Section
 .col-lg-8 {
    background-color: black;
    background-size: cover;
-   //padding: 180px;
+   padding: 25px;
    color: #4040a1 !important;
    text-align: center;
-   //margin-bottom: 25px;
+   margin-bottom: 25px;
    width: 100%;
    height: 100%;
    //opacity: 80%;
@@ -188,9 +225,6 @@ text-align: left;
  font-size: 150%;
 }
 
-.col-md-12 {
-  margin-top: 260px;
-}
 .signed-in-user {
   padding-top: 10px;
   padding-right: 20px;

@@ -28,8 +28,9 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [:email]
+  config.authentication_keys = [:login]
 
+  config.reset_password_keys = [:login]
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
   # find_for_authentication method and considered in your model lookup. For instance,
@@ -182,7 +183,6 @@ Devise.setup do |config|
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
-  config.authentication_keys = [ :login ]
   # Warn on the last attempt before the account is locked.
   # config.last_attempt_warning = true
 
@@ -277,7 +277,6 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  #config.omniauth :google_oauth2, 'AIzaSyB49uC_ZAuE5ef0ouy5DuVJ1qroP7qN6Ss', 'tDdFW_ZGEoSYyn8o5PpqScGJ', scope: 'user,calendars,email,maps'
   module OmniAuth
     module Strategies
       class GoogleAuth < OmniAuth::Strategies::GoogleOauth2
@@ -289,10 +288,9 @@ Devise.setup do |config|
 
   require 'omniauth-google-oauth2'
 
+
   Rails.application.config.middleware.use OmniAuth::Builder do
-    #def google_oauth2_options
-   #config.omniauth 
-    provider :google_oauth2,
+    config.omniauth :google_oauth2,
      Figaro.env.google_client_id,
      Figaro.env.google_client_secret
      #google_oauth2_options

@@ -30,6 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    attributes:
+      user:
+        login: "Username or email"
   active_admin:
     dashboard: "Genius Lounge"
     dashboard_welcome:
@@ -76,7 +80,7 @@ en:
       "yes": "Yes"
       "no": "No"
     main_content: "Please implement %{model}#main_content to display content."
-    logout: "Logout"
+    logout: "Tapout"
     powered_by: "Powered by %{active_admin} %{version}"
     sidebars:
       filters: "Filters"

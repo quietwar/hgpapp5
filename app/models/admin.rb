@@ -1,4 +1,4 @@
-class Admin < ApplicationRecord
+class Admin::ParameterSanitizer < Devise::ParameterSanitizer
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -16,6 +16,11 @@ class Admin < ApplicationRecord
          has_many :classrooms
          has_many :features
          has_many :messages
+
+    def initialize(*)
+       super
+       permit(:sign_up, keys: [:username, :email])
+    end
 
     def full_name
            [first_name, last_name].join(" ")

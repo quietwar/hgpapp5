@@ -1,7 +1,8 @@
-class AdminController < ApplicationController
+class AdminController< Devise::RegistrationsController
+  
+
   def index
     #render 'index'
-
   end
 
 

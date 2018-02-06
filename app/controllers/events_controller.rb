@@ -60,8 +60,8 @@ class EventsController < Devise::OmniauthCallbacksController
 
   def redirect
     client = Signet::OAuth2::Client.new({
-      client_id: '542001295987-1a2tcq6vm4ndsov68svt3e1379lpetnk.apps.googleusercontent.com',
-      client_secret: 'tDdFW_ZGEoSYyn8o5PpqScGJ',
+      client_id: '1006347326565-e30jdl53gig8s97mss8c606o0db865qu.apps.googleusercontent.com',
+      client_secret: 'uJ9YgUrDhROhQQt9hhVpjJJc',
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
       redirect_uri: url_for(:action => :callback)

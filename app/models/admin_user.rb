@@ -7,9 +7,9 @@ class AdminUser < ApplicationRecord
          attr_accessor :username, :email, :password, :password_confirmation, :remember_me, :login
 
 
-   with_options presence: true do
+   #with_options presence: true do
      validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-     validates :provider
+     validates :provider, presence: true
      validates :uid, uniqueness: { scope: :provider }
      validates :first_name, presence: true
      validates :last_name, presence: true
@@ -28,9 +28,13 @@ class AdminUser < ApplicationRecord
      has_many :features
      has_many :messages
 
-    end
+
 
     # Devise override to ignore the password requirement if the user is authenticated
+        def self.current_logged_user
+          :current_admin_user
+        end
+
         def password_required?
           return false if provider.present?
           super

@@ -42,20 +42,12 @@ ActiveAdmin.setup do |config|
   config.default_namespace = :Hgp_staff
     config.namespace :Hgp_staff do |hgp_staff|
       hgp_staff.build_menu :utility_navigation do |menu|
-        menu.add id: 'current_user', label: -> { display_name current_user } #url: -> { hgp_staff_dashboard(current_user) }, if: :current_user
-        #menu.add label: "HGP Webpage", url: -> "http://www.hiddengeniusproject"
-                                            #html_options: { target: :blank }
-        #  add_current_user menu  menu
-        #  add_logout_button menu menu
+        menu.add label: add_current_admin_user
+        menu.add label: add_logout_button
+        menu.add id: 'current_admin_user', label: -> { display_name :current_admin_user }, url: -> { hgp_staff_dashboard(:current_admin_user) }
       end
-    #end
+    end
 
-
-
-  #     hgp_staff.add_current_user_to_menu :current_admin
-  #     hgp_staff.add_logout_button_to_menu method: :delete
-  #   end
-  # end
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
   # within a namespace:
@@ -76,7 +68,7 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
 
-  config.authentication_method = false #:authenticate_admin!
+  config.authentication_method = :authenticate_admin_user!
 
   # == User Authorization
   #
@@ -108,7 +100,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
-  config.current_user_method = :current_user
+  config.current_user_method = :current_admin_user
 
   # == Logging Out
   #
@@ -253,15 +245,6 @@ ActiveAdmin.setup do |config|
   # To change the default utility navigation to show a link to your website & a logout btn
   #
 
-
-  # If you wanted to add a static menu item to the default menu provided:
-  #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :default do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #     end
-  #   end
-
   # == Download Links
   #
   # You can disable download links on resource listing pages,
@@ -329,5 +312,5 @@ ActiveAdmin.setup do |config|
   #config.order_clause = MyOrderClause
 # end
    #end
- end
+ #end
 end

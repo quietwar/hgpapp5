@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable
       devise :registerable,:database_authenticatable, :confirmable,
-             :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
+             :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]#, :authentication_keys => {email: true, login: true}
              #validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
               validates :cohort_id, :city, presence: true
               validates :email, presence: false
@@ -11,7 +11,7 @@ class User < ApplicationRecord
               has_attached_file :avatar, styles: { medium: '680x300>', thumb: '170x75>' }, default_url: '/assests/images/missing.png"'
                 validates_attachment_content_type :avatar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
               after_create :create_chatroom, :send_welcome_email!, :create_profile!
-
+              attr_accessor :login
               has_one :room, inverse_of: :user
               has_one :cohort, inverse_of: :user
               has_many :projects, inverse_of: :user
@@ -21,7 +21,13 @@ class User < ApplicationRecord
               has_many :active_admin_comments, as: :resource, class_name: 'Hgp_staffStaff::Comment'
               alias_method :comments, :active_admin_comments
               belongs_to :cohort, inverse_of: :users
-                validates_presence_of :cohort
+                validates_presence_of :cohort_id
+
+      def self.find_for_database_authentication warden_conditions
+        conditions = warden_conditions.dup
+        login = conditions.delete(:login)
+        where(conditions).where(["lower(username) = :value OR lower(email) = :value", {value: login.strip.downcase}]).first
+      end
 
       def full_name
         "#{first_name} #{last_name}"
@@ -48,19 +54,27 @@ class User < ApplicationRecord
       def current_friendship(friend)
         friendships.where(friend: friend).first
       end
-
       def self.from_omniauth(auth)
         byebug
-        where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-          user.provider = auth.provider
+        user.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
           user.email = auth.info.email
           user.password = Devise.friendly_token[0,20]
-          user.first_name = auth.info.first_name
-          user.last_name = auth.info.last_name   # assuming the user model has a name
+          user.name = auth.info.name   # assuming the user model has a name
           user.image = auth.info.image # assuming the user model has an image
-          user.save!
         end
       end
+      # def self.from_omniauth(auth)
+      #   byebug
+      #   user.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      #     user.provider = auth.provider
+      #     user.email = auth.info.email
+      #     user.password = Devise.friendly_token[0,20]
+      #     user.first_name = auth.info.first_name
+      #     user.last_name = auth.info.last_name   # assuming the user model has a name
+      #     user.image = auth.info.image # assuming the user model has an image
+      #     user.save!
+      #   end
+      # end
 
         def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
             #byebug
@@ -136,9 +150,47 @@ class User < ApplicationRecord
          end
 
 
-      private
+    protected
 
+        def self.send_reset_password_instructions attributes = {}
+          recoverable = find_recoverable_or_initialize_with_errors(reset_password_keys, attributes, :not_found)
+          recoverable.send_reset_password_instructions if recoverable.persisted?
+          recoverable
+        end
 
+        def self.find_recoverable_or_initialize_with_errors required_attributes, attributes, error = :invalid
+          (case_insensitive_keys || []).each {|k| attributes[k].try(:downcase!)}
+
+          attributes = attributes.slice(*required_attributes)
+          attributes.delete_if {|_key, value| value.blank?}
+
+          if attributes.size == required_attributes.size
+            if attributes.key?(:login)
+              login = attributes.delete(:login)
+              record = find_record(login)
+            else
+              record = where(attributes).first
+            end
+          end
+
+          unless record
+            record = new
+
+            required_attributes.each do |key|
+              value = attributes[key]
+              record.send("#{key}=", value)
+              record.errors.add(key, value.present? ? error : :blank)
+            end
+          end
+          record
+        end
+
+        def self.find_record login
+          where(["username = :value OR email = :value", {value: login}]).first
+        end
+
+    private
+    
         def configure_permitted_parameters
           devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name
         end
