@@ -146,7 +146,7 @@ en:
       login:
         title: "Login"
         remember_me: "Remember me"
-        submit: "Login"
+        submit: "Submit"
       reset_password:
         title: "Forgot your password?"
         submit: "Reset My Password"

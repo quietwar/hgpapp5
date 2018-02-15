@@ -1,5 +1,17 @@
 module ApplicationHelper
 
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+     @devise_mapping ||= Devise.mappings[:user]
+  end
+  
   def avatar_profile_link(user, image_options={}, html_options={})
   avatar_url = nil
   unless user.nil?

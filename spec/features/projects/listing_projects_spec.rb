@@ -7,11 +7,11 @@ RSpec.feature "Listing Projects" do
 
     login_as(@john)
 
-    @p1 = @john.projects.create(app_name: "my app",
+    @p1 = @john.projects.create(app_name: "my app2",
                                   coding: "ruby",
                                   start_date: Date.today)
 
-    @p2 = @john.projects.create(app_name: "my app",
+    @p2 = @john.projects.create(app_name: "my app3",
                                   coding: "ruby",
                                   start_date: Date.today)
 

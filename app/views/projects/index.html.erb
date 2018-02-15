@@ -1,5 +1,5 @@
 <% content_for(:whole_page) do %>
-  <div class="col-md-7 col-xs-12">
+<div class="col-md-7 col-xs-12">
   <% unless @projects.empty? %>
     <h1>My Projects</h1>
 
@@ -19,30 +19,27 @@
           <tr>
             <td><%= project.app_name %></td>
             <td><%= project.coding %></td>
-            <td><%= truncate(project.project_details, length: 240) %></td>
+            <td><%= project.project_details %></td>
             <td><%= project.start_date %></td>
-            <td><%= link_to 'Show', user_project_path(:user_id, project) %></td>
-            <td><%= link_to 'Edit', edit_user_project_path(:user_id, project)
-             %></td>
-            <td><%= link_to 'Destroy',  user_project_path(:user_id, project),
-            method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Show', project_path(:user_id, @projects) %></td>
+            <td><%= link_to 'Edit', edit_project_path(:user_id, @projects)%></td>
+            <td><%= link_to 'Destroy',  delete_project_path(:user_id, @projects),
+            data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <br>
-    <div class="row">
       <div class="col-md-10">
         <h2>List of Geniuses</h2>
 
       </div>
-    </div>
 
     <div class="row">
-      <% @followers.each do |follower| %>
+      <% @follower.each do |follower| %>
         <div class="col-md-10 well member">
           <%= friend.full_name %>
-          <% if current_user %>
+          <% if :current_user %>
             <%= link_to "Follow", friendships_path(friend_id: feature.id),
                 method: :post, class: "btn btn-success pull-right" unless current_user.follows_or_same?(follow) %>
           <% end %>
@@ -55,38 +52,32 @@
     <div class="alert alert-danger message-font text-center"
     role="alert">
       No Projects Yet
-    </div>
+
     <br>
   <% end %>
-  <%= link_to 'New Project', new_user_project_path,
+  <%= link_to 'New Project', new_project_path,
       class: "btn btn-success link" %>
-
-</div>
 
 <div class="col-md-5 col-xs-12">
   <div id="chat-window" class="col-md-12">
-    <header class="text-center">Channel: <%= current_room %></header>
+    <header class="text-center">Channel: <%= :current_room %></header>
 
     <div class="col-md-2" id="followers">
-      <% @followers.each do |follower| %>
-        <%= link_to follower.user.full_name, user_projects_path(current_user, roomId: follower.user.room.id), class: 'followers' %>
+      <% @follower.each do |follower| %>
+        <%= link_to follower.user.full_name, projects_path(:current_user, roomId: follower.user.room.id), class: 'followers' %>
         <br />
       <% end %>
     </div>
 
-    <div class="col-md-10" id="messages-box">
-      <div id="chat-box" data-channel="rooms" data-room-id=<%= current_room %>>
-      <% @message.each do |message| %>
-        <%= render partial: 'shared/message', locals: { message: message } %>
-      <% end %>
-    </div>
 
-    <div id="form-box">
+  
 
-        <%= form_with message: Message.new do |form| %>
-          <%= form.text_field :title %>
-        <% end %>
-    </div>
+      <div id="form-box">
+
+          <%= form_with message: Message.new do |form| %>
+            <%= form.text_field :title %>
+          <% end %>
+      </div>
     </div>
   </div>
   <h1 class="text-center">My Friends</h1>
@@ -99,10 +90,11 @@
     <div class="col-md-3">
       <div class="btn-unfollow">
         <%= link_to "Unfollow", friendship_path(current_user.current_friendship(friend)),
-            method: :delete, data: { confirm: "Are you sure?" },
+             data: { confirm: "Are you sure?" },
             class: "btn btn-success link" %>
       </div>
     </div>
   <% end %>
+ </div>
 </div>
 <% end %>

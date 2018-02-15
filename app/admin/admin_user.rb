@@ -1,6 +1,6 @@
 ActiveAdmin.register AdminUser, :as => 'Staff' do
   actions :all
-  permit_params :first_name, :last_name, :email, :cell, :title, :password, :password_confirmation, :superadmin
+  permit_params :first_name, :last_name, :email, :cell, :title, :password, :password_confirmation, :role, :superadmin
   menu priority: 2
   config.batch_actions = true
   #sortable tree: true
@@ -15,6 +15,7 @@ ActiveAdmin.register AdminUser, :as => 'Staff' do
     column :cell
     column :title
     column :email2
+    column :superadmin
     column :sign_in_count
     column :created_at
     column :current_user_email do

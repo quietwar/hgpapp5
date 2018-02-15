@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207234905) do
+ActiveRecord::Schema.define(version: 20180209174101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,10 @@ ActiveRecord::Schema.define(version: 20171207234905) do
     t.bigint "cell"
     t.string "provider"
     t.string "uid"
+    t.integer "roles_mask"
+    t.string "username"
+    t.boolean "superadmin"
+    t.integer "utf8"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_admin_users_on_provider_and_uid", unique: true
   end
@@ -163,6 +167,10 @@ ActiveRecord::Schema.define(version: 20171207234905) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "utf8"
+    t.string "authenticity_token"
+    t.string "commit"
+    t.string "locale"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -234,6 +242,7 @@ ActiveRecord::Schema.define(version: 20171207234905) do
     t.string "google_oauth2"
     t.string "user"
     t.string "name"
+    t.integer "roles_mask"
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

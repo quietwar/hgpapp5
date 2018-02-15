@@ -19,6 +19,7 @@ Devise.setup do |config|
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
+  
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -236,7 +237,7 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
+  config.sign_out_via = :get
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -258,11 +259,17 @@ Devise.setup do |config|
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
-  #
   # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-  # end
+  #   config.failure_app = FailureApp
+  #end
+#   Warden::Manager do |config|
+#   config.failure_app = FailureApp
+#   config.oauth(:google) do |google|
+#     Figaro.env.google_client_id,
+#     Figaro.env.google_client_secret
+#   end
+#   config.default_strategies(:google_oauth2, :password, :other)
+# end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -277,19 +284,19 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  module OmniAuth
-    module Strategies
-      class GoogleAuth < OmniAuth::Strategies::GoogleOauth2
-        option :name, 'google_auth'
-        option :callback_path, '/callbacks/google'
-      end
-    end
-  end
+  # module OmniAuth
+  #   module Strategies
+  #     class GoogleAuth < OmniAuth::Strategies::GoogleOauth2
+  #       option :name, 'google_auth'
+  #       option :callback_path, '/callbacks/google'
+  #     end
+  #   end
+  # end
 
   require 'omniauth-google-oauth2'
 
 
-  Rails.application.config.middleware.use OmniAuth::Builder do
+  Rails.application.config.app_middleware.use OmniAuth::Builder do
     config.omniauth :google_oauth2,
      Figaro.env.google_client_id,
      Figaro.env.google_client_secret
@@ -302,6 +309,6 @@ Devise.setup do |config|
         access_type: 'offline',
         provider_ignores_state: true
       }
-    end
-
+    #end
+   end
   end

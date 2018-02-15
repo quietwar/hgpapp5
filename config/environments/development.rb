@@ -38,7 +38,7 @@ Rails.application.routes.default_url_options[:host] = 'domain.com'
       enable_starttls_auto: true
     }
   # Don't care if the mailer can't send.
-  config.consider_all_requests_local = false
+  config.consider_all_requests_local = true
 
   config.action_mailer.raise_delivery_errors = false
 

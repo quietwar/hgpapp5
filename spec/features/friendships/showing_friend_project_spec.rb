@@ -14,11 +14,11 @@ RSpec.feature "Showing Friend Project" do
 
     @e1 = @john.projects.create!(app_name: "My App",
                                 coding: "language",
-                                app_details: "das shyt",
+                                project_details: "das shyt",
                                 start_date: Date.today)
     @e2 = @sarah.projects.create!(app_name: "My App",
                                  coding: "language",
-                                 app_details: "das shyt",
+                                 project_details: "das shyt",
                                  start_date: Date.today)
     login_as(@john)
 

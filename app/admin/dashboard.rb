@@ -1,8 +1,7 @@
 ActiveAdmin.register_page "Dashboard" do
-  menu priority: 1, label:  "Genius Lounge"
+
+  menu priority: 1, label: "Genius Lounge" #proc{ I18n.t("active_admin.dashboard") }
   #active_admin_comments
-  # params.permit :utf8, :_method, :authenticity_token, :commit, :id,
-  #               project: [:app_name, :coding ]
   controller do
     def permitted_params
       params.permit :utf8, :_method, :authenticity_token, :commit, :id
@@ -10,63 +9,62 @@ ActiveAdmin.register_page "Dashboard" do
     end
    end
 
+      content title:  "The Genius Lounge" do
+        link_to "www.hiddengeniusproject.org"
+        div class: "blank_slate_container", id: "dashboard_default_message" do
+          span class: "blank_slate" do
+            span I18n.t("active_admin.dashboard_welcome.welcome")
+            small I18n.t("active_admin.dashboard_welcome.call_to_action")
+          end
+        end
 
+        # Here is an example of a simple dashboard with columns and panels.
+        #
+        columns do
+          column do
+            panel "Cohorts" do
+              table_for Cohort.order("id desc").limit(10) do
+                ul "HGP Cohorts" do
 
-  content title:  "The Genius Lounge" do
-    link_to "www.hiddengeniusproject.org"
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
-    end
+                  li link_to "Rich 1", page_path('Rich1')
+                  li link_to "Rich 2", page_path('Rich2')
+                  li link_to "Oak 1", page_path('Oak1')
+                  li link_to "Oak 2", page_path('Oak2')
+                  li link_to "Oak 3", page_path('Oak3')
+                  li link_to "Oak 4", page_path('Oak4')
+                  li link_to "Oak 5", page_path('Oak5')
+                  li link_to "Oak 6", page_path('Oak6')
+                  li link_to "Create a new HGP Cohort", page_path("New Cohort")
+                end
+               end
+            end
+          end
 
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    columns do
-      column do
-        panel "Cohorts" do
-          table_for Cohort.order("id desc").limit(10) do
-            ul "HGP Cohorts" do
+          column do
+            panel "Geniuses" do
+              para "Welcome to the Hidden Genius Project! Please click on the logo to go back to the Genius home screen"
+              table_for Cohort.order("id desc").limit(10) do
 
-              li link_to "Rich 1"
-              li link_to "Oak 1"
-              li link_to "Oak 2"
-              li link_to "Oak 3"
-              li link_to "Oak 4"
-              li link_to "Oak 5"
-              li link_to "Create a new HGP Cohort"
+                ul "Feature Geniuses" do
+
+                   li link_to "Isaiah", page_path('isaiah')
+                   li link_to "George", page_path('george')
+                   li link_to "Malik",  page_path('malik')
+                   li link_to "Create a new HGP featured Genius", features_path(:current_admin)
+                end
+              end
             end
            end
-        end
+
+           column do
+             panel "Events" do
+               table_for Event.order("id desc").limit(10) do
+                 ul "Upcoming Events" do
+                   li link_to "HGP Events Calendar",  events_path
+                 end
+                end
+              end
+            end
       end
-
-      column do
-        panel "Geniuses" do
-          para "Welcome to the Hidden Genius Project! Please click on the logo to go back to the Genius home screen"
-          table_for Cohort.order("id desc").limit(10) do
-
-            ul "Feature Geniuses" do
-
-               li link_to "Isaiah", page_path('isaiah')
-               li link_to "George", page_path('george')
-               li link_to "Malik",  page_path('malik')
-               li link_to "Create a new HGP featured Genius", features_path(:current_admin)
-            end
-          end
-        end
-       end
-
-       column do
-         panel "Events" do
-           table_for Event.order("id desc").limit(10) do
-             ul "Upcoming Events" do
-               li link_to "HGP Events Calendar",  events_path
-             end
-            end
-          end
-        end
-     #end
-    end
   end
 end

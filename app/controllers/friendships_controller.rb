@@ -27,7 +27,7 @@ class FriendshipsController < ApplicationController
     else
       flash.now[:alert] = "#{friendname} could not be unfollowed."
     end
-    redirect_to user_projects_path(current_user)
+    redirect_to projects_path(current_user)
   end
 
   private

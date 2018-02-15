@@ -1,16 +1,15 @@
 class CohortsController < ApplicationController
-  #before_action :authenticate_admin!
-  before_action :set_cohort#, only: [:show, :edit, :update, :destroy]
-  permit_params :genius, :city, :cohort_id, :cell, :email, :email2
-Rails.logger.info(@cohorts.errors.inspect)
+  before_action :set_cohort
+  #permit_params :genius, :city, :cohort_id, :cell, :email, :email2
+
     def index
       @cohort = Cohort.all
-      @cohorts = current_admin.cohorts
-
-        respond_to do |format|
-      format.html
-      format.json { render json: UsersDatatable.new(view_context) }
-      end
+      # @cohorts = current_admin.cohorts
+      #
+      #   respond_to do |format|
+      # format.html
+      # format.json { render json: UsersDatatable.new(view_context) }
+      # end
     end
 
     def show

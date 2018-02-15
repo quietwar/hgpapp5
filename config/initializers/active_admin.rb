@@ -1,7 +1,7 @@
 ActiveAdmin.setup do |config|
-  config.before_action do
-    params.permit!
-  end
+  # config.before_action do
+  #   permitted params!
+  # end
 
   # == Site Title
   require 'active_admin'
@@ -38,15 +38,20 @@ ActiveAdmin.setup do |config|
   #
   # Default:
 
+  config.namespace :admin do |admin|
+     admin.build_menu :utility_navigation do |menu|
+       menu.add  :label  => proc{ display_name current_active_admin_user },
+                 #:url    =>  proc{ edit_admin admin_path(current_active_admin_user) }  ,#link_to current_active_admin_user,
+                 :id     => 'current_admin_user',
+                 :if     => proc{ current_active_admin_user? }
+       admin.add_logout_button_to_menu menu
+       menu.add label: "HGP Website", url: "http://www.hiddengeniusproject.org",
+                                           html_options: { target: :blank }
 
-  config.default_namespace = :Hgp_staff
-    config.namespace :Hgp_staff do |hgp_staff|
-      hgp_staff.build_menu :utility_navigation do |menu|
-        menu.add label: add_current_admin_user
-        menu.add label: add_logout_button
-        menu.add id: 'current_admin_user', label: -> { display_name :current_admin_user }, url: -> { hgp_staff_dashboard(:current_admin_user) }
-      end
-    end
+     end
+   end
+
+
 
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
@@ -68,23 +73,25 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
 
-  config.authentication_method = :authenticate_admin_user!
-
-  # == User Authorization
+  # config.authentication_method = false #:authenticate_admin_user!
   #
-  # Active Admin will automatically call an authorization
-  # method in a before filter of all controller actions to
-  # ensure that there is a user with proper rights. You can use
-  # CanCanAdapter or make your own. Please refer to documentation.
-  #config.authorization_adapter = ActiveAdmin::CanCanAdapter
-
-  # In case you prefer Pundit over other solutions you can here pass
-  # the name of default policy class. This policy will be used in every
-  # case when Pundit is unable to find suitable policy.
-   #config.pundit_default_policy = "MyDefaultPunditPolicy"
-
-  # You can customize your CanCan Ability class name here.
-   #config.cancan_ability_class = "Ability"
+  #
+  #
+  # # == User Authorization
+  # #
+  # # Active Admin will automatically call an authorization
+  # # method in a before filter of all controller actions to
+  # # ensure that there is a user with proper rights. You can use
+  # # CanCanAdapter or make your own. Please refer to documentation.
+  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  #
+  # # In case you prefer Pundit over other solutions you can here pass
+  # # the name of default policy class. This policy will be used in every
+  # # case when Pundit is unable to find suitable policy.
+  #  #config.pundit_default_policy = "MyDefaultPunditPolicy"
+  #
+  # # You can customize your CanCan Ability class name here.
+  # config.cancan_ability_class = "Ability"
 
   # You can specify a method to be called on unauthorized access.
   # This is necessary in order to prevent a redirect loop which happens
@@ -112,7 +119,7 @@ ActiveAdmin.setup do |config|
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = :destroy_admin_session_path
+  config.logout_link_path = :destroy_admin_user_session_path
 
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
@@ -149,19 +156,19 @@ ActiveAdmin.setup do |config|
    config.comments_menu = { parent: 'Staff', priority: 5 }
   #module ActiveAdmin
     #class ResourceDSL < DSL
-      def permit_params#(*args, &block)
-        resource_sym = config.resource_name.singular.to_sym
-        controller do
-          define_method :permitted_params do
-            params.permit :utf8, :authenticity_token, :commit
-          #                 resource_sym =>
-          #                 block? instance_exec(&block) : args do
-          #
-          # end
-         #end
-        end
-      end
-    end
+    #   def permit_params#(*args, &block)
+    #     resource_sym = config.resource_name.singular.to_sym
+    #     controller do
+    #       define_method :permitted_params do
+    #         params.permit :utf8, :authenticity_token, :commit
+    #       #                 resource_sym =>
+    #       #                 block? instance_exec(&block) : args do
+    #       #
+    #       # end
+    #      #end
+    #     end
+    #   end
+    # end
   # == Batch Actions
   #
   # Enable and disable Batch Actions
@@ -252,13 +259,6 @@ ActiveAdmin.setup do |config|
   #
   # To disable/customize for the :admin namespace:
   #
-  #   config.namespace :admin do |admin|
-    # admin_user.build_menu do |menu|
-    #   menu.add :label => "Ad", :priority => 1
-    #   menu.add :label => "Second Item", :priority => 2
-    #   menu.add :label => "Third Item", :priority => 3
-    # end
-  #end
   #     # Disable the links entirely
   #     admin.download_links = false
   #

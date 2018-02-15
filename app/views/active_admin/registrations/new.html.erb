@@ -33,7 +33,7 @@
           <%= f.email_field :email, class: 'form-control'  %>
         </div>
       </div>
-
+    
       <div class='form-group'>
         <div class='control-label col-md-3'>
           <%= f.label :password %>
@@ -44,6 +44,25 @@
           <% if @minimum_password_length %>
             <em>(<%= @minimum_password_length %>
                                     characters minimum)</em>
+      <div class='form-group'>
+        <div class='control-label col-md-3'>
+          <%= f.label :email2 %>
+        </div>
+        <div class='col-md-9'>
+          <%= f.email_field :email2, class: 'form-control'  %>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <div class='control-label col-md-3'>
+          <%= f.label :password %>
+        </div>
+        <div class='col-md-9'>
+          <%= f.password_field :password, class: 'form-control',
+            autocomplete: "off" %>
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %>
+                                                                  characters minimum)</em>
           <% end %><br />
         </div>
       </div>

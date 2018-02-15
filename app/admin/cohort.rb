@@ -3,7 +3,7 @@ ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
   permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend,:project, :benchmark, :projects
   menu priority: 3
   config.batch_actions = true
-  active_admin_importable
+  #active_admin_importable
   #sortable tree: true
 
   # sidebar  only: => [:show, :edit] do

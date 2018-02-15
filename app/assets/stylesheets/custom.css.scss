@@ -20,7 +20,7 @@ body {
    }
 
    .g-signin2 {
-     margin-top: 250px;
+     margin-top: 400px;
    }
 
    .genius {
@@ -50,6 +50,7 @@ body {
 // .col-md-12 {
 //   margin-top: 260px;
 // }
+
 .intro {
   margin-top: 500px;
   text-align: center;
@@ -225,14 +226,12 @@ text-align: left;
  font-size: 150%;
 }
 
-.signed-in-user {
-  padding-top: 10px;
+.signed-in-user .navbar-text{
+  padding-top: 80px;
   padding-right: 20px;
+  color: red;
 }
 
-.signed-in-user .navbar-text {
-  color: #ffffff;
-}
 
 // Link styling
 .link {

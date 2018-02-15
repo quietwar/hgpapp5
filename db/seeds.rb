@@ -43,3 +43,4 @@ puts "There are now #{Cohort.count} rows in the cohort table"
 # admin: 'no'
 # }])
 # end
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

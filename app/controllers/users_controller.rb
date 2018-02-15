@@ -1,7 +1,6 @@
 class UsersController < Devise::RegistrationsController
-          before_action :authenticate_user!
+          before_action :authenticate_user!, except: [:new, :create]
           before_action user_params:
-          before_create :create_login
 
 #permit_params :first_name, :last_name, :city, :cohort, :email, :email2, :avatar, :username, :project
 # require 'google/api_client'
@@ -13,31 +12,17 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
-    @user = User.from_omniauth(request.env["omniauth.auth"])
-    session[:user_id] = user.id
-    redirect_to root_path
-     if @user.save!
-       redirect_to root_path
-     else
-       @user = User.new(set_user_params)
-       respond_to do |format|
-       format.html { redirect_to @user }
-       format.js
-       # create.js.erb
-       # destroy.js.erb
-     #  user_password = params[:session][:password]
-     #  user_email = params[:session][:email]
-     #  user = user_email.present? && User.find_by(email: :user_email)
-
-     #  if user && valid_password? user_password
-     #    sign_in user, store: false
-     #    user.generate_authentication_token!
-     #    user.save
-     #    render json: user, status: 200, location: [:api, :user]
-     #  else
-     #    render json: { errors: "Invalid email or password" }, status: 422
-     #  end
+    @user = User.new(params[:user])
+    if @user.save
+      flash[:notice] = "Successfully created User."
+      redirect_to root_path
+    else
+      render :action => 'new'
     end
+  end
+
+  def edit
+    @user = User.find(params[:id])
   end
 
 
@@ -48,7 +33,7 @@ class UsersController < Devise::RegistrationsController
     end
   end
   def index
-     @users = User.all
+     @users = User.excludes(:id => current_user.id)
      @hash = Gmaps4rails.build_markers(@users) do |user, marker|
         marker.lat user.latitude
         marker.lng user.longitude
@@ -56,9 +41,17 @@ class UsersController < Devise::RegistrationsController
      end
   end
 
+  def update
+    authorize! :assign_roles, @user if params[:user][:assign_roles]
+    # ...
+  end
+
   def destroy
-    session[:user_id] = nil
-    redirect_to root_path
+    @user = User.find(params[:id])
+    if @user.destroy
+      flash[:notice] = "Successfully deleted User."
+      redirect_to root_path
+    end
   end
 
 
@@ -92,5 +85,4 @@ class UsersController < Devise::RegistrationsController
          redirect_to root_path
        end
     end
-  end
 end

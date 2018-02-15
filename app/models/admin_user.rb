@@ -1,7 +1,7 @@
 class AdminUser < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable,:omniauthable,
-  devise :database_authenticatable,:registerable,:omniauthable,
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
          attr_accessor :login
          attr_accessor :username, :email, :password, :password_confirmation, :remember_me, :login
@@ -29,11 +29,26 @@ class AdminUser < ApplicationRecord
      has_many :messages
 
 
+     ROLES = %i[admin superadmin]
 
+     def roles=(roles)
+       roles = [*roles].map { |r| r.to_sym }
+       self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+     end
+
+     def roles
+       ROLES.reject do |r|
+         ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
+       end
+     end
+
+     def has_role?(role)
+       roles.include?(role)
+     end
     # Devise override to ignore the password requirement if the user is authenticated
-        def self.current_logged_user
-          :current_admin_user
-        end
+        # def self.current_admin_user
+        #   current_admin_user ==
+        # end
 
         def password_required?
           return false if provider.present?
@@ -45,7 +60,6 @@ class AdminUser < ApplicationRecord
             admin_user = where(email: auth.info.email).first || where(auth.slice(:provider, :uid).to_h).first || new
             admin_user.tap { |this| this.update_attributes(provider: auth.provider, uid: auth.uid, email: auth.info.email) }
           end
-        end
 
        def self.find_for_database_authentication(warden_conditions)
          conditions = warden_conditions.dup
@@ -53,3 +67,4 @@ class AdminUser < ApplicationRecord
          where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
        end
     end
+  end 

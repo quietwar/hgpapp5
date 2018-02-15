@@ -1,9 +1,23 @@
 Rails.application.routes.draw do
+
   ActiveAdmin.routes(self)
+  devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :active_admin)
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+      resources :users do
+        resources :projects
+      end
 
       devise_scope :user do
-          get '/project/new', to: 'projects#new', as: 'new_user_project'
-          post 'project/new', to: 'projects#create'
+          get "/admin/signup", to: 'active_admin/devise/registrations#new'
+          get '/users/:user_id/projects', to: 'projects#index', as: 'projects'
+          get '/users/:user_id/projects/new', to: 'projects#new', as: 'new_project'
+          post '/users/:user_id/projects/new', to: 'projects#new'
+          post '/users/:user_id/projects', to: 'projects#create'
+          get '/users/:user_id/projects/:id', to: 'projects#show', as: 'project'
+          get '/users/:user_id/projects/:id/edit', to: 'projects#edit', as: 'edit_project'
+          patch '/users/:user_id/projects/:id', to: 'projects#update'
+          put    '/users/:user_id/projects/:id', to: 'projects#update'
+          delete '/users/:user_id/projects/:id', to: 'projects#destroy', as: 'delete_project'
           get '/events', to: 'events#index'
           get '/events/new', to: 'events#new'#, as: 'new_event'
           get '/events/1/', to: 'events#show', :id => "1"
@@ -24,23 +38,19 @@ Rails.application.routes.draw do
           get 'auth/google_oauth2/callback', to: 'users#create', as: 'google_signin'
           get '/signout', to: 'devise/sessions#destroy', via: 'destroy'
           post 'signout', to: 'classrooms#index'
-      end
-    devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
-    resources :users do
-      resources :projects, except: [:create, :new]
-      end
+      #end
+    end
   # scope :api do
   #   scope :v1 do
   #     #resources :<controller_name>, except: [:new, :edit]
   #     get 'api/v1/users' , to: 'registrations#create' , via: :post
   #   end
   # end
-  # devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :admin)
 
 
 
 # # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 
 
       resources :features,only: [:create]

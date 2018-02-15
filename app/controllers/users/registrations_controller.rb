@@ -1,5 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :authenticate_user!
+  include Accessible
 
     def index
       @users = User.all
@@ -11,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         redirect_to :back, :alert => "Access denied."
       end
     end
-    
+
     def create
       @project = Project.new(project_params)
 
