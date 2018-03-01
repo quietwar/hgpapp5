@@ -1,14 +1,20 @@
 Rails.application.routes.draw do
 
+  get "/admin/cohort/:id", id: 'Rich1', controller: "admin/cohort", action: "show"
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config.merge(:path => :active_admin)
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users#omniauth_callbacks" }
       resources :users do
         resources :projects
       end
 
       devise_scope :user do
-          get "/admin/signup", to: 'active_admin/devise/registrations#new'
+          #get '/admin/', to: 'classrooms#index'
+          get 'admin_login', to: 'active_admin/devise/sessions#new'#, as: 'Staff Tap-in'
+          post 'admin_login', to: 'active_admin/devise/sessions#new'
+          #'admin/cohort/rich1', to: 'admin/cohort#show('rich1')'
+          #post '/admin/cohorts/new', to: 'cohorts#new'
+          get 'admin_signup', to: 'active_admin/devise/registrations#new'
           get '/users/:user_id/projects', to: 'projects#index', as: 'projects'
           get '/users/:user_id/projects/new', to: 'projects#new', as: 'new_project'
           post '/users/:user_id/projects/new', to: 'projects#new'
@@ -18,28 +24,19 @@ Rails.application.routes.draw do
           patch '/users/:user_id/projects/:id', to: 'projects#update'
           put    '/users/:user_id/projects/:id', to: 'projects#update'
           delete '/users/:user_id/projects/:id', to: 'projects#destroy', as: 'delete_project'
-          get '/events', to: 'events#index'
-          get '/events/new', to: 'events#new'#, as: 'new_event'
-          get '/events/1/', to: 'events#show', :id => "1"
-          get '/events/1/edit', to: 'events#edit', :id => "1"
-          post '/events', to: 'events#create'
-          #post '/new_event', to: 'events#create'
-          delete "/events/1", to: "events#destroy", :id => "1"
-          put "/events/1", to: "events#update", :id => "1"
-          patch "/events/1", to: "events#update", :id => "1"
-          get 'user_google_oauth2_omniauth_authorize_path', to: 'events#calendars', as: 'calendars'
+          get '/calendars', to: 'events#calendars', as: 'calendars'
           get '/redirect', to: 'events#redirect', as: 'redirect'
           get '/callback', to: 'events#callback', as: 'callback'
-
-          get '/events/:calendar_id', to: 'events#events', as: 'hgp_event', calendar_id: /[^\/]+/
-          post '/events/:calendar_id', to: 'events#new_event', as: 'new_hgp_event', calendar_id: /[^\/]+/
+          get '/events/:calendar_id', to: 'events#events', as: 'event', calendar_id: /[^\/]+/
+          post '/events/:calendar_id', to: 'events#new_event', as: 'new_event', calendar_id: /[^\/]+/
           get 'tap_in', to: 'devise/sessions#new'
+          post 'tap_in', to: 'classrooms#index'
           get 'genius_signup', to: 'devise/registrations#new'
           get 'auth/google_oauth2/callback', to: 'users#create', as: 'google_signin'
-          get '/signout', to: 'devise/sessions#destroy', via: 'destroy'
+          get 'signout', to: 'devise/sessions#destroy', via: 'destroy'
           post 'signout', to: 'classrooms#index'
-      #end
-    end
+      end
+    #end
   # scope :api do
   #   scope :v1 do
   #     #resources :<controller_name>, except: [:new, :edit]
@@ -55,7 +52,8 @@ Rails.application.routes.draw do
 
       resources :features,only: [:create]
       resources :cohorts, only: [:index, :show]
-      resources :classrooms, only: [:index, :show, :search] do
+      resources :classrooms do
+        resources :attendances
         collection do
           post :search, to: 'classrooms#search'
         end

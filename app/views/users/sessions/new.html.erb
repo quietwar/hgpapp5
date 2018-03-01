@@ -1,6 +1,25 @@
 <h2>Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<div class='page'>
+        <%= form_tag tap_in_path do %>
+          <%= text_field_tag 'user[login]' %>
+          <%= password_field_tag 'user[password]' %>
+          <%=  submit_tag 'Login' %>
+      <% end %>
+          <!-- <%= form_with model: @user, class: 'form-box' do |form|  %><br>
+            <%= form.label :login, class: 'control-label col-md-2' %>
+            <%= form.text_field :login, class: 'col-md-10' %><br>
+            <%= form.label :password, class: 'control-label col-md-2' %>
+            <%= form.password_field :password, autocomplete: "off", class: 'col-md-10' %><br>
+            <% if devise_mapping.rememberable? -%>
+            <%= form.check_box :remember_me, class: 'control-label col-md-2' %>
+            <%= form.label :remember_me, class: 'col-md-10' %><br>
+            <%= form.submit "Log in", class: 'btn btn-success btn-lg' %>
+          <% end %>
+          <% end %> -->
+</div>
+
+<!-- <%= form_for(resource, as: resource_name, url: new_user_session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :login %><br />
     <%= f.text_field :login %>
@@ -24,4 +43,5 @@
   </div>
 <% end %>
 
-<%= render "users/shared/links" %>
+ -->
+ <%= render "users/shared/links" %>

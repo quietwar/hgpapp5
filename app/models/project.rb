@@ -6,7 +6,7 @@ class Project < ApplicationRecord
   alias_attribute :genius, :user
 
 
-  validates :app_name, :project_details, :coding, :utf8, :_method, :authenticity_token, presence: false
+  validates :app_name, :project_details, :coding, :github, :utf8, :_method, :authenticity_token, presence: false
 
 
 

@@ -1,4 +1,5 @@
 class AdminUser < ApplicationRecord
+  role_based_authorizable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -9,8 +10,8 @@ class AdminUser < ApplicationRecord
 
    #with_options presence: true do
      validates :email, format: { with: /\.org\z/, message: "only allows HGP addresses" }
-     validates :provider, presence: true
-     validates :uid, uniqueness: { scope: :provider }
+     validates :provider, presence: false
+     validates :uid, uniqueness: false #{ scope: :provider }, false
      validates :first_name, presence: true
      validates :last_name, presence: true
      alias_attribute :Genius_Staff, :admin
@@ -29,26 +30,26 @@ class AdminUser < ApplicationRecord
      has_many :messages
 
 
-     ROLES = %i[admin superadmin]
+     ROLES = %i[user, director, admin]
 
      def roles=(roles)
        roles = [*roles].map { |r| r.to_sym }
-       self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+       self.roles_mask = (roles & ROLES).map { |r| 3**ROLES.index(r) }.inject(0, :+)
      end
 
      def roles
        ROLES.reject do |r|
-         ((roles_mask.to_i || 0) & 2**ROLES.index(r)).zero?
+         ((roles_mask.to_i || 0) & 3**ROLES.index(r)).zero?
        end
      end
 
      def has_role?(role)
        roles.include?(role)
      end
-    # Devise override to ignore the password requirement if the user is authenticated
-        # def self.current_admin_user
-        #   current_admin_user ==
-        # end
+    # # Devise override to ignore the password requirement if the user is authenticated
+    # #     def self.current_admin_user
+    # #       current_admin_user ==
+    # #     end
 
         def password_required?
           return false if provider.present?
@@ -66,5 +67,6 @@ class AdminUser < ApplicationRecord
          login = conditions.delete(:login)
          where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
        end
-    end
-  end 
+     end
+    # end
+ end

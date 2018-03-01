@@ -1,5 +1,5 @@
 #require 'devise/orm/:active_record'
-require 'kaminari'
+#require 'kaminari'
 require_relative 'boot'
 require 'rails/all'
 

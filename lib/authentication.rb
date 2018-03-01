@@ -27,21 +27,21 @@ module Authentication
 
    unless current_admin_user
       flash[:alert] = "Unauthorized Access: Genius, go back!"
-      redirect_to root_path
+      redirect_to admin_login_path
     end
   end
 
   def logged_in?
-    :current_user
+    current_user
   end
 
-  def login_required
-    unless logged_in?
-      flash[:error] = "You must first log in or sign up before accessing this page."
-      store_target_location
-      redirect_to login_url
-    end
-  end
+  # def login_required
+  #   unless logged_in?
+  #     flash[:error] = "You must first log in or sign up before accessing this page."
+  #     store_target_location
+  #     redirect_to login_url
+  #   end
+  # end
 
   def redirect_to_target_or_default(default)
     redirect_to(session[:return_to] || default)

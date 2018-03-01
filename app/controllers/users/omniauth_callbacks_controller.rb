@@ -11,7 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
        redirect_to new_user_registration_url
      end
    end
-  
+
 
 
 
@@ -30,7 +30,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
  end
   # GET|POST /resource/auth/google
   def passthru
-    super
+    #super
     render status: 404, plain: "Not found. Authentication passthru."
   end
   #

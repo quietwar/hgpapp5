@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable
-      devise :registerable,:database_authenticatable, :confirmable,
+      devise :registerable,:database_authenticatable,# :confirmable,
              :recoverable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]#, :authentication_keys => {email: true, login: true}
              #validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
               validates :cohort_id, :city, presence: true
@@ -12,12 +12,15 @@ class User < ApplicationRecord
                 validates_attachment_content_type :avatar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
               after_create :create_room
               attr_accessor :login
+              has_many  :attendances
+              has_many  :classrooms, :through => :cohorts
               has_one :room, dependent: :destroy
               has_one :cohort, inverse_of: :user
               has_many :projects, inverse_of: :user
               has_many :messages, inverse_of: :user
                 accepts_nested_attributes_for :cohort, :room, :projects, :allow_destroy => true
               has_many :friendships, class_name: "Genius"
+              has_many :attendances, dependent: :destroy
               has_many :active_admin_comments, as: :resource, class_name: 'Hgp_staffStaff::Comment'
               alias_method :comments, :active_admin_comments
               belongs_to :cohort, inverse_of: :users

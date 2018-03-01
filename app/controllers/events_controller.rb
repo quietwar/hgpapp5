@@ -30,17 +30,17 @@ class EventsController < Devise::OmniauthCallbacksController
   end
 
   def create
-    byebug
+
     @event = Event.new(event_params)
     flash[:notice] = 'Event was successfully created' if @event.save
     respond_with(@event)
     @event.save
   end
 
-  def destroy
-    session[:user_id] = nil
-    redirect_to root_path
-  end
+  # def destroy
+  #   session[:user_id] = nil
+  #   redirect_to root_path
+  # end
 
   def update
     flash[:notice] = 'Event was successfully updated' if @event.update(event_params)
@@ -52,20 +52,9 @@ class EventsController < Devise::OmniauthCallbacksController
     respond_with(@event)
   end
 
-  # def redirect
-  #   client = Signet::OAuth2::Client.new(client_options)
-  #
-  #   redirect_to client.authorization_uri.to_s
-  # end
 
   def redirect
-    client = Signet::OAuth2::Client.new({
-      client_id: '1006347326565-e30jdl53gig8s97mss8c606o0db865qu.apps.googleusercontent.com',
-      client_secret: 'uJ9YgUrDhROhQQt9hhVpjJJc',
-      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-      scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
-      redirect_uri: url_for(:action => :callback)
-    })
+    client = Signet::OAuth2::Client.new(client_options)
 
     redirect_to client.authorization_uri.to_s
   end
@@ -78,63 +67,60 @@ class EventsController < Devise::OmniauthCallbacksController
 
     session[:authorization] = response
 
-    redirect_to events_path
+    redirect_to calendars_url
   end
 
-
   def calendars
-    byebug
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(session[:authorization])
 
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
-
     @calendar_list = service.list_calendar_lists
-  rescue Google::Apis::AuthorizationError
-    response = client.refresh!
+      rescue Google::Apis::AuthorizationError
+        response = client.refresh!
 
-    session[:authorization] = session[:authorization].merge(response)
+        session[:authorization] = session[:authorization].merge(response)
 
     retry
   end
 
-  def hgp_events
+  def events
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(session[:authorization])
 
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
-    @hgp_event_list = service.list_events(params[:calendar_id])
+    @event_list = service.list_events(params[:calendar_id])
   end
 
-  def new_hgp_event
-     client = Signet::OAuth2::Client.new(client_options)
-     client.update!(session[:authorization])
+  def new_event
+    client = Signet::OAuth2::Client.new(client_options)
+   client.update!(session[:authorization])
 
-     service = Google::Apis::CalendarV3::CalendarService.new
-     service.authorization = client
+   service = Google::Apis::CalendarV3::CalendarService.new
+   service.authorization = client
 
-     today = Date.today
+   today = Date.today
 
-     event = Google::Apis::CalendarV3::Event.new({
-       start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
-       end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
-       summary: 'New HGP event!'
-     })
+   event = Google::Apis::CalendarV3::Event.new({
+     start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
+     end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
+     summary: 'New event!'
+   })
 
-     service.insert_hgp_event(params[:calendar_id], event)
+   service.insert_event(params[:calendar_id], event)
 
-     redirect_to hpg_event_url(calendar_id: params[:calendar_id])
+   redirect_to events_url(calendar_id: params[:calendar_id])
    end
 
   private
 
     def client_options
       {
-        client_id: Figaro.env.GOOGLE_CLIENT_ID!,
-        client_secret: Figaro.env.GOOGLE_CLIENT_SECRET!,
+        client_id: Rails.application.secrets.google_client_id,
+        client_secret: Rails.application.secrets.google_client_secret,
         authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
         token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
         scope: Google::Apis::CalendarV3::AUTH_CALENDAR,

@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # end
 
   # == Site Title
-  require 'active_admin'
+  #require 'active_admin'
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
@@ -38,18 +38,15 @@ ActiveAdmin.setup do |config|
   #
   # Default:
 
-  config.namespace :admin do |admin|
-     admin.build_menu :utility_navigation do |menu|
-       menu.add  :label  => proc{ display_name current_active_admin_user },
-                 #:url    =>  proc{ edit_admin admin_path(current_active_admin_user) }  ,#link_to current_active_admin_user,
-                 :id     => 'current_admin_user',
-                 :if     => proc{ current_active_admin_user? }
-       admin.add_logout_button_to_menu menu
-       menu.add label: "HGP Website", url: "http://www.hiddengeniusproject.org",
-                                           html_options: { target: :blank }
-
-     end
-   end
+  # config.namespace :admin do |admin|
+  #    admin.build_menu :utility_navigation do |menu|
+  #      menu.add  :label  => proc{ display_name current_admin },
+  #                :id     => 'staff',
+  #                :button  => proc{ logout_button_to_menu },
+  #                :link  => "HGP Website", url: "http://www.hiddengeniusproject.org"
+  #
+  #    end
+  #  end
 
 
 
@@ -73,24 +70,24 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
 
-  # config.authentication_method = false #:authenticate_admin_user!
+   config.authentication_method = :authenticate_admin_user!
   #
   #
   #
-  # # == User Authorization
-  # #
-  # # Active Admin will automatically call an authorization
-  # # method in a before filter of all controller actions to
-  # # ensure that there is a user with proper rights. You can use
-  # # CanCanAdapter or make your own. Please refer to documentation.
-  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  # == User Authorization
   #
-  # # In case you prefer Pundit over other solutions you can here pass
-  # # the name of default policy class. This policy will be used in every
-  # # case when Pundit is unable to find suitable policy.
-  #  #config.pundit_default_policy = "MyDefaultPunditPolicy"
+  # Active Admin will automatically call an authorization
+  # method in a before filter of all controller actions to
+  # ensure that there is a user with proper rights. You can use
+  # CanCanAdapter or make your own. Please refer to documentation.
+   config.authorization_adapter = ActiveAdmin::CanCanAdapter
   #
-  # # You can customize your CanCan Ability class name here.
+  # In case you prefer Pundit over other solutions you can here pass
+  # the name of default policy class. This policy will be used in every
+  # case when Pundit is unable to find suitable policy.
+   #config.pundit_default_policy = "MyDefaultPunditPolicy"
+  #
+  # You can customize your CanCan Ability class name here.
   # config.cancan_ability_class = "Ability"
 
   # You can specify a method to be called on unauthorized access.
@@ -98,7 +95,7 @@ ActiveAdmin.setup do |config|
   # because, by default, user gets redirected to Dashboard. If user
   # doesn't have access to Dashboard, he'll end up in a redirect loop.
   # Method provided here should be defined in application_controller.rb.
-   config.on_unauthorized_access = :access_denied
+  # config.on_unauthorized_access = :access_denied
 
   # == Current User
   #config.authorization_adapter = :OnlyHgpAuthorization
@@ -127,6 +124,7 @@ ActiveAdmin.setup do |config|
   # Default:
    config.logout_link_method = :delete
 
+
   # == Root
   #
   # Set the action to call for the root path. You can set different
@@ -143,7 +141,7 @@ ActiveAdmin.setup do |config|
   config.comments = true
   # #
   # # You can change the name under which comments are registered:
-  config.comments_registration_name = 'staff-comments'
+  config.comments_registration_name = 'staffs-comments'
   # #
   # # You can change the order for the comments and you can change the column
   # # to be used for ordering:
@@ -153,7 +151,7 @@ ActiveAdmin.setup do |config|
    config.comments_menu = true
   # #
   # # You can customize the comment menu:
-   config.comments_menu = { parent: 'Staff', priority: 5 }
+   config.comments_menu = { parent: 'Staffs', priority: 5 }
   #module ActiveAdmin
     #class ResourceDSL < DSL
     #   def permit_params#(*args, &block)
@@ -179,11 +177,7 @@ ActiveAdmin.setup do |config|
   #
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
-  #
-  #config.before_action :authenticate_admin!
-
-  #config.before_action :current_ability
-  # == Localize Date/Time Format
+# == Localize Date/Time Format
   #
   # Set the localize format to display dates and times.
   # To understand how to localize your app with I18n, read more at

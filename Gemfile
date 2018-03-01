@@ -19,16 +19,19 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 #gem 'kaminari'
 gem 'ffi', '1.9.18'
-gem 'activeadmin', '~> 1.1'
+#gem 'forest_liana'
+gem 'activeadmin'#, '~> 1.2.1'
 gem 'active_admin_theme'
+gem 'activeadmin_addons'
+gem 'active_admin_role'
+gem 'active_admin_importable'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+
+#gem "active_admin-sortable_tree"
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'paperclip', '~> 5.0'
-#gem "active_admin-sortable_tree"
-gem 'active_admin_importable'
-gem 'inherited_resources', github: 'activeadmin/inherited_resources'
-gem 'activeadmin_addons'
-gem 'active_admin_role'
+
 gem 'responders', '~> 2.2'
 gem 'gmaps4rails'
 gem 'underscore-rails'

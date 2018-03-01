@@ -1,31 +1,19 @@
-ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
-
+ActiveAdmin.register Cohort do#, :as => 'Hgp cohorts'
+# ActiveAdmin.register User do
+#     belongs_to :cohort
   permit_params :first_name, :last_name, :username, :genius, :cohort_id, :city, :email, :email2, :cell, :stipend,:project, :benchmark, :projects
   menu priority: 3
   config.batch_actions = true
   #active_admin_importable
   #sortable tree: true
 
-  # sidebar  only: => [:show, :edit] do
-  #   ul "Genius Details" do
-  #     li link_to "Goals",  admin_genius_goals_path(genius)
-  #     li link_to "Features", admin_genius_features_path(genius)
-  #   end
-
-  #  end
 
   index do
     selectable_column
     id_column
     column :cohort_id
-    column :genius
-    column :username
     column :city
-    column :email
-    column :email2
-    column :cell
-    column :password
-    column :password_confirmation
+
 
     actions
   end
@@ -36,19 +24,30 @@ ActiveAdmin.register Cohort, :as => 'Hgp-cohorts'  do
   filter :username
 
 
-  form do |f|
-    f.inputs "Hgp Geniuses" do
-      f.input :genius
-      f.input :cohort_id
-      f.input :city
-      f.input :cell
-      f.input :email
-      f.input :email2
-      f.input :password
-      f.input :password_confirmation
-
+    form do |f|
+        ### Declare here the model's own form fields:
+    f.inputs "Hgp Cohorts" do
+      f.input :city, label: "Office Location"
+      f.input :cohort_id, label: "Cohort Number"
     end
-    f.actions
-
-	end
+      ### Declare here the form for the child model, using the "has_many" method:
+      f.inputs "Geniuses" do
+        f.has_many :users,allow_destroy: true,
+                              new_record: true do |u|
+          u.input :genius
+          u.input :cell
+          u.input :email
+          u.input :password, input_html: { autocomplete: "new-password" }
+          u.input :email2
+          u.input :username
+          u.input :avatar, as: :file
+          if u.object.avatar.present?
+            u.semantic_fields_for :avatar_attributes do |avatar_fields|
+             avatar_fields.input :_destroy, as: :boolean, label: 'Delete?'
+           end
+       end
+      end
+      f.actions
+      end
+    end
   end

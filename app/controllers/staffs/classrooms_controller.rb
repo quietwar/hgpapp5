@@ -1,5 +1,4 @@
 class Staffs::ClassroomsController < ApplicationController
-  #before_action :authenticate_admin!
   #before_action :set_current_classroom, only: [:show, :edit, :update, :destroy]
 
     #admin home page

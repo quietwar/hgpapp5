@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
-  skip_before_action :verify_authenticity_token
-   helper_method :current_user, :logged_in?, :current_room, :authenticate_admin_user!, :authenticate_user!
+  #skip_before_action :verify_authenticity_token
+   helper_method :current_user, :current_admin, :logged_in?, :current_room, :authenticate_admin_user!, :authenticate_user!
    before_action :configure_permitted_parameters, if: :devise_controller?
    rescue_from ActiveRecord::RecordNotFound, with: :not_found_error
 
@@ -12,10 +12,10 @@ protected
       render file: 'public/401.html', status: :not_found
     end
 
-  #  rescue_from CanCan::AccessDenied do |exception|
-  #   flash[:error] = exception.message
-  #   redirect_to root_url
-  # end
+   rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_url
+  end
 
 
     def after_sign_out_path_for(user)
@@ -35,9 +35,6 @@ protected
     end
 
 
-
-protected
-
   def configure_permitted_parameters
        attributes = [:first_name, :last_name, :username, :email, :avatar, :cohort, :cohort_id, :city, :password, roles: []]
        devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :password, :password_confirmation])
@@ -48,30 +45,52 @@ protected
 
 private
 
-  def set_current_user
-    :current_user != nil
-  end
+ # def authenticate
+ #  	redirect_to :login unless user_signed_in?
+ #  end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+  	@current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-helper_method :current_user
+  def user_signed_in?
+  	# converts current_user to a boolean by negating the negation
+  	!!current_user
+  end
+
+  def set_current_user
+    current_user != nil
+  end
+
+  # def current_user
+  #   @current_user ||= User.find_by(id: session[:user_id])
+  # end
+
 
   def logged_in?
-    :current_user != nil
+    current_user != nil
   end
+
+  # def authenticate_admin_user!
+  #    authenticate_user!
+  #    # current_user is devise provided method.
+  #    # Authority You can do whatever you like about the user's role.  (In my case, implemented with the has_role method)
+  #    unless current_user.has_role 'admin'
+  #      flash[:alert] = "Unauthorized Access: Genius, go back! Otherwise, please login as staff."
+  #      redirect_to admin_signup_path
+  #    end
+  #  end
 
   def authenticate_admin_user!
 
-   unless :current_admin_user
+   unless :current_admin
       flash[:alert] = "Unauthorized Access: Genius, go back!"
       redirect_to  admin_signup_path
     end
   end
 
   def access_denied(exception)
-      redirect_to root_path, alert: exception.message
+    redirect_to admin_login_path, alert: exception.message
   end
 
   def current_room

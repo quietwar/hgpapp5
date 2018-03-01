@@ -1,5 +1,5 @@
 class AdminUsers::RegistrationsController < Devise::RegistrationsController
-  #include Accessible
+  include Accessible
 
   #GET /resource/sign_up
   def new

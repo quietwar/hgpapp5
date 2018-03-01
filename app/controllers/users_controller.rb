@@ -9,17 +9,34 @@ class UsersController < Devise::RegistrationsController
 
   def new
     @user = User.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
+    end
   end
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      flash[:notice] = "Successfully created User."
-      redirect_to root_path
-    else
-      render :action => 'new'
+
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
-  end
+  #   @user = User.new(params[:user])
+  #   if @user.save
+  #     flash[:notice] = "Successfully created User."
+  #     redirect_to root_path
+  #   else
+  #     render :action => 'new'
+  #   end
+  # end
 
   def edit
     @user = User.find(params[:id])
@@ -32,6 +49,7 @@ class UsersController < Devise::RegistrationsController
       redirect_to :back, :alert => "Access denied."
     end
   end
+
   def index
      @users = User.excludes(:id => current_user.id)
      @hash = Gmaps4rails.build_markers(@users) do |user, marker|
@@ -85,4 +103,5 @@ class UsersController < Devise::RegistrationsController
          redirect_to root_path
        end
     end
+  end
 end

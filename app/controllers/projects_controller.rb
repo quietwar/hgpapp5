@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource through: :current_user
   before_action :project_params, only: [:create, :edit]
   #before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy]
@@ -6,7 +7,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-     :set_current_room
+     set_current_room
     #@projects =
     @friends = :friend_id
     @message = Message.new
@@ -18,7 +19,7 @@ class ProjectsController < ApplicationController
 
 
   def show
-    @project = Project.find(params[:current_user])
+    @project = Project.find(params[:id])
     @friendship = Friendship(:user_id, @friends)
   end
 
@@ -27,7 +28,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-      @message = current_user.messages.build(message_params)
+      @message = Messages.find(params[:current_user])
       @message.room = :current_room
 
       if @message.save
@@ -82,6 +83,10 @@ private
 
   def project_params
     params.permit(:app_name, :coding, :project_details, :start_date, :utf8, :authenticity_token, :commit, :locale)
+  end
+
+  def message_params
+    params.require(:message).permit(:body)
   end
 
   def set_current_room
